@@ -183,6 +183,12 @@ foreach ( $modules as $mid => $m ) {
 			</div>
 		</header>
 
+		<?php
+		$backup_active = in_array( 'backup_restore', $active, true );
+		$cloud_active  = in_array( 'cloud_backup', $active, true );
+		$seo_active    = in_array( 'seo_checker', $active, true );
+		?>
+
 		<section class="stackpress-feature-shell" aria-label="Featured tools">
 			<div class="stackpress-feature-card">
 				<div class="stackpress-feature-card-icon"><i class="ti ti-database" aria-hidden="true"></i></div>
@@ -191,8 +197,8 @@ foreach ( $modules as $mid => $m ) {
 					<p><?php esc_html_e( 'Protect your site with on-demand backups, scheduled archives, and safe restore workflows that never hit upload limits.', 'stackpress' ); ?></p>
 				</div>
 				<div class="stackpress-feature-card-actions">
-					<a class="stackpress-action-btn is-primary" href="<?php echo esc_url( admin_url( 'admin.php?page=stackpress-backups' ) ); ?>"><?php esc_html_e( 'Open backups', 'stackpress' ); ?></a>
-					<a class="stackpress-link-btn" href="<?php echo esc_url( admin_url( 'admin.php?page=stackpress-cloud' ) ); ?>"><?php esc_html_e( 'Cloud backup', 'stackpress' ); ?></a>
+					<a class="stackpress-action-btn is-primary" href="<?php echo esc_url( admin_url( $backup_active ? 'admin.php?page=stackpress-backups' : 'admin.php?page=stackpress-setup' ) ); ?>" data-modal-page="<?php echo esc_attr( $backup_active ? 'stackpress-backups' : 'stackpress-setup' ); ?>"><?php esc_html_e( 'Open backups', 'stackpress' ); ?></a>
+					<a class="stackpress-link-btn" href="<?php echo esc_url( admin_url( $cloud_active ? 'admin.php?page=stackpress-cloud' : 'admin.php?page=stackpress-setup' ) ); ?>" data-modal-page="<?php echo esc_attr( $cloud_active ? 'stackpress-cloud' : 'stackpress-setup' ); ?>"><?php esc_html_e( 'Cloud backup', 'stackpress' ); ?></a>
 				</div>
 			</div>
 			<div class="stackpress-feature-card">
@@ -202,8 +208,8 @@ foreach ( $modules as $mid => $m ) {
 					<p><?php esc_html_e( 'Run an AI-aware SEO audit with metadata, sitemap, and llms.txt checks to help your site rank and be ready for AI discovery.', 'stackpress' ); ?></p>
 				</div>
 				<div class="stackpress-feature-card-actions">
-					<a class="stackpress-action-btn is-primary" href="<?php echo esc_url( admin_url( 'admin.php?page=stackpress-seo-checker' ) ); ?>"><?php esc_html_e( 'Run audit', 'stackpress' ); ?></a>
-					<a class="stackpress-link-btn" href="<?php echo esc_url( admin_url( 'admin.php?page=stackpress-setup' ) ); ?>"><?php esc_html_e( 'Optimize SEO', 'stackpress' ); ?></a>
+					<a class="stackpress-action-btn is-primary" href="<?php echo esc_url( admin_url( $seo_active ? 'admin.php?page=stackpress-seo-checker' : 'admin.php?page=stackpress-setup' ) ); ?>" data-modal-page="<?php echo esc_attr( $seo_active ? 'stackpress-seo-checker' : 'stackpress-setup' ); ?>"><?php esc_html_e( 'Run audit', 'stackpress' ); ?></a>
+					<a class="stackpress-link-btn" href="<?php echo esc_url( admin_url( 'admin.php?page=stackpress-setup' ) ); ?>" data-modal-page="stackpress-setup"><?php esc_html_e( 'Optimize SEO', 'stackpress' ); ?></a>
 				</div>
 			</div>
 		</section>
@@ -350,7 +356,7 @@ foreach ( $modules as $mid => $m ) {
 									<i class="ti ti-settings" aria-hidden="true"></i> <?php esc_html_e( 'Settings', 'stackpress' ); ?>
 								</button>
 							<?php endif; ?>
-							<a class="stackpress-help" href="<?php echo esc_url( 'https://dicecodes.com/stackpress/docs/#mod-' . $id ); ?>" target="_blank" rel="noopener" title="<?php esc_attr_e( 'How to use this tool', 'stackpress' ); ?>">
+							<a class="stackpress-help" href="<?php echo esc_url( 'https://github.com/Joseymras/StackPress-free-all-in-one-WordPress-plugin' ); ?>" target="_blank" rel="noopener" title="<?php esc_attr_e( 'How to use this tool', 'stackpress' ); ?>">
 								<i class="ti ti-info-circle" aria-hidden="true"></i> <?php esc_html_e( 'Help', 'stackpress' ); ?>
 							</a>
 							<?php if ( ! $dep_ok ) : ?>

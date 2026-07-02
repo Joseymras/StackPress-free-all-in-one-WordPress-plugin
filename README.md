@@ -11,7 +11,7 @@
 
 **Built by Stack Press — your digital dream team.**
 
-🔗 **[Download on WordPress.org](https://wordpress.org/plugins/stackpress/)** &nbsp;•&nbsp; 🌐 **[Plugin Home](https://dicecodes.com/stackpress-wordpress-plugin/)** &nbsp;•&nbsp; 📖 **[Documentation](https://dicecodes.com/stackpress/docs/)**
+🔗 **[Download on WordPress.org](https://wordpress.org/plugins/stackpress/)** &nbsp;•&nbsp; 🌐 **[Plugin Home](https://dicecodes.com/stackpress-wordpress-plugin/)** &nbsp;•&nbsp; 📖 **[Documentation](https://github.com/Joseymras/StackPress-free-all-in-one-WordPress-plugin)**
 
 <p align="center">
   <img src=".wordpress-org/github-social.png" alt="StackPress — the free all-in-one WordPress plugin with 185 modular tools for security, performance, SEO, WooCommerce, caching and backups" width="100%">
@@ -48,7 +48,7 @@ Most WordPress sites run a dozen plugins — one for caching, one for security, 
 | 🧰 **Admin & Developer** | 30 | File manager, .htaccess editor, admin menu editor, DB search-replace, config export/import, WP-CLI |
 | 🗄️ **Site Management** | 13 | Backups & restore, cloud backup, monthly reports, error monitor, activity log, diagnostics || 💡 **AI & Insights** | 4 | SEO & AI visibility checker, smart metadata audits, llms.txt discovery, AI-ready sitemap checks || ♿ **Accessibility & Legal** | 7 | Cookie consent, accessibility toolbar, privacy tools |
 
-> 👉 Full tool-by-tool guides: **[dicecodes.com/stackpress/docs](https://dicecodes.com/stackpress/docs/)**
+> 👉 Full tool-by-tool guides: **[github.com/Joseymras/StackPress-free-all-in-one-WordPress-plugin](https://github.com/Joseymras/StackPress-free-all-in-one-WordPress-plugin)**
 
 ---
 

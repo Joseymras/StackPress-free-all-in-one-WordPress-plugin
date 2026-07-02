@@ -167,7 +167,7 @@
 
 		var help = document.createElement( 'a' );
 		help.className = 'stackpress-toast-link';
-		help.href = 'https://dicecodes.com/stackpress/docs/#mod-' + id;
+		help.href = 'https://github.com/Joseymras/StackPress-free-all-in-one-WordPress-plugin';
 		help.target = '_blank';
 		help.rel = 'noopener';
 		help.textContent = cfg.i18n.howToUse || 'How to use';
