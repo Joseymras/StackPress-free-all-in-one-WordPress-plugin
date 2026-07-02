@@ -518,6 +518,13 @@ final class Module_Registry {
 				'weight' => 3,
 			);
 		}
+		if ( 'seo_checker' === $id ) {
+			return array(
+				'label'  => __( 'AI insight', 'stackpress' ),
+				'key'    => 'ai',
+				'weight' => 4,
+			);
+		}
 		if ( in_array( $id, $recommended, true ) ) {
 			return array(
 				'label'  => __( 'Recommended', 'stackpress' ),
