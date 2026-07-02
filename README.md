@@ -27,7 +27,9 @@ Most WordPress sites run a dozen plugins — one for caching, one for security, 
 - **⚡ Zero bloat by design** — every tool is off until you enable it, and disabled tools load **no PHP, JS, or CSS**. The dashboard shows the exact RAM / JS / DB cost of each tool *before* you turn it on.
 - **💯 100% free, forever** — no "Pro" upsell, no locked features, no nag screens.
 - **🛡️ Safe Mode & isolation** — a failing tool auto-disables itself instead of taking down your site.
-- **🤝 Conflict-aware** — StackPress detects plugins you already run (e.g. an SEO or caching plugin) and warns you before enabling an overlapping tool.
+- **� AI-aware SEO checks** — audit metadata, sitemaps, search visibility, and llms.txt readiness so your content is visible to search engines and AI assistants.
+- **🧩 Backup & restore built in** — create downloadable site archives, schedule backups, and restore from the dashboard without upload limits.
+- **�🤝 Conflict-aware** — StackPress detects plugins you already run (e.g. an SEO or caching plugin) and warns you before enabling an overlapping tool.
 - **🏢 Agency Mode** — per-tool control and a 1-click "Recommended setup" that scans your site and enables the right essentials.
 
 ---
@@ -44,8 +46,7 @@ Most WordPress sites run a dozen plugins — one for caching, one for security, 
 | 🖼️ **Media** | 10 | Image optimization, WebP, SVG support, lazy media, bulk compression |
 | 📣 **Content & Marketing** | 30 | Reviews, shortcodes, custom code, GA4, popups, related posts |
 | 🧰 **Admin & Developer** | 30 | File manager, .htaccess editor, admin menu editor, DB search-replace, config export/import, WP-CLI |
-| 🗄️ **Site Management** | 13 | Backups & restore, cloud backup, monthly reports, error monitor, activity log, diagnostics |
-| ♿ **Accessibility & Legal** | 7 | Cookie consent, accessibility toolbar, privacy tools |
+| 🗄️ **Site Management** | 13 | Backups & restore, cloud backup, monthly reports, error monitor, activity log, diagnostics || 💡 **AI & Insights** | 4 | SEO & AI visibility checker, smart metadata audits, llms.txt discovery, AI-ready sitemap checks || ♿ **Accessibility & Legal** | 7 | Cookie consent, accessibility toolbar, privacy tools |
 
 > 👉 Full tool-by-tool guides: **[dicecodes.com/stackpress/docs](https://dicecodes.com/stackpress/docs/)**
 

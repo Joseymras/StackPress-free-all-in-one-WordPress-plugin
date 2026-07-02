@@ -183,7 +183,30 @@ foreach ( $modules as $mid => $m ) {
 			</div>
 		</header>
 
-		<!-- Pro roadmap removed per user request -->
+		<section class="stackpress-feature-shell" aria-label="Featured tools">
+			<div class="stackpress-feature-card">
+				<div class="stackpress-feature-card-icon"><i class="ti ti-database" aria-hidden="true"></i></div>
+				<div class="stackpress-feature-card-copy">
+					<h2><?php esc_html_e( 'Backup & Restore', 'stackpress' ); ?></h2>
+					<p><?php esc_html_e( 'Protect your site with on-demand backups, scheduled archives, and safe restore workflows that never hit upload limits.', 'stackpress' ); ?></p>
+				</div>
+				<div class="stackpress-feature-card-actions">
+					<a class="stackpress-action-btn is-primary" href="<?php echo esc_url( admin_url( 'admin.php?page=stackpress-backups' ) ); ?>"><?php esc_html_e( 'Open backups', 'stackpress' ); ?></a>
+					<a class="stackpress-link-btn" href="<?php echo esc_url( admin_url( 'admin.php?page=stackpress-cloud' ) ); ?>"><?php esc_html_e( 'Cloud backup', 'stackpress' ); ?></a>
+				</div>
+			</div>
+			<div class="stackpress-feature-card">
+				<div class="stackpress-feature-card-icon"><i class="ti ti-search" aria-hidden="true"></i></div>
+				<div class="stackpress-feature-card-copy">
+					<h2><?php esc_html_e( 'SEO & AI visibility checker', 'stackpress' ); ?></h2>
+					<p><?php esc_html_e( 'Run an AI-aware SEO audit with metadata, sitemap, and llms.txt checks to help your site rank and be ready for AI discovery.', 'stackpress' ); ?></p>
+				</div>
+				<div class="stackpress-feature-card-actions">
+					<a class="stackpress-action-btn is-primary" href="<?php echo esc_url( admin_url( 'admin.php?page=stackpress-seo-checker' ) ); ?>"><?php esc_html_e( 'Run audit', 'stackpress' ); ?></a>
+					<a class="stackpress-link-btn" href="<?php echo esc_url( admin_url( 'admin.php?page=stackpress-setup' ) ); ?>"><?php esc_html_e( 'Optimize SEO', 'stackpress' ); ?></a>
+				</div>
+			</div>
+		</section>
 
 		<div class="stackpress-toolbar">
 			<div class="stackpress-search">

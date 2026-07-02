@@ -158,6 +158,44 @@
 	background: var(--stackpress-surface);
 	border-bottom: 1px solid var(--stackpress-line);
 }
+.stackpress-feature-shell {
+	padding: 20px 28px;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+	gap: 14px;
+	background: var(--stackpress-surface);
+	border-bottom: 1px solid var(--stackpress-line);
+}
+.stackpress-feature-card {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	padding: 18px;
+	border: 1px solid var(--stackpress-line);
+	border-radius: var(--stackpress-radius);
+	background: var(--stackpress-canvas);
+}
+.stackpress-feature-card-icon {
+	width: 46px;
+	height: 46px;
+	border-radius: 14px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: rgba(0, 163, 8, 0.12);
+	color: var(--stackpress-cyan);
+	font-size: 22px;
+	flex-shrink: 0;
+}
+.stackpress-feature-card-copy { flex: 1; }
+.stackpress-feature-card-copy h2 { margin: 0 0 6px; font-size: 16px; }
+.stackpress-feature-card-copy p { margin: 0; color: var(--stackpress-muted); font-size: 13px; line-height: 1.5; }
+.stackpress-feature-card-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+.stackpress-feature-card-actions .stackpress-action-btn,
+.stackpress-feature-card-actions .stackpress-link-btn {
+	font-size: 12px;
+	padding: 7px 12px;
+}
 .stackpress-topbar-title { font-size: 18px; font-weight: 600; margin: 0; flex: 1; }
 .stackpress-stats { display: flex; gap: 8px; flex-wrap: wrap; }
 .stackpress-stat-pill {
