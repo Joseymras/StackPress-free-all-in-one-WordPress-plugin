@@ -69,7 +69,7 @@ foreach ( $modules as $mid => $m ) {
 		$unsupported_count++;
 	}
 }
-$tip_settings = get_option( 'stackpress_tip_settings', array() );
+
 ?>
 <div class="stackpress-app">
 
@@ -141,12 +141,12 @@ $tip_settings = get_option( 'stackpress_tip_settings', array() );
 		<div class="stackpress-brand">
 			<div class="stackpress-brand-head">
 				<?php
-				// Prefer a bundled logo (PNG first, then the shipped SVG); else the "JM" mark.
+				// Prefer a bundled plugin icon (PNG first, then SVG); else the "JM" mark.
 				$stackpress_logo = '';
-				if ( file_exists( STACKPRESS_PATH . 'assets/img/dice-codes-white.png' ) ) {
-					$stackpress_logo = STACKPRESS_URL . 'assets/img/dice-codes-white.png';
-				} elseif ( file_exists( STACKPRESS_PATH . 'assets/img/dice-codes-white.svg' ) ) {
-					$stackpress_logo = STACKPRESS_URL . 'assets/img/dice-codes-white.svg';
+				if ( file_exists( STACKPRESS_PATH . 'assets/img/stackpress-icon.png' ) ) {
+					$stackpress_logo = STACKPRESS_URL . 'assets/img/stackpress-icon.png';
+				} elseif ( file_exists( STACKPRESS_PATH . 'assets/img/stackpress-icon.svg' ) ) {
+					$stackpress_logo = STACKPRESS_URL . 'assets/img/stackpress-icon.svg';
 				}
 				?>
 					<?php if ( '' !== $stackpress_logo ) : ?>
@@ -166,7 +166,7 @@ $tip_settings = get_option( 'stackpress_tip_settings', array() );
 				<a href="https://github.com/IamRamgarhia/StackPress-free-all-in-one-WordPress-plugin" target="_blank" rel="noopener"><i class="ti ti-info-circle" aria-hidden="true"></i> <?php esc_html_e( 'Docs & guides', 'stackpress' ); ?></a>
 				<a href="mailto:joseymras88@gmail.com?subject=<?php echo rawurlencode( 'StackPress support request' ); ?>"><i class="ti ti-mail" aria-hidden="true"></i> <?php esc_html_e( 'Get support', 'stackpress' ); ?></a>
 				<a href="mailto:joseymras88@gmail.com?subject=<?php echo rawurlencode( 'StackPress feature request' ); ?>"><i class="ti ti-speakerphone" aria-hidden="true"></i> <?php esc_html_e( 'Request a feature', 'stackpress' ); ?></a>
-				<a href="https://buymeacoffee.com/joseymras88" target="_blank" rel="noopener"><i class="ti ti-coffee" aria-hidden="true"></i> <?php esc_html_e( 'Buy me a coffee', 'stackpress' ); ?></a>
+				<a href="https://buymeacoffee.com/joseymras" target="_blank" rel="noopener"><i class="ti ti-coffee" aria-hidden="true"></i> <?php esc_html_e( 'Buy me a coffee', 'stackpress' ); ?></a>
 			</div>
 			<p class="stackpress-footer-credit">Built by Josey Mras<br /><a href="mailto:joseymras88@gmail.com">joseymras88@gmail.com</a></p>
 		</div>
@@ -183,41 +183,7 @@ $tip_settings = get_option( 'stackpress_tip_settings', array() );
 			</div>
 		</header>
 
-		<section class="stackpress-pro-shell" aria-label="StackPress Pro roadmap">
-			<div class="stackpress-pro-intro">
-				<div>
-					<h2><?php esc_html_e( 'StackPress Pro', 'stackpress' ); ?></h2>
-					<p><?php esc_html_e( 'Support the next wave of premium StackPress capabilities and help fund the roadmap.', 'stackpress' ); ?></p>
-				</div>
-				<button type="button" class="stackpress-action-btn is-primary" id="stackpress-open-tip"><?php esc_html_e( 'Support the Pro roadmap', 'stackpress' ); ?></button>
-			</div>
-			<div class="stackpress-pro-grid">
-				<article class="stackpress-pro-card">
-					<span class="stackpress-pro-badge">Pro</span>
-					<h3><?php esc_html_e( 'AI SEO Generator', 'stackpress' ); ?></h3>
-					<p><?php esc_html_e( 'Generate titles, meta descriptions, FAQs, and schema from one click.', 'stackpress' ); ?></p>
-					<button type="button" class="stackpress-link-btn stackpress-pro-cta" data-pro-feature="ai-seo-generator"><?php esc_html_e( 'Support this idea', 'stackpress' ); ?></button>
-				</article>
-				<article class="stackpress-pro-card">
-					<span class="stackpress-pro-badge">Recurring revenue</span>
-					<h3><?php esc_html_e( 'Cloud Backup', 'stackpress' ); ?></h3>
-					<p><?php esc_html_e( 'Connect WordPress sites to your future StackPress cloud platform.', 'stackpress' ); ?></p>
-					<button type="button" class="stackpress-link-btn stackpress-pro-cta" data-pro-feature="cloud-backup"><?php esc_html_e( 'Support this idea', 'stackpress' ); ?></button>
-				</article>
-				<article class="stackpress-pro-card">
-					<span class="stackpress-pro-badge">Differentiator</span>
-					<h3><?php esc_html_e( 'Site Health Score', 'stackpress' ); ?></h3>
-					<p><?php esc_html_e( 'Show SEO, performance, security, and accessibility in a single score.', 'stackpress' ); ?></p>
-					<button type="button" class="stackpress-link-btn stackpress-pro-cta" data-pro-feature="site-health-score"><?php esc_html_e( 'Support this idea', 'stackpress' ); ?></button>
-				</article>
-				<article class="stackpress-pro-card">
-					<span class="stackpress-pro-badge">High value</span>
-					<h3><?php esc_html_e( 'Agency Dashboard', 'stackpress' ); ?></h3>
-					<p><?php esc_html_e( 'Manage multiple client websites from one interface.', 'stackpress' ); ?></p>
-					<button type="button" class="stackpress-link-btn stackpress-pro-cta" data-pro-feature="agency-dashboard"><?php esc_html_e( 'Support this idea', 'stackpress' ); ?></button>
-				</article>
-			</div>
-		</section>
+		<!-- Pro roadmap removed per user request -->
 
 		<div class="stackpress-toolbar">
 			<div class="stackpress-search">
@@ -384,28 +350,7 @@ $tip_settings = get_option( 'stackpress_tip_settings', array() );
 			<div class="stackpress-empty" id="stackpress-empty" hidden></div>
 		</div>
 
-		<section class="stackpress-support-footer" aria-label="Support StackPress">
-			<div class="stackpress-support-copy">
-				<h2><?php esc_html_e( 'Support StackPress', 'stackpress' ); ?></h2>
-				<p><?php esc_html_e( 'If this plugin saves you time or money, tip the builder directly from this dashboard without leaving the page.', 'stackpress' ); ?></p>
-			</div>
-			<div class="stackpress-support-actions">
-				<button type="button" class="stackpress-action-btn is-primary" id="stackpress-open-tip"><?php esc_html_e( 'Tip with Paystack', 'stackpress' ); ?></button>
-				<a class="stackpress-link-btn" href="https://buymeacoffee.com/joseymras88" target="_blank" rel="noopener"><?php esc_html_e( 'Buy me a coffee', 'stackpress' ); ?></a>
-			</div>
-			<form method="post" class="stackpress-tip-settings-form" style="margin-top: 12px;">
-				<?php wp_nonce_field( 'stackpress_tip_settings', 'stackpress_tip_settings_nonce' ); ?>
-				<label class="stackpress-tip-field">
-					<span><?php esc_html_e( 'Paystack public key', 'stackpress' ); ?></span>
-					<input type="text" name="stackpress_tip_public_key" value="<?php echo esc_attr( isset( $tip_settings['public_key'] ) ? $tip_settings['public_key'] : '' ); ?>" />
-				</label>
-				<label class="stackpress-tip-field">
-					<span><?php esc_html_e( 'Paystack secret key', 'stackpress' ); ?></span>
-					<input type="password" name="stackpress_tip_secret_key" value="<?php echo esc_attr( isset( $tip_settings['secret_key'] ) ? $tip_settings['secret_key'] : '' ); ?>" />
-				</label>
-				<button type="submit" class="stackpress-action-btn"><?php esc_html_e( 'Save tip settings', 'stackpress' ); ?></button>
-			</form>
-		</section>
+		<!-- Support/tipping UI removed per user request -->
 	</main>
 
 	<div id="stackpress-modal" class="stackpress-modal" hidden>

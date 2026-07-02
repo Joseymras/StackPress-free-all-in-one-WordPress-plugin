@@ -6,8 +6,8 @@
 :root {
 	--stackpress-navy: #1b2a4a;
 	--stackpress-navy-2: #24365c;
-	--stackpress-cyan: #0aa2c0;
-	--stackpress-cyan-soft: #e6f6fa;
+	--stackpress-cyan: #00A308;
+	--stackpress-cyan-soft: rgba(0,163,8,0.08);
 	--stackpress-ink: #1d2327;
 	--stackpress-muted: #6b7280;
 	--stackpress-faint: #9aa3af;
@@ -149,50 +149,7 @@
 .stackpress-footer-credit { margin: 10px 0 0; font-size: 11px; color: #8a96ac; line-height: 1.45; }
 .stackpress-footer-credit a { color: #cdd5e3; text-decoration: none; }
 .stackpress-footer-credit a:hover { color: var(--stackpress-cyan); }
-.stackpress-pro-shell {
-	padding: 20px 28px 0;
-	background: var(--stackpress-surface);
-	border-bottom: 1px solid var(--stackpress-line);
-}
-.stackpress-pro-intro {
-	display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 16px;
-}
-.stackpress-pro-intro h2 { margin: 0 0 4px; font-size: 17px; color: var(--stackpress-ink); }
-.stackpress-pro-intro p { margin: 0; color: var(--stackpress-muted); font-size: 13px; max-width: 640px; }
-.stackpress-pro-grid {
-	display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px;
-}
-.stackpress-pro-card {
-	background: var(--stackpress-canvas); border: 1px solid var(--stackpress-line); border-radius: var(--stackpress-radius); padding: 14px;
-	display: flex; flex-direction: column; gap: 8px;
-}
-.stackpress-pro-card h3 { margin: 0; font-size: 14px; color: var(--stackpress-ink); }
-.stackpress-pro-card p { margin: 0; color: var(--stackpress-muted); font-size: 12px; line-height: 1.5; }
-.stackpress-pro-badge {
-	display: inline-flex; align-self: flex-start; padding: 3px 8px; border-radius: 999px; background: var(--stackpress-cyan-soft); color: var(--stackpress-cyan); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .03em;
-}
-.stackpress-support-footer {
-	display: flex; align-items: center; justify-content: space-between; gap: 16px;
-	padding: 16px 28px 24px; background: var(--stackpress-surface); border-top: 1px solid var(--stackpress-line);
-}
-.stackpress-support-copy h2 { font-size: 15px; margin: 0 0 4px; color: var(--stackpress-ink); }
-.stackpress-support-copy p { margin: 0; font-size: 13px; color: var(--stackpress-muted); max-width: 680px; }
-.stackpress-support-actions, .stackpress-tip-actions-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-.stackpress-link-btn {
-	display: inline-flex; align-items: center; gap: 6px; font-size: 12px; padding: 6px 12px; border-radius: var(--stackpress-radius-sm);
-	border: 1px solid var(--stackpress-line); background: var(--stackpress-surface); color: var(--stackpress-ink); text-decoration: none;
-}
-.stackpress-link-btn:hover { border-color: var(--stackpress-cyan); color: var(--stackpress-cyan); }
-.stackpress-tip-modal { position: fixed; inset: 0; z-index: 100002; display: flex; align-items: center; justify-content: center; padding: 20px; }
-.stackpress-tip-modal[hidden] { display: none; }
-.stackpress-tip-backdrop { position: absolute; inset: 0; background: rgba(16, 24, 40, 0.55); }
-.stackpress-tip-box { position: relative; width: min(480px, 100%); background: var(--stackpress-surface); border-radius: var(--stackpress-radius); box-shadow: 0 20px 60px rgba(0,0,0,.3); padding: 20px; z-index: 1; }
-.stackpress-tip-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
-.stackpress-tip-head h3 { margin: 0; font-size: 16px; }
-.stackpress-tip-close { background: none; border: 0; font-size: 24px; line-height: 1; cursor: pointer; color: var(--stackpress-faint); }
-.stackpress-tip-intro { margin: 0 0 14px; font-size: 13px; color: var(--stackpress-muted); line-height: 1.5; }
-.stackpress-tip-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; font-size: 13px; color: var(--stackpress-ink); }
-.stackpress-tip-field input, .stackpress-tip-field select { width: 100%; padding: 9px 10px; border: 1px solid var(--stackpress-line); border-radius: var(--stackpress-radius-sm); }
+/* Pro roadmap and tipping UI removed per rebrand request */
 .stackpress-topbar {
 	display: flex;
 	align-items: center;

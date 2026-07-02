@@ -42,7 +42,7 @@ final class Admin {
 		add_action( 'wp_ajax_stackpress_save_settings', array( $this, 'ajax_save_settings' ) );
 		add_action( 'wp_ajax_stackpress_get_settings_form', array( $this, 'ajax_get_settings_form' ) );
 		add_action( 'wp_ajax_stackpress_bulk_toggle', array( $this, 'ajax_bulk_toggle' ) );
-		add_action( 'wp_ajax_stackpress_create_tip_payment', array( $this, 'ajax_create_tip_payment' ) );
+
 		add_action( 'admin_post_stackpress_clear_cache', array( $this, 'handle_clear_cache' ) );
 		add_action( 'admin_menu', array( $this, 'register_changes_page' ), 20 );
 		add_action( 'admin_post_stackpress_clear_log', array( $this, 'handle_clear_log' ) );
@@ -55,7 +55,7 @@ final class Admin {
 		add_action( 'admin_init', array( $this, 'maybe_dismiss_setup' ) );
 		add_action( 'admin_notices', array( $this, 'module_failure_notice' ) );
 		add_action( 'admin_init', array( $this, 'maybe_clear_failures' ) );
-		add_action( 'admin_init', array( $this, 'maybe_save_tip_settings' ) );
+
 	}
 
 	/**
@@ -291,24 +291,7 @@ final class Admin {
 		exit;
 	}
 
-	/**
-	 * Save Paystack tip settings from a simple admin form.
-	 *
-	 * @return void
-	 */
-	public function maybe_save_tip_settings() {
-		if ( ! isset( $_POST['stackpress_tip_settings_nonce'] ) || ! current_user_can( 'manage_options' ) ) {
-			return;
-		}
-		check_admin_referer( 'stackpress_tip_settings', 'stackpress_tip_settings_nonce' );
-		$settings = array(
-			'public_key' => isset( $_POST['stackpress_tip_public_key'] ) ? sanitize_text_field( wp_unslash( $_POST['stackpress_tip_public_key'] ) ) : '',
-			'secret_key' => isset( $_POST['stackpress_tip_secret_key'] ) ? sanitize_text_field( wp_unslash( $_POST['stackpress_tip_secret_key'] ) ) : '',
-		);
-		update_option( 'stackpress_tip_settings', $settings );
-		wp_safe_redirect( add_query_arg( 'stackpress_tip_saved', '1', admin_url( 'admin.php?page=' . self::PAGE_SLUG ) ) );
-		exit;
-	}
+
 
 	/**
 	 * Permanently dismiss the setup nudge when the user clicks Dismiss.
@@ -504,76 +487,7 @@ final class Admin {
 		update_option( self::CHANGE_LOG, array_slice( $log, 0, 200 ), false );
 	}
 
-	/**
-	 * Initialize a Paystack tip payment from the dashboard.
-	 *
-	 * @return void
-	 */
-	public function ajax_create_tip_payment() {
-		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_send_json_error( array( 'message' => __( 'Permission denied.', 'stackpress' ) ), 403 );
-		}
-		check_ajax_referer( 'stackpress_admin', 'nonce' );
 
-		$amount = isset( $_POST['amount'] ) ? absint( wp_unslash( $_POST['amount'] ) ) : 0;
-		$email  = isset( $_POST['email'] ) ? sanitize_email( wp_unslash( $_POST['email'] ) ) : '';
-		if ( $amount < 100 ) {
-			wp_send_json_error( array( 'message' => __( 'Please choose at least 100 NGN.', 'stackpress' ) ) );
-		}
-		if ( ! is_email( $email ) ) {
-			$email = get_option( 'admin_email' );
-		}
-
-		$settings = get_option( 'stackpress_tip_settings', array() );
-		$public_key = isset( $settings['public_key'] ) ? $settings['public_key'] : ( defined( 'STACKPRESS_PAYSTACK_PUBLIC_KEY' ) ? STACKPRESS_PAYSTACK_PUBLIC_KEY : '' );
-		$secret_key = isset( $settings['secret_key'] ) ? $settings['secret_key'] : ( defined( 'STACKPRESS_PAYSTACK_SECRET_KEY' ) ? STACKPRESS_PAYSTACK_SECRET_KEY : '' );
-
-		if ( '' === $public_key || '' === $secret_key ) {
-			wp_send_json_error( array( 'message' => __( 'Paystack has not been configured yet.', 'stackpress' ) ) );
-		}
-
-		$payload = array(
-			'email'        => $email,
-			'amount'       => $amount * 100,
-			'currency'     => 'NGN',
-			'callback_url' => admin_url( 'admin.php?page=' . self::PAGE_SLUG . '&stackpress_tip=success' ),
-			'metadata'     => array(
-				'source'   => 'stackpress_plugin',
-				'user_id'  => get_current_user_id(),
-				'page'     => self::PAGE_SLUG,
-			),
-		);
-
-		$response = wp_remote_post(
-			'https://api.paystack.co/transaction/initialize',
-			array(
-				'timeout' => 30,
-				'headers' => array(
-					'Authorization' => 'Bearer ' . $secret_key,
-					'Content-Type'  => 'application/json',
-				),
-				'body'    => wp_json_encode( $payload ),
-			)
-		);
-
-		if ( is_wp_error( $response ) ) {
-			wp_send_json_error( array( 'message' => $response->get_error_message() ) );
-		}
-
-		$body = json_decode( wp_remote_retrieve_body( $response ), true );
-		if ( empty( $body['status'] ) || empty( $body['data']['authorization_url'] ) ) {
-			wp_send_json_error( array( 'message' => __( 'Paystack could not start the payment flow.', 'stackpress' ) ) );
-		}
-
-		wp_send_json_success(
-			array(
-				'authorization_url' => $body['data']['authorization_url'],
-				'reference'         => $body['data']['reference'],
-				'publicKey'         => $public_key,
-				'email'             => $email,
-			)
-		);
-	}
 
 	/**
 	 * Add the top-level admin menu.
@@ -623,10 +537,7 @@ final class Admin {
 		// that aggressively cache (or strip query strings from) static assets.
 		$css = $this->asset_contents( 'assets/admin/tabler-icons.min.css' ) . "\n" . $this->asset_contents( 'assets/admin/admin.css' );
 
-		$tip_settings = get_option( 'stackpress_tip_settings', array() );
-		$tip_public   = isset( $tip_settings['public_key'] ) ? $tip_settings['public_key'] : ( defined( 'STACKPRESS_PAYSTACK_PUBLIC_KEY' ) ? STACKPRESS_PAYSTACK_PUBLIC_KEY : '' );
-		$tip_secret   = isset( $tip_settings['secret_key'] ) ? $tip_settings['secret_key'] : ( defined( 'STACKPRESS_PAYSTACK_SECRET_KEY' ) ? STACKPRESS_PAYSTACK_SECRET_KEY : '' );
-		$tip_enabled  = '' !== $tip_public && '' !== $tip_secret;
+
 
 		wp_register_style( 'stackpress-admin', false, array(), STACKPRESS_VERSION ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- inline-only handle.
 		wp_enqueue_style( 'stackpress-admin' );
@@ -636,16 +547,7 @@ final class Admin {
 			'ajaxUrl'  => admin_url( 'admin-ajax.php' ),
 			'adminUrl' => admin_url(),
 			'nonce'    => wp_create_nonce( self::NONCE ),
-			'tip'      => array(
-				'enabled'       => $tip_enabled,
-				'currency'      => 'NGN',
-				'defaultAmount' => 1000,
-				'email'         => get_option( 'admin_email' ),
-				'heading'       => __( 'Support StackPress', 'stackpress' ),
-				'body'          => __( 'Tip the builder directly from this dashboard without leaving the page.', 'stackpress' ),
-				'button'        => __( 'Pay with Paystack', 'stackpress' ),
-				'disabledText'  => __( 'Set your Paystack keys to enable this tip flow.', 'stackpress' ),
-			),
+
 			'i18n'    => array(
 				'enabled'      => __( 'Enabled', 'stackpress' ),
 				'disabled'     => __( 'Disabled', 'stackpress' ),
@@ -665,8 +567,7 @@ final class Admin {
 			),
 		);
 
-		wp_register_script( 'stackpress-paystack', 'https://js.paystack.co/v1/inline.js', array(), null, true );
-		wp_enqueue_script( 'stackpress-paystack' );
+
 		wp_register_script( 'stackpress-admin', false, array(), STACKPRESS_VERSION, true ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- inline-only handle.
 		wp_enqueue_script( 'stackpress-admin' );
 		wp_add_inline_script( 'stackpress-admin', 'window.StackPressAdmin = ' . wp_json_encode( $config ) . ';', 'before' );

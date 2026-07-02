@@ -80,33 +80,6 @@
 		return wrap;
 	}
 
-	function openTipModal() {
-		var modal = qs( '#stackpress-tip-modal' );
-		if ( modal ) { modal.hidden = false; }
-	}
-
-	function setTipFeatureMessage( feature ) {
-		var status = qs( '#stackpress-tip-status' );
-		var title = qs( '#stackpress-tip-title' );
-		var copy = {
-			'ai-seo-generator': 'Your support helps fund the AI SEO Generator roadmap.',
-			'cloud-backup': 'Your support helps fund the future StackPress cloud backup platform.',
-			'site-health-score': 'Your support helps fund the Site Health Score experience.',
-			'agency-dashboard': 'Your support helps fund the Agency Dashboard for multi-site management.'
-		};
-		if ( status ) {
-			status.textContent = copy[ feature ] || 'Choose an amount and pay securely with Paystack — all without leaving this page.';
-		}
-		if ( title ) {
-			title.textContent = feature ? 'Support StackPress Pro' : 'Support StackPress';
-		}
-	}
-
-	function closeTipModal() {
-		var modal = qs( '#stackpress-tip-modal' );
-		if ( modal ) { modal.hidden = true; }
-	}
-
 	/* ---------------- "Ready" toast after a reload (tools that add a page) ---------------- */
 	function showReadyToast() {
 		var raw;
@@ -495,94 +468,5 @@
 		bindBulk();
 		showReadyToast();
 
-		var tipOpen = qs( '#stackpress-open-tip' );
-		var tipModal = qs( '#stackpress-tip-modal' );
-		var tipForm = qs( '#stackpress-tip-form' );
-		var tipStatus = qs( '#stackpress-tip-status' );
-		var tipSubmit = qs( '#stackpress-tip-submit' );
-		var tipAmount = qs( '#stackpress-tip-amount' );
-		var tipEmail = qs( '#stackpress-tip-email' );
-
-		if ( tipOpen ) {
-			tipOpen.addEventListener( 'click', function () {
-				setTipFeatureMessage( '' );
-				if ( cfg.tip && cfg.tip.enabled ) {
-					openTipModal();
-				} else if ( tipStatus ) {
-					tipStatus.textContent = cfg.tip && cfg.tip.disabledText ? cfg.tip.disabledText : 'Set your Paystack keys to enable this tip flow.';
-					openTipModal();
-				}
-			} );
-		}
-
-		qsa( '.stackpress-pro-cta' ).forEach( function ( btn ) {
-			btn.addEventListener( 'click', function () {
-				setTipFeatureMessage( btn.getAttribute( 'data-pro-feature' ) || '' );
-				if ( cfg.tip && cfg.tip.enabled ) {
-					openTipModal();
-				} else if ( tipStatus ) {
-					tipStatus.textContent = cfg.tip && cfg.tip.disabledText ? cfg.tip.disabledText : 'Set your Paystack keys to enable this tip flow.';
-					openTipModal();
-				}
-			} );
-		} );
-
-		qsa( '[data-close-tip]', document ).forEach( function ( el ) {
-			el.addEventListener( 'click', function () { closeTipModal(); } );
-		} );
-
-		if ( tipForm ) {
-			tipForm.addEventListener( 'submit', function ( e ) {
-				e.preventDefault();
-				if ( ! cfg.tip || ! cfg.tip.enabled ) {
-					if ( tipStatus ) { tipStatus.textContent = cfg.tip && cfg.tip.disabledText ? cfg.tip.disabledText : 'Set your Paystack keys to enable this tip flow.'; }
-					return;
-				}
-
-				var amount = parseInt( tipAmount && tipAmount.value ? tipAmount.value : '0', 10 ) || 0;
-				var email = tipEmail && tipEmail.value ? tipEmail.value.trim() : '';
-				if ( ! email ) { email = cfg.tip && cfg.tip.email ? cfg.tip.email : ''; }
-				if ( amount < 100 ) {
-					if ( tipStatus ) { tipStatus.textContent = 'Please choose at least 100 NGN.'; }
-					return;
-				}
-
-				if ( tipSubmit ) { tipSubmit.disabled = true; tipSubmit.textContent = 'Processing…'; }
-				if ( tipStatus ) { tipStatus.textContent = 'Preparing your secure payment…'; }
-
-				post( 'stackpress_create_tip_payment', { amount: amount, email: email } ).then( function ( res ) {
-					if ( ! res || ! res.success ) {
-						if ( tipStatus ) { tipStatus.textContent = res && res.data && res.data.message ? res.data.message : 'Tip setup is not available yet.'; }
-						if ( tipSubmit ) { tipSubmit.disabled = false; tipSubmit.textContent = cfg.tip && cfg.tip.button ? cfg.tip.button : 'Pay with Paystack'; }
-						return;
-					}
-
-					var data = res.data || {};
-					if ( window.PaystackPop && data.publicKey ) {
-						var handler = window.PaystackPop.setup( {
-							key: data.publicKey,
-							email: data.email || email,
-							amount: amount * 100,
-							currency: cfg.tip && cfg.tip.currency ? cfg.tip.currency : 'NGN',
-							ref: data.reference,
-							callback: function () {
-								closeTipModal();
-								if ( tipStatus ) { tipStatus.textContent = 'Thank you for your support!'; }
-							},
-							onClose: function () {
-								if ( tipStatus ) { tipStatus.textContent = 'Payment cancelled — you can try again anytime.'; }
-							}
-						} );
-						handler.openIframe();
-					} else if ( tipStatus ) {
-						tipStatus.textContent = 'Paystack could not be loaded. Please refresh and try again.';
-					}
-				} ).catch( function () {
-					if ( tipStatus ) { tipStatus.textContent = 'Unable to start the tip flow right now.'; }
-				} ).finally( function () {
-					if ( tipSubmit ) { tipSubmit.disabled = false; tipSubmit.textContent = cfg.tip && cfg.tip.button ? cfg.tip.button : 'Pay with Paystack'; }
-				} );
-			} );
-		}
 	} );
 } )();

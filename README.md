@@ -1,4 +1,4 @@
-# StackPress — Free All-in-One WordPress Plugin (185 Tools)
+# Stack Press — Free All-in-One WordPress Plugin (185 Tools)
 
 > **One plugin. Every tool. Always free.** StackPress bundles **185 modular tools** for security, performance, SEO, WooCommerce, caching, backups, forms, and site management into a single lightweight dashboard — and you turn on **only what you need**. Disabled tools load **zero code**, so your site stays fast.
 
@@ -9,7 +9,7 @@
 ![Tools](https://img.shields.io/badge/tools-185-16a34a)
 ![Price](https://img.shields.io/badge/price-100%25%20free-success)
 
-**Built by [Dice Codes](https://dicecodes.com) — your digital dream team.**
+**Built by Stack Press — your digital dream team.**
 
 🔗 **[Download on WordPress.org](https://wordpress.org/plugins/stackpress/)** &nbsp;•&nbsp; 🌐 **[Plugin Home](https://dicecodes.com/stackpress-wordpress-plugin/)** &nbsp;•&nbsp; 📖 **[Documentation](https://dicecodes.com/stackpress/docs/)**
 
@@ -151,5 +151,5 @@ StackPress is free software, released under the **[GNU General Public License v2
 
 ## Credits
 
-Designed and built by **[Dice Codes](https://dicecodes.com)**.
-📧 Contact@dicecodes.com
+Designed and built by **Stack Press**.
+📧 joseymras88@gmail.com
