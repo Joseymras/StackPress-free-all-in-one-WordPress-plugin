@@ -140,30 +140,14 @@ foreach ( $modules as $mid => $m ) {
 
 		<div class="stackpress-brand">
 			<div class="stackpress-brand-head">
-				<?php
-				// Prefer a bundled plugin icon (PNG first, then SVG); else the "JM" mark.
-				$stackpress_logo = '';
-				if ( file_exists( STACKPRESS_PATH . 'assets/img/stackpress-icon.png' ) ) {
-					$stackpress_logo = STACKPRESS_URL . 'assets/img/stackpress-icon.png';
-				} elseif ( file_exists( STACKPRESS_PATH . 'assets/img/stackpress-icon.svg' ) ) {
-					$stackpress_logo = STACKPRESS_URL . 'assets/img/stackpress-icon.svg';
-				}
-				?>
-					<?php if ( '' !== $stackpress_logo ) : ?>
-					<span class="stackpress-brand-by">
-						<img class="stackpress-brand-logo" src="<?php echo esc_url( $stackpress_logo ); ?>" alt="Josey Mras" />
-						<span class="stackpress-brand-tag"><?php esc_html_e( 'Builder & maintainer', 'stackpress' ); ?></span>
-					</span>
-				<?php else : ?>
-					<span class="stackpress-brand-mark">JM</span>
-					<span class="stackpress-brand-by">
-						<span class="stackpress-brand-name">Josey Mras</span>
-						<span class="stackpress-brand-tag"><?php esc_html_e( 'Builder & maintainer', 'stackpress' ); ?></span>
-					</span>
-				<?php endif; ?>
+				<span class="stackpress-brand-mark">SP</span>
+				<span class="stackpress-brand-by">
+					<span class="stackpress-brand-name">StackPress</span>
+					<span class="stackpress-brand-tag"><?php esc_html_e( 'Free all-in-one toolkit', 'stackpress' ); ?></span>
+				</span>
 			</div>
 			<div class="stackpress-brand-links">
-				<a href="https://github.com/IamRamgarhia/StackPress-free-all-in-one-WordPress-plugin" target="_blank" rel="noopener"><i class="ti ti-info-circle" aria-hidden="true"></i> <?php esc_html_e( 'Docs & guides', 'stackpress' ); ?></a>
+				<a href="https://github.com/Joseymras/StackPress-free-all-in-one-WordPress-plugin" target="_blank" rel="noopener"><i class="ti ti-info-circle" aria-hidden="true"></i> <?php esc_html_e( 'Docs & guides', 'stackpress' ); ?></a>
 				<a href="mailto:joseymras88@gmail.com?subject=<?php echo rawurlencode( 'StackPress support request' ); ?>"><i class="ti ti-mail" aria-hidden="true"></i> <?php esc_html_e( 'Get support', 'stackpress' ); ?></a>
 				<a href="mailto:joseymras88@gmail.com?subject=<?php echo rawurlencode( 'StackPress feature request' ); ?>"><i class="ti ti-speakerphone" aria-hidden="true"></i> <?php esc_html_e( 'Request a feature', 'stackpress' ); ?></a>
 				<a href="https://buymeacoffee.com/joseymras" target="_blank" rel="noopener"><i class="ti ti-coffee" aria-hidden="true"></i> <?php esc_html_e( 'Buy me a coffee', 'stackpress' ); ?></a>

@@ -102,6 +102,47 @@ final class Contact_Form extends Abstract_Module {
 				'type'    => 'toggle',
 				'default' => true,
 			),
+			array(
+				'key'     => 'provider',
+				'label'   => __( 'Forward leads to', 'stackpress' ),
+				'type'    => 'select',
+				'default' => 'none',
+				'options' => array(
+					'none'           => __( 'Do not forward', 'stackpress' ),
+					'mailchimp'      => __( 'Mailchimp', 'stackpress' ),
+					'klaviyo'        => __( 'Klaviyo', 'stackpress' ),
+					'brevo'          => __( 'Brevo', 'stackpress' ),
+					'convertkit'     => __( 'ConvertKit', 'stackpress' ),
+					'hubspot'        => __( 'HubSpot', 'stackpress' ),
+					'activecampaign' => __( 'ActiveCampaign', 'stackpress' ),
+					'webhook'        => __( 'Webhook', 'stackpress' ),
+				),
+				'help'    => __( 'Optionally forward form submissions to your email tool.', 'stackpress' ),
+			),
+			array(
+				'key'     => 'api_key',
+				'label'   => __( 'API key or token', 'stackpress' ),
+				'type'    => 'text',
+				'default' => '',
+			),
+			array(
+				'key'     => 'audience_id',
+				'label'   => __( 'List / audience / form ID', 'stackpress' ),
+				'type'    => 'text',
+				'default' => '',
+			),
+			array(
+				'key'     => 'activecampaign_url',
+				'label'   => __( 'ActiveCampaign API URL', 'stackpress' ),
+				'type'    => 'url',
+				'default' => '',
+			),
+			array(
+				'key'     => 'endpoint_url',
+				'label'   => __( 'Webhook endpoint', 'stackpress' ),
+				'type'    => 'url',
+				'default' => '',
+			),
 		);
 	}
 
@@ -257,7 +298,119 @@ final class Contact_Form extends Abstract_Module {
 			}
 		}
 
+		$this->sync_to_provider( $name, $email, $subject, $message );
 		$this->redirect_back( '1' );
+	}
+
+	/**
+	 * Forward a contact submission to the configured provider if enabled.
+	 *
+	 * @param string $name Contact name.
+	 * @param string $email Contact email.
+	 * @param string $subject Subject.
+	 * @param string $message Message.
+	 * @return void
+	 */
+	private function sync_to_provider( $name, $email, $subject, $message ) {
+		$provider = sanitize_key( (string) $this->get_setting( 'provider', 'none' ) );
+		if ( 'none' === $provider ) {
+			return;
+		}
+
+		$api_key = trim( (string) $this->get_setting( 'api_key', '' ) );
+		$audience_id = trim( (string) $this->get_setting( 'audience_id', '' ) );
+		$endpoint = trim( (string) $this->get_setting( 'endpoint_url', '' ) );
+		$activecampaign_url = trim( (string) $this->get_setting( 'activecampaign_url', '' ) );
+
+		if ( 'webhook' === $provider ) {
+			if ( '' === $endpoint ) {
+				return;
+			}
+			wp_remote_post(
+				$endpoint,
+				array(
+					'timeout' => 15,
+					'headers' => array( 'Content-Type' => 'application/json' ),
+					'body'    => wp_json_encode( array( 'name' => $name, 'email' => $email, 'subject' => $subject, 'message' => $message ) ),
+				)
+			);
+			return;
+		}
+
+		if ( '' === $api_key || '' === $audience_id ) {
+			return;
+		}
+
+		$payload = array( 'name' => $name, 'email' => $email, 'subject' => $subject, 'message' => $message );
+		$headers = array();
+		$url = '';
+
+		switch ( $provider ) {
+			case 'mailchimp':
+				$dc = substr( strrchr( $api_key, '-' ), 1 );
+				if ( '' === $dc ) {
+					return;
+				}
+				$url = 'https://' . $dc . '.api.mailchimp.com/3.0/lists/' . rawurlencode( $audience_id ) . '/members';
+				$headers['Authorization'] = 'Basic ' . base64_encode( 'user:' . $api_key );
+				$payload = array( 'email_address' => $email, 'merge_fields' => array( 'FNAME' => $name ), 'status' => 'subscribed' );
+				break;
+			case 'klaviyo':
+				$url = 'https://a.klaviyo.com/api/v2/list/' . rawurlencode( $audience_id ) . '/members';
+				$headers['Authorization'] = 'Klaviyo-API-Key ' . $api_key;
+				$payload = array( 'email' => $email, 'first_name' => $name, 'confirm_opt_in' => 'false' );
+				break;
+			case 'brevo':
+				$url = 'https://api.brevo.com/v3/contacts';
+				$headers['api-key'] = $api_key;
+				$payload = array( 'email' => $email, 'attributes' => array( 'FIRSTNAME' => $name ), 'listIds' => array( (int) $audience_id ) );
+				break;
+			case 'convertkit':
+				$url = 'https://api.convertkit.com/v3/forms/' . rawurlencode( $audience_id ) . '/subscribe';
+				$payload = array( 'email' => $email, 'api_key' => $api_key, 'first_name' => $name );
+				break;
+			case 'hubspot':
+				$url = 'https://api.hubapi.com/contacts/v1/contact';
+				$headers['Authorization'] = 'Bearer ' . $api_key;
+				$payload = array(
+					'properties' => array(
+						array(
+							'property' => 'email',
+							'value'    => $email,
+						),
+						array(
+							'property' => 'firstname',
+							'value'    => $name,
+						),
+					),
+				);
+				break;
+			case 'activecampaign':
+				if ( '' === $activecampaign_url ) {
+					return;
+				}
+				$url = rtrim( $activecampaign_url, '/' ) . '/api/3/contacts';
+				$headers['Api-Token'] = $api_key;
+				$payload = array(
+					'contact' => array(
+						'email'  => $email,
+						'firstName' => $name,
+						'status' => 1,
+					),
+				);
+				break;
+			default:
+				return;
+		}
+
+		wp_remote_post(
+			$url,
+			array(
+				'timeout' => 15,
+				'headers' => array_merge( array( 'Content-Type' => 'application/json' ), $headers ),
+				'body'    => wp_json_encode( $payload ),
+			)
+		);
 	}
 
 	/**
