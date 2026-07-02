@@ -2,12 +2,12 @@
 /**
  * WooCommerce Checkout Fields module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\WooCommerce;
+namespace StackPress\Modules\WooCommerce;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -29,14 +29,14 @@ final class Checkout_Fields extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Checkout field editor', 'dicestack' );
+		return __( 'Checkout field editor', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Remove or make optional the company, address-2, and phone checkout fields.', 'dicestack' );
+		return __( 'Remove or make optional the company, address-2, and phone checkout fields.', 'stackpress' );
 	}
 
 	/**
@@ -85,28 +85,28 @@ final class Checkout_Fields extends Abstract_Module {
 	 */
 	public function settings_schema() {
 		$options = array(
-			'keep'     => __( 'Keep as is', 'dicestack' ),
-			'optional' => __( 'Make optional', 'dicestack' ),
-			'remove'   => __( 'Remove', 'dicestack' ),
+			'keep'     => __( 'Keep as is', 'stackpress' ),
+			'optional' => __( 'Make optional', 'stackpress' ),
+			'remove'   => __( 'Remove', 'stackpress' ),
 		);
 		return array(
 			array(
 				'key'     => 'company',
-				'label'   => __( 'Company field', 'dicestack' ),
+				'label'   => __( 'Company field', 'stackpress' ),
 				'type'    => 'select',
 				'default' => 'keep',
 				'options' => $options,
 			),
 			array(
 				'key'     => 'address_2',
-				'label'   => __( 'Address line 2 field', 'dicestack' ),
+				'label'   => __( 'Address line 2 field', 'stackpress' ),
 				'type'    => 'select',
 				'default' => 'keep',
 				'options' => $options,
 			),
 			array(
 				'key'     => 'phone',
-				'label'   => __( 'Phone field', 'dicestack' ),
+				'label'   => __( 'Phone field', 'stackpress' ),
 				'type'    => 'select',
 				'default' => 'keep',
 				'options' => $options,

@@ -2,12 +2,12 @@
 /**
  * WooCommerce Quantity Buttons module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\WooCommerce;
+namespace StackPress\Modules\WooCommerce;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Quantity_Buttons extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Quantity plus/minus buttons', 'dicestack' );
+		return __( 'Quantity plus/minus buttons', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Add + and − buttons around quantity fields for easier ordering on mobile.', 'dicestack' );
+		return __( 'Add + and − buttons around quantity fields for easier ordering on mobile.', 'stackpress' );
 	}
 
 	/**
@@ -90,16 +90,16 @@ final class Quantity_Buttons extends Abstract_Module {
 		}
 		?>
 		<style>
-		.dicestack-qty{display:inline-flex;align-items:center}
-		.dicestack-qty button{width:32px;height:32px;border:1px solid #ccc;background:#f6f7f9;cursor:pointer;font-size:16px;line-height:1}
-		.dicestack-qty input.qty{text-align:center}
+		.stackpress-qty{display:inline-flex;align-items:center}
+		.stackpress-qty button{width:32px;height:32px;border:1px solid #ccc;background:#f6f7f9;cursor:pointer;font-size:16px;line-height:1}
+		.stackpress-qty input.qty{text-align:center}
 		</style>
 		<script>
 		(function(){
 		function enhance(){
-			document.querySelectorAll('.quantity:not(.dicestack-done)').forEach(function(wrap){
+			document.querySelectorAll('.quantity:not(.stackpress-done)').forEach(function(wrap){
 				var input=wrap.querySelector('input.qty');if(!input)return;
-				wrap.classList.add('dicestack-qty','dicestack-done');
+				wrap.classList.add('stackpress-qty','stackpress-done');
 				var minus=document.createElement('button');minus.type='button';minus.textContent='−';
 				var plus=document.createElement('button');plus.type='button';plus.textContent='+';
 				function step(d){var v=parseFloat(input.value)||0;var s=parseFloat(input.step)||1;var min=parseFloat(input.min)||0;v=v+d*s;if(v<min)v=min;input.value=v;input.dispatchEvent(new Event('change',{bubbles:true}));}

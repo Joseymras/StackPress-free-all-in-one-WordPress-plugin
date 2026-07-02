@@ -2,12 +2,12 @@
 /**
  * Minify JS module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Performance;
+namespace StackPress\Modules\Performance;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -31,14 +31,14 @@ final class Minify_JS extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Minify JavaScript', 'dicestack' );
+		return __( 'Minify JavaScript', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Strip comments and whitespace from inline and local scripts. Safe: strings are protected and line breaks kept.', 'dicestack' );
+		return __( 'Strip comments and whitespace from inline and local scripts. Safe: strings are protected and line breaks kept.', 'stackpress' );
 	}
 
 	/**
@@ -82,14 +82,14 @@ final class Minify_JS extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'files',
-				'label'   => __( 'Also minify linked script files', 'dicestack' ),
+				'label'   => __( 'Also minify linked script files', 'stackpress' ),
 				'type'    => 'checkbox',
 				'default' => true,
-				'help'    => __( 'Minifies local .js files (cached). Turn off if a script misbehaves.', 'dicestack' ),
+				'help'    => __( 'Minifies local .js files (cached). Turn off if a script misbehaves.', 'stackpress' ),
 			),
 			array(
 				'key'     => 'inline',
-				'label'   => __( 'Minify inline scripts', 'dicestack' ),
+				'label'   => __( 'Minify inline scripts', 'stackpress' ),
 				'type'    => 'checkbox',
 				'default' => true,
 			),
@@ -101,7 +101,7 @@ final class Minify_JS extends Abstract_Module {
 	 */
 	public function init() {
 		add_action( 'template_redirect', array( $this, 'start' ), 7 );
-		add_action( 'dicestack_module_disabled_' . $this->id(), array( $this, 'clear_cache' ) );
+		add_action( 'stackpress_module_disabled_' . $this->id(), array( $this, 'clear_cache' ) );
 		add_action( 'switch_theme', array( $this, 'clear_cache' ) );
 	}
 
@@ -194,7 +194,7 @@ final class Minify_JS extends Abstract_Module {
 		$protected = preg_replace_callback(
 			'/("(?:\\\\.|[^"\\\\])*"|\'(?:\\\\.|[^\'\\\\])*\'|`(?:\\\\.|[^`\\\\])*`)/s',
 			function ( $m ) use ( &$store ) {
-				$k           = '__DICESTACKJS' . count( $store ) . '__';
+				$k           = '__STACKPRESSJS' . count( $store ) . '__';
 				$store[ $k ] = $m[0];
 				return $k;
 			},
@@ -266,8 +266,8 @@ final class Minify_JS extends Abstract_Module {
 	 */
 	private function cache_file( $path ) {
 		$uploads = wp_get_upload_dir();
-		$dir     = trailingslashit( $uploads['basedir'] ) . 'dicestack-min/';
-		$url_dir = trailingslashit( $uploads['baseurl'] ) . 'dicestack-min/';
+		$dir     = trailingslashit( $uploads['basedir'] ) . 'stackpress-min/';
+		$url_dir = trailingslashit( $uploads['baseurl'] ) . 'stackpress-min/';
 
 		$key  = md5( $path . '|' . filemtime( $path ) ) . '.js';
 		$file = $dir . $key;
@@ -299,7 +299,7 @@ final class Minify_JS extends Abstract_Module {
 	 */
 	public function clear_cache() {
 		$uploads = wp_get_upload_dir();
-		$dir     = trailingslashit( $uploads['basedir'] ) . 'dicestack-min/';
+		$dir     = trailingslashit( $uploads['basedir'] ) . 'stackpress-min/';
 		if ( ! is_dir( $dir ) ) {
 			return;
 		}

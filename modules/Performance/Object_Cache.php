@@ -2,13 +2,13 @@
 /**
  * Object Cache module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Performance;
+namespace StackPress\Modules\Performance;
 
-use DiceStack\Modules\Abstract_Module;
-use DiceStack\Environment;
+use StackPress\Modules\Abstract_Module;
+use StackPress\Environment;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -23,7 +23,7 @@ final class Object_Cache extends Abstract_Module {
 	/**
 	 * Signature that marks our drop-in (so we never delete another plugin's).
 	 */
-	const SIGNATURE = 'DICESTACK_OBJECT_CACHE_DROPIN';
+	const SIGNATURE = 'STACKPRESS_OBJECT_CACHE_DROPIN';
 
 	/**
 	 * {@inheritDoc}
@@ -36,14 +36,14 @@ final class Object_Cache extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Object cache (Redis / Memcached)', 'dicestack' );
+		return __( 'Object cache (Redis / Memcached)', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Cache database queries in Redis or Memcached so pages build far faster. Auto-detected on your server.', 'dicestack' );
+		return __( 'Cache database queries in Redis or Memcached so pages build far faster. Auto-detected on your server.', 'stackpress' );
 	}
 
 	/**
@@ -95,11 +95,11 @@ final class Object_Cache extends Abstract_Module {
 			return;
 		}
 		add_action( 'admin_menu', array( $this, 'add_page' ) );
-		add_action( 'admin_post_dicestack_oc_install', array( $this, 'handle_install' ) );
-		add_action( 'admin_post_dicestack_oc_remove', array( $this, 'handle_remove' ) );
-		add_action( 'admin_post_dicestack_oc_flush', array( $this, 'handle_flush' ) );
+		add_action( 'admin_post_stackpress_oc_install', array( $this, 'handle_install' ) );
+		add_action( 'admin_post_stackpress_oc_remove', array( $this, 'handle_remove' ) );
+		add_action( 'admin_post_stackpress_oc_flush', array( $this, 'handle_flush' ) );
 		// Remove our drop-in when the module is switched off.
-		add_action( 'dicestack_module_disabled_' . $this->id(), array( $this, 'remove_dropin' ) );
+		add_action( 'stackpress_module_disabled_' . $this->id(), array( $this, 'remove_dropin' ) );
 	}
 
 	/**
@@ -109,11 +109,11 @@ final class Object_Cache extends Abstract_Module {
 	 */
 	public function add_page() {
 		add_submenu_page(
-			'dicestack',
-			__( 'Object cache', 'dicestack' ),
-			__( 'Object cache', 'dicestack' ),
+			'stackpress',
+			__( 'Object cache', 'stackpress' ),
+			__( 'Object cache', 'stackpress' ),
 			'manage_options',
-			'dicestack-object-cache',
+			'stackpress-object-cache',
 			array( $this, 'render_page' )
 		);
 	}
@@ -124,7 +124,7 @@ final class Object_Cache extends Abstract_Module {
 	 * @return string
 	 */
 	private function source() {
-		return DICESTACK_PATH . 'modules/Performance/dropins/object-cache.php';
+		return STACKPRESS_PATH . 'modules/Performance/dropins/object-cache.php';
 	}
 
 	/**
@@ -158,7 +158,7 @@ final class Object_Cache extends Abstract_Module {
 	 */
 	public function render_page() {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( esc_html__( 'Permission denied.', 'dicestack' ) );
+			wp_die( esc_html__( 'Permission denied.', 'stackpress' ) );
 		}
 
 		$backend_ok = Environment::has( 'object_cache_backend' );
@@ -167,23 +167,23 @@ final class Object_Cache extends Abstract_Module {
 		$active       = Environment::object_cache_active();
 		$blocked      = defined( 'DISALLOW_FILE_MODS' ) && DISALLOW_FILE_MODS;
 
-		echo '<div class="wrap"><h1>' . esc_html__( 'Object cache', 'dicestack' ) . '</h1>';
-		echo '<p>' . esc_html__( 'A persistent object cache stores the results of expensive database queries in memory (Redis or Memcached), so WordPress rebuilds pages much faster.', 'dicestack' ) . '</p>';
+		echo '<div class="wrap"><h1>' . esc_html__( 'Object cache', 'stackpress' ) . '</h1>';
+		echo '<p>' . esc_html__( 'A persistent object cache stores the results of expensive database queries in memory (Redis or Memcached), so WordPress rebuilds pages much faster.', 'stackpress' ) . '</p>';
 
 		// Status line.
 		echo '<table class="widefat striped" style="max-width:680px;margin:14px 0;"><tbody>';
-		$this->status_row( __( 'Redis / Memcached on server', 'dicestack' ), $backend_ok );
-		$this->status_row( __( 'Drop-in installed', 'dicestack' ), $dropin, $dropin && ! $ours ? __( 'A different object-cache.php is installed (another plugin). DiceStack will not touch it.', 'dicestack' ) : '' );
-		$this->status_row( __( 'Persistent object cache active', 'dicestack' ), $active );
+		$this->status_row( __( 'Redis / Memcached on server', 'stackpress' ), $backend_ok );
+		$this->status_row( __( 'Drop-in installed', 'stackpress' ), $dropin, $dropin && ! $ours ? __( 'A different object-cache.php is installed (another plugin). StackPress will not touch it.', 'stackpress' ) : '' );
+		$this->status_row( __( 'Persistent object cache active', 'stackpress' ), $active );
 		echo '</tbody></table>';
 
 		// phpcs:disable WordPress.Security.NonceVerification.Recommended
 		if ( isset( $_GET['msg'] ) ) {
 			$messages = array(
-				'installed' => __( 'Object cache drop-in installed. Your site is now using persistent caching.', 'dicestack' ),
-				'removed'   => __( 'Object cache drop-in removed.', 'dicestack' ),
-				'flushed'   => __( 'Object cache flushed.', 'dicestack' ),
-				'failed'    => __( 'Could not write the drop-in. Check that wp-content is writable, or that file edits are not disabled.', 'dicestack' ),
+				'installed' => __( 'Object cache drop-in installed. Your site is now using persistent caching.', 'stackpress' ),
+				'removed'   => __( 'Object cache drop-in removed.', 'stackpress' ),
+				'flushed'   => __( 'Object cache flushed.', 'stackpress' ),
+				'failed'    => __( 'Could not write the drop-in. Check that wp-content is writable, or that file edits are not disabled.', 'stackpress' ),
 			);
 			$key = sanitize_key( wp_unslash( $_GET['msg'] ) );
 			if ( isset( $messages[ $key ] ) ) {
@@ -200,21 +200,21 @@ final class Object_Cache extends Abstract_Module {
 		}
 
 		if ( $blocked ) {
-			echo '<div class="notice notice-warning inline"><p>' . esc_html__( 'File modifications are disabled on this site (DISALLOW_FILE_MODS), so the drop-in cannot be installed automatically.', 'dicestack' ) . '</p></div></div>';
+			echo '<div class="notice notice-warning inline"><p>' . esc_html__( 'File modifications are disabled on this site (DISALLOW_FILE_MODS), so the drop-in cannot be installed automatically.', 'stackpress' ) . '</p></div></div>';
 			return;
 		}
 
 		echo '<p>';
 		if ( ! $dropin ) {
-			echo $this->action_button( 'dicestack_oc_install', __( 'Enable persistent object cache', 'dicestack' ), 'button button-primary button-hero' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo $this->action_button( 'stackpress_oc_install', __( 'Enable persistent object cache', 'stackpress' ), 'button button-primary button-hero' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		} elseif ( $ours ) {
-			echo $this->action_button( 'dicestack_oc_flush', __( 'Flush cache', 'dicestack' ), 'button' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo $this->action_button( 'stackpress_oc_flush', __( 'Flush cache', 'stackpress' ), 'button' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo ' ';
-			echo $this->action_button( 'dicestack_oc_remove', __( 'Remove drop-in', 'dicestack' ), 'button button-secondary' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo $this->action_button( 'stackpress_oc_remove', __( 'Remove drop-in', 'stackpress' ), 'button button-secondary' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 		echo '</p>';
 
-		echo '<p style="color:#50575e;font-size:13px;max-width:680px;">' . esc_html__( 'Tip: set WP_REDIS_HOST / WP_REDIS_PORT (or WP_CACHE_HOST / WP_CACHE_PORT for Memcached) in wp-config.php if your cache server is not on 127.0.0.1. If the cache server ever stops responding, DiceStack automatically falls back to normal caching — your site stays online.', 'dicestack' ) . '</p>';
+		echo '<p style="color:#50575e;font-size:13px;max-width:680px;">' . esc_html__( 'Tip: set WP_REDIS_HOST / WP_REDIS_PORT (or WP_CACHE_HOST / WP_CACHE_PORT for Memcached) in wp-config.php if your cache server is not on 127.0.0.1. If the cache server ever stops responding, StackPress automatically falls back to normal caching — your site stays online.', 'stackpress' ) . '</p>';
 		echo '</div>';
 	}
 
@@ -229,8 +229,8 @@ final class Object_Cache extends Abstract_Module {
 	private function status_row( $label, $ok, $note = '' ) {
 		echo '<tr><td style="width:60%;">' . esc_html( $label ) . ( $note ? ' <span style="color:#a36a00;">— ' . esc_html( $note ) . '</span>' : '' ) . '</td>';
 		echo '<td>' . ( $ok
-			? '<span style="color:#3b6d11;font-weight:600;">' . esc_html__( 'Yes', 'dicestack' ) . '</span>'
-			: '<span style="color:#a32d2d;font-weight:600;">' . esc_html__( 'No', 'dicestack' ) . '</span>' );
+			? '<span style="color:#3b6d11;font-weight:600;">' . esc_html__( 'Yes', 'stackpress' ) . '</span>'
+			: '<span style="color:#a32d2d;font-weight:600;">' . esc_html__( 'No', 'stackpress' ) . '</span>' );
 		echo '</td></tr>';
 	}
 
@@ -257,7 +257,7 @@ final class Object_Cache extends Abstract_Module {
 	 * @return void
 	 */
 	public function handle_install() {
-		$this->guard( 'dicestack_oc_install' );
+		$this->guard( 'stackpress_oc_install' );
 		$msg = 'failed';
 		if ( ! ( defined( 'DISALLOW_FILE_MODS' ) && DISALLOW_FILE_MODS ) && ! Environment::object_cache_dropin() ) {
 			// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- reading our bundled drop-in.
@@ -278,7 +278,7 @@ final class Object_Cache extends Abstract_Module {
 	 * @return void
 	 */
 	public function handle_remove() {
-		$this->guard( 'dicestack_oc_remove' );
+		$this->guard( 'stackpress_oc_remove' );
 		$this->remove_dropin();
 		$this->redirect( 'removed' );
 	}
@@ -289,7 +289,7 @@ final class Object_Cache extends Abstract_Module {
 	 * @return void
 	 */
 	public function handle_flush() {
-		$this->guard( 'dicestack_oc_flush' );
+		$this->guard( 'stackpress_oc_flush' );
 		if ( function_exists( 'wp_cache_flush' ) ) {
 			wp_cache_flush();
 		}
@@ -316,7 +316,7 @@ final class Object_Cache extends Abstract_Module {
 	 */
 	private function guard( $action ) {
 		if ( ! current_user_can( 'manage_options' ) || ! check_admin_referer( $action ) ) {
-			wp_die( esc_html__( 'Permission denied.', 'dicestack' ) );
+			wp_die( esc_html__( 'Permission denied.', 'stackpress' ) );
 		}
 	}
 
@@ -327,7 +327,7 @@ final class Object_Cache extends Abstract_Module {
 	 * @return void
 	 */
 	private function redirect( $msg ) {
-		wp_safe_redirect( admin_url( 'admin.php?page=dicestack-object-cache&msg=' . $msg ) );
+		wp_safe_redirect( admin_url( 'admin.php?page=stackpress-object-cache&msg=' . $msg ) );
 		exit;
 	}
 }

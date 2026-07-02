@@ -2,12 +2,12 @@
 /**
  * Frontend Error Monitor module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Site;
+namespace StackPress\Modules\Site;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -21,7 +21,7 @@ final class Error_Monitor extends Abstract_Module {
 	/**
 	 * Option storing recent caught errors.
 	 */
-	const OPTION = 'dicestack_error_log';
+	const OPTION = 'stackpress_error_log';
 
 	/**
 	 * Max stored errors.
@@ -39,14 +39,14 @@ final class Error_Monitor extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Error monitor', 'dicestack' );
+		return __( 'Error monitor', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Capture fatal PHP errors that break the site and suggest the likely cause and fix.', 'dicestack' );
+		return __( 'Capture fatal PHP errors that break the site and suggest the likely cause and fix.', 'stackpress' );
 	}
 
 	/**
@@ -83,7 +83,7 @@ final class Error_Monitor extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'email_admin',
-				'label'   => __( 'Email the admin when a fatal error is caught', 'dicestack' ),
+				'label'   => __( 'Email the admin when a fatal error is caught', 'stackpress' ),
 				'type'    => 'toggle',
 				'default' => true,
 			),
@@ -141,16 +141,16 @@ final class Error_Monitor extends Abstract_Module {
 		$file = wp_normalize_path( (string) $file );
 		if ( preg_match( '#/plugins/([^/]+)/#', $file, $m ) ) {
 			/* translators: %s: plugin folder. */
-			return sprintf( __( 'Plugin: %s', 'dicestack' ), $m[1] );
+			return sprintf( __( 'Plugin: %s', 'stackpress' ), $m[1] );
 		}
 		if ( preg_match( '#/themes/([^/]+)/#', $file, $m ) ) {
 			/* translators: %s: theme folder. */
-			return sprintf( __( 'Theme: %s', 'dicestack' ), $m[1] );
+			return sprintf( __( 'Theme: %s', 'stackpress' ), $m[1] );
 		}
 		if ( false !== strpos( $file, '/wp-includes/' ) || false !== strpos( $file, '/wp-admin/' ) ) {
-			return __( 'WordPress core', 'dicestack' );
+			return __( 'WordPress core', 'stackpress' );
 		}
-		return __( 'Unknown', 'dicestack' );
+		return __( 'Unknown', 'stackpress' );
 	}
 
 	/**
@@ -160,18 +160,18 @@ final class Error_Monitor extends Abstract_Module {
 	 * @return void
 	 */
 	private function maybe_email( $entry ) {
-		if ( get_transient( 'dicestack_error_emailed' ) ) {
+		if ( get_transient( 'stackpress_error_emailed' ) ) {
 			return;
 		}
-		set_transient( 'dicestack_error_emailed', 1, HOUR_IN_SECONDS );
+		set_transient( 'stackpress_error_emailed', 1, HOUR_IN_SECONDS );
 
-		$body  = __( 'A fatal error was detected on your site:', 'dicestack' ) . "\n\n";
+		$body  = __( 'A fatal error was detected on your site:', 'stackpress' ) . "\n\n";
 		$body .= $entry['message'] . "\n\n";
-		$body .= __( 'Likely cause', 'dicestack' ) . ': ' . $entry['culprit'] . "\n";
+		$body .= __( 'Likely cause', 'stackpress' ) . ': ' . $entry['culprit'] . "\n";
 		$body .= $entry['file'] . ':' . $entry['line'] . "\n\n";
-		$body .= __( 'Suggested fix: deactivate the plugin/theme above, or use Recovery Mode.', 'dicestack' );
+		$body .= __( 'Suggested fix: deactivate the plugin/theme above, or use Recovery Mode.', 'stackpress' );
 
-		wp_mail( get_option( 'admin_email' ), '[' . get_bloginfo( 'name' ) . '] ' . __( 'Fatal error detected', 'dicestack' ), $body );
+		wp_mail( get_option( 'admin_email' ), '[' . get_bloginfo( 'name' ) . '] ' . __( 'Fatal error detected', 'stackpress' ), $body );
 	}
 
 	/**
@@ -181,11 +181,11 @@ final class Error_Monitor extends Abstract_Module {
 	 */
 	public function add_page() {
 		add_submenu_page(
-			'dicestack',
-			__( 'Error monitor', 'dicestack' ),
-			__( 'Error monitor', 'dicestack' ),
+			'stackpress',
+			__( 'Error monitor', 'stackpress' ),
+			__( 'Error monitor', 'stackpress' ),
 			'manage_options',
-			'dicestack-errors',
+			'stackpress-errors',
 			array( $this, 'render_page' )
 		);
 	}
@@ -198,22 +198,22 @@ final class Error_Monitor extends Abstract_Module {
 	public function render_page() {
 		$log = get_option( self::OPTION, array() );
 		$log = is_array( $log ) ? $log : array();
-		echo '<div class="wrap"><h1>' . esc_html__( 'Error monitor', 'dicestack' ) . '</h1>';
+		echo '<div class="wrap"><h1>' . esc_html__( 'Error monitor', 'stackpress' ) . '</h1>';
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- display-only flag.
 		if ( isset( $_GET['settings-saved'] ) ) {
-			echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__( 'Settings saved.', 'dicestack' ) . '</p></div>';
+			echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__( 'Settings saved.', 'stackpress' ) . '</p></div>';
 		}
-		echo \DiceStack\Admin\Settings_Renderer::page_form( $this ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped internally.
+		echo \StackPress\Admin\Settings_Renderer::page_form( $this ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped internally.
 		if ( empty( $log ) ) {
-			echo '<p>' . esc_html__( 'No fatal errors recorded. Your site is healthy.', 'dicestack' ) . '</p></div>';
+			echo '<p>' . esc_html__( 'No fatal errors recorded. Your site is healthy.', 'stackpress' ) . '</p></div>';
 			return;
 		}
-		echo '<table class="widefat striped"><thead><tr><th>' . esc_html__( 'When', 'dicestack' ) . '</th><th>' . esc_html__( 'Likely cause', 'dicestack' ) . '</th><th>' . esc_html__( 'Message', 'dicestack' ) . '</th></tr></thead><tbody>';
+		echo '<table class="widefat striped"><thead><tr><th>' . esc_html__( 'When', 'stackpress' ) . '</th><th>' . esc_html__( 'Likely cause', 'stackpress' ) . '</th><th>' . esc_html__( 'Message', 'stackpress' ) . '</th></tr></thead><tbody>';
 		foreach ( $log as $e ) {
-			$when = isset( $e['time'] ) ? sprintf( /* translators: %s: time diff. */ __( '%s ago', 'dicestack' ), human_time_diff( (int) $e['time'], time() ) ) : '';
+			$when = isset( $e['time'] ) ? sprintf( /* translators: %s: time diff. */ __( '%s ago', 'stackpress' ), human_time_diff( (int) $e['time'], time() ) ) : '';
 			echo '<tr><td>' . esc_html( $when ) . '</td><td><strong>' . esc_html( isset( $e['culprit'] ) ? $e['culprit'] : '' ) . '</strong></td><td><code style="font-size:11px;">' . esc_html( isset( $e['message'] ) ? $e['message'] : '' ) . '</code></td></tr>';
 		}
 		echo '</tbody></table>';
-		echo '<p>' . esc_html__( 'Tip: if the front end is broken, the "Likely cause" above is usually the plugin or theme to deactivate.', 'dicestack' ) . '</p></div>';
+		echo '<p>' . esc_html__( 'Tip: if the front end is broken, the "Likely cause" above is usually the plugin or theme to deactivate.', 'stackpress' ) . '</p></div>';
 	}
 }

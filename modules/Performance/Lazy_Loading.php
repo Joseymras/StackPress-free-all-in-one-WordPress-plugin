@@ -2,12 +2,12 @@
 /**
  * Lazy Loading module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Performance;
+namespace StackPress\Modules\Performance;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Lazy_Loading extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Lazy loading', 'dicestack' );
+		return __( 'Lazy loading', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Defer off-screen images and iframes until the visitor scrolls to them.', 'dicestack' );
+		return __( 'Defer off-screen images and iframes until the visitor scrolls to them.', 'stackpress' );
 	}
 
 	/**
@@ -72,7 +72,7 @@ final class Lazy_Loading extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'iframes',
-				'label'   => __( 'Lazy-load iframes (YouTube, Maps, etc.)', 'dicestack' ),
+				'label'   => __( 'Lazy-load iframes (YouTube, Maps, etc.)', 'stackpress' ),
 				'type'    => 'toggle',
 				'default' => true,
 			),

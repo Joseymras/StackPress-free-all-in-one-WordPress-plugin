@@ -2,12 +2,12 @@
 /**
  * Rename Login URL module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Security;
+namespace StackPress\Modules\Security;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -39,14 +39,14 @@ final class Rename_Login extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Change login URL', 'dicestack' );
+		return __( 'Change login URL', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Move wp-login.php to a secret address and 404 the old one. Emails the new link to your client.', 'dicestack' );
+		return __( 'Move wp-login.php to a secret address and 404 the old one. Emails the new link to your client.', 'stackpress' );
 	}
 
 	/**
@@ -90,23 +90,23 @@ final class Rename_Login extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'slug',
-				'label'   => __( 'New login address', 'dicestack' ),
+				'label'   => __( 'New login address', 'stackpress' ),
 				'type'    => 'text',
 				'default' => '',
-				'help'    => __( 'e.g. "secret-door". Your login becomes yoursite.com/secret-door. Leave blank to keep the default. Avoid words like login, admin, wp-admin.', 'dicestack' ),
+				'help'    => __( 'e.g. "secret-door". Your login becomes yoursite.com/secret-door. Leave blank to keep the default. Avoid words like login, admin, wp-admin.', 'stackpress' ),
 			),
 			array(
 				'key'     => 'notify',
-				'label'   => __( 'Email the new link when it changes', 'dicestack' ),
+				'label'   => __( 'Email the new link when it changes', 'stackpress' ),
 				'type'    => 'checkbox',
 				'default' => true,
 			),
 			array(
 				'key'     => 'notify_email',
-				'label'   => __( 'Send the link to', 'dicestack' ),
+				'label'   => __( 'Send the link to', 'stackpress' ),
 				'type'    => 'text',
 				'default' => get_option( 'admin_email' ),
-				'help'    => __( 'Where to email the new login link (e.g. your client). Defaults to the site admin email.', 'dicestack' ),
+				'help'    => __( 'Where to email the new login link (e.g. your client). Defaults to the site admin email.', 'stackpress' ),
 			),
 		);
 	}
@@ -255,8 +255,8 @@ final class Rename_Login extends Abstract_Module {
 		status_header( 404 );
 		nocache_headers();
 		wp_die(
-			esc_html__( 'This page does not exist.', 'dicestack' ),
-			esc_html__( 'Not found', 'dicestack' ),
+			esc_html__( 'This page does not exist.', 'stackpress' ),
+			esc_html__( 'Not found', 'stackpress' ),
 			array( 'response' => 404 )
 		);
 	}
@@ -298,12 +298,12 @@ final class Rename_Login extends Abstract_Module {
 	private function send_email( $to ) {
 		$site    = wp_specialchars_decode( get_bloginfo( 'name' ), ENT_QUOTES );
 		$url     = $this->login_url();
-		$subject = sprintf( /* translators: %s: site name. */ __( '[%s] Your new login link — please save it', 'dicestack' ), $site );
+		$subject = sprintf( /* translators: %s: site name. */ __( '[%s] Your new login link — please save it', 'stackpress' ), $site );
 		$body    = sprintf(
 			/* translators: 1: site name, 2: new login URL. */
 			__(
-				"Hello,\n\nFor security, the login address for %1\$s has been changed.\n\nYour NEW login link is:\n%2\$s\n\nPlease make a note of this link and keep it somewhere safe. The old /wp-login.php and /wp-admin login pages no longer work — you must use the link above to sign in.\n\n— DiceStack by Dice Codes",
-				'dicestack'
+				"Hello,\n\nFor security, the login address for %1\$s has been changed.\n\nYour NEW login link is:\n%2\$s\n\nPlease make a note of this link and keep it somewhere safe. The old /wp-login.php and /wp-admin login pages no longer work — you must use the link above to sign in.\n\n— StackPress by Dice Codes",
+				'stackpress'
 			),
 			$site,
 			$url

@@ -2,12 +2,12 @@
 /**
  * WooCommerce Min/Max Order module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\WooCommerce;
+namespace StackPress\Modules\WooCommerce;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Min_Max_Order extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Min / max order limits', 'dicestack' );
+		return __( 'Min / max order limits', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Require a minimum (or cap a maximum) order total before checkout.', 'dicestack' );
+		return __( 'Require a minimum (or cap a maximum) order total before checkout.', 'stackpress' );
 	}
 
 	/**
@@ -86,21 +86,21 @@ final class Min_Max_Order extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'min_total',
-				'label'   => __( 'Minimum order total', 'dicestack' ),
+				'label'   => __( 'Minimum order total', 'stackpress' ),
 				'type'    => 'number',
 				'default' => 0,
 				'min'     => 0,
 				'step'    => 1,
-				'help'    => __( '0 = no minimum.', 'dicestack' ),
+				'help'    => __( '0 = no minimum.', 'stackpress' ),
 			),
 			array(
 				'key'     => 'max_total',
-				'label'   => __( 'Maximum order total', 'dicestack' ),
+				'label'   => __( 'Maximum order total', 'stackpress' ),
 				'type'    => 'number',
 				'default' => 0,
 				'min'     => 0,
 				'step'    => 1,
-				'help'    => __( '0 = no maximum.', 'dicestack' ),
+				'help'    => __( '0 = no maximum.', 'stackpress' ),
 			),
 		);
 	}
@@ -129,7 +129,7 @@ final class Min_Max_Order extends Abstract_Module {
 			wc_add_notice(
 				sprintf(
 					/* translators: 1: minimum amount, 2: current amount. */
-					esc_html__( 'A minimum order of %1$s is required. Your current total is %2$s.', 'dicestack' ),
+					esc_html__( 'A minimum order of %1$s is required. Your current total is %2$s.', 'stackpress' ),
 					wp_kses_post( wc_price( $min ) ),
 					wp_kses_post( wc_price( $total ) )
 				),
@@ -141,7 +141,7 @@ final class Min_Max_Order extends Abstract_Module {
 			wc_add_notice(
 				sprintf(
 					/* translators: 1: maximum amount, 2: current amount. */
-					esc_html__( 'The maximum order total is %1$s. Your current total is %2$s.', 'dicestack' ),
+					esc_html__( 'The maximum order total is %1$s. Your current total is %2$s.', 'stackpress' ),
 					wp_kses_post( wc_price( $max ) ),
 					wp_kses_post( wc_price( $total ) )
 				),

@@ -2,12 +2,12 @@
 /**
  * WooCommerce Back-in-Stock module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\WooCommerce;
+namespace StackPress\Modules\WooCommerce;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -21,7 +21,7 @@ final class Back_In_Stock extends Abstract_Module {
 	/**
 	 * Product meta key holding subscriber emails.
 	 */
-	const META = '_dicestack_bis';
+	const META = '_stackpress_bis';
 
 	/**
 	 * {@inheritDoc}
@@ -34,14 +34,14 @@ final class Back_In_Stock extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Back-in-stock alerts', 'dicestack' );
+		return __( 'Back-in-stock alerts', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Let customers get an email when an out-of-stock product is available again.', 'dicestack' );
+		return __( 'Let customers get an email when an out-of-stock product is available again.', 'stackpress' );
 	}
 
 	/**
@@ -98,12 +98,12 @@ final class Back_In_Stock extends Abstract_Module {
 			return;
 		}
 		?>
-		<form method="post" class="dicestack-bis" style="margin-top:14px;padding:14px;background:#f6f7f9;border-radius:8px;">
-			<label style="display:block;margin-bottom:6px;font-weight:500;"><?php esc_html_e( 'Email me when this is back in stock', 'dicestack' ); ?></label>
-			<?php wp_nonce_field( 'dicestack_bis', 'dicestack_bis_nonce' ); ?>
-			<input type="hidden" name="dicestack_bis_product" value="<?php echo esc_attr( $product->get_id() ); ?>" />
-			<input type="email" name="dicestack_bis_email" required placeholder="<?php esc_attr_e( 'you@example.com', 'dicestack' ); ?>" style="padding:8px;width:60%;max-width:280px;" />
-			<button type="submit" style="background:#1b2a4a;color:#fff;border:0;padding:9px 16px;border-radius:6px;cursor:pointer;"><?php esc_html_e( 'Notify me', 'dicestack' ); ?></button>
+		<form method="post" class="stackpress-bis" style="margin-top:14px;padding:14px;background:#f6f7f9;border-radius:8px;">
+			<label style="display:block;margin-bottom:6px;font-weight:500;"><?php esc_html_e( 'Email me when this is back in stock', 'stackpress' ); ?></label>
+			<?php wp_nonce_field( 'stackpress_bis', 'stackpress_bis_nonce' ); ?>
+			<input type="hidden" name="stackpress_bis_product" value="<?php echo esc_attr( $product->get_id() ); ?>" />
+			<input type="email" name="stackpress_bis_email" required placeholder="<?php esc_attr_e( 'you@example.com', 'stackpress' ); ?>" style="padding:8px;width:60%;max-width:280px;" />
+			<button type="submit" style="background:#1b2a4a;color:#fff;border:0;padding:9px 16px;border-radius:6px;cursor:pointer;"><?php esc_html_e( 'Notify me', 'stackpress' ); ?></button>
 		</form>
 		<?php
 	}
@@ -114,14 +114,14 @@ final class Back_In_Stock extends Abstract_Module {
 	 * @return void
 	 */
 	public function handle_subscribe() {
-		if ( ! isset( $_POST['dicestack_bis_product'], $_POST['dicestack_bis_nonce'] ) ) {
+		if ( ! isset( $_POST['stackpress_bis_product'], $_POST['stackpress_bis_nonce'] ) ) {
 			return;
 		}
-		if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['dicestack_bis_nonce'] ) ), 'dicestack_bis' ) ) {
+		if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['stackpress_bis_nonce'] ) ), 'stackpress_bis' ) ) {
 			return;
 		}
-		$product_id = absint( $_POST['dicestack_bis_product'] );
-		$email      = isset( $_POST['dicestack_bis_email'] ) ? sanitize_email( wp_unslash( $_POST['dicestack_bis_email'] ) ) : '';
+		$product_id = absint( $_POST['stackpress_bis_product'] );
+		$email      = isset( $_POST['stackpress_bis_email'] ) ? sanitize_email( wp_unslash( $_POST['stackpress_bis_email'] ) ) : '';
 		if ( ! $product_id || ! is_email( $email ) ) {
 			return;
 		}
@@ -133,7 +133,7 @@ final class Back_In_Stock extends Abstract_Module {
 			update_post_meta( $product_id, self::META, $subs );
 		}
 
-		wp_safe_redirect( add_query_arg( 'dicestack_bis', 'ok', get_permalink( $product_id ) ) );
+		wp_safe_redirect( add_query_arg( 'stackpress_bis', 'ok', get_permalink( $product_id ) ) );
 		exit;
 	}
 
@@ -158,12 +158,12 @@ final class Back_In_Stock extends Abstract_Module {
 		$url   = get_permalink( $product_id );
 		$subject = sprintf(
 			/* translators: %s: product name. */
-			__( 'Back in stock: %s', 'dicestack' ),
+			__( 'Back in stock: %s', 'stackpress' ),
 			$title
 		);
 		$body = sprintf(
 			/* translators: 1: product, 2: url. */
-			__( "Good news! \"%1\$s\" is back in stock.\n\nBuy it here: %2\$s", 'dicestack' ),
+			__( "Good news! \"%1\$s\" is back in stock.\n\nBuy it here: %2\$s", 'stackpress' ),
 			$title,
 			$url
 		);

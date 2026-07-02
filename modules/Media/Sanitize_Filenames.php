@@ -2,12 +2,12 @@
 /**
  * Sanitize Filenames module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Media;
+namespace StackPress\Modules\Media;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Sanitize_Filenames extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Tidy upload filenames', 'dicestack' );
+		return __( 'Tidy upload filenames', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Make uploaded filenames lowercase and URL-safe (spaces and accents removed).', 'dicestack' );
+		return __( 'Make uploaded filenames lowercase and URL-safe (spaces and accents removed).', 'stackpress' );
 	}
 
 	/**

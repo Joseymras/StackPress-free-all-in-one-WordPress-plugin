@@ -2,12 +2,12 @@
 /**
  * Security Hardening module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Security;
+namespace StackPress\Modules\Security;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Security_Hardening extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Security hardening', 'dicestack' );
+		return __( 'Security hardening', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Hide the WP version, add security headers, block the file editor, and more.', 'dicestack' );
+		return __( 'Hide the WP version, add security headers, block the file editor, and more.', 'stackpress' );
 	}
 
 	/**
@@ -79,31 +79,31 @@ final class Security_Hardening extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'hide_version',
-				'label'   => __( 'Hide WordPress version', 'dicestack' ),
+				'label'   => __( 'Hide WordPress version', 'stackpress' ),
 				'type'    => 'toggle',
 				'default' => true,
-				'help'    => __( 'Removes the version meta tag and query strings that reveal your WP version.', 'dicestack' ),
+				'help'    => __( 'Removes the version meta tag and query strings that reveal your WP version.', 'stackpress' ),
 			),
 			array(
 				'key'     => 'disable_file_editor',
-				'label'   => __( 'Disable the theme/plugin file editor', 'dicestack' ),
+				'label'   => __( 'Disable the theme/plugin file editor', 'stackpress' ),
 				'type'    => 'toggle',
 				'default' => true,
-				'help'    => __( 'Stops admins editing PHP from wp-admin — a common post-breach attack path.', 'dicestack' ),
+				'help'    => __( 'Stops admins editing PHP from wp-admin — a common post-breach attack path.', 'stackpress' ),
 			),
 			array(
 				'key'     => 'security_headers',
-				'label'   => __( 'Send security headers', 'dicestack' ),
+				'label'   => __( 'Send security headers', 'stackpress' ),
 				'type'    => 'toggle',
 				'default' => true,
-				'help'    => __( 'Adds X-Frame-Options, X-Content-Type-Options, and Referrer-Policy headers.', 'dicestack' ),
+				'help'    => __( 'Adds X-Frame-Options, X-Content-Type-Options, and Referrer-Policy headers.', 'stackpress' ),
 			),
 			array(
 				'key'     => 'disable_user_enum',
-				'label'   => __( 'Block user enumeration', 'dicestack' ),
+				'label'   => __( 'Block user enumeration', 'stackpress' ),
 				'type'    => 'toggle',
 				'default' => true,
-				'help'    => __( 'Prevents ?author=1 scans from revealing usernames.', 'dicestack' ),
+				'help'    => __( 'Prevents ?author=1 scans from revealing usernames.', 'stackpress' ),
 			),
 		);
 	}

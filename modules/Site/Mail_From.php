@@ -2,12 +2,12 @@
 /**
  * Mail From module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Site;
+namespace StackPress\Modules\Site;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Mail_From extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Email sender name', 'dicestack' );
+		return __( 'Email sender name', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Set the From name and address used on all WordPress emails.', 'dicestack' );
+		return __( 'Set the From name and address used on all WordPress emails.', 'stackpress' );
 	}
 
 	/**
@@ -72,16 +72,16 @@ final class Mail_From extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'from_name',
-				'label'   => __( 'From name', 'dicestack' ),
+				'label'   => __( 'From name', 'stackpress' ),
 				'type'    => 'text',
 				'default' => get_option( 'blogname' ),
 			),
 			array(
 				'key'     => 'from_email',
-				'label'   => __( 'From email', 'dicestack' ),
+				'label'   => __( 'From email', 'stackpress' ),
 				'type'    => 'text',
 				'default' => '',
-				'help'    => __( 'Leave blank to keep the WordPress default address.', 'dicestack' ),
+				'help'    => __( 'Leave blank to keep the WordPress default address.', 'stackpress' ),
 			),
 		);
 	}

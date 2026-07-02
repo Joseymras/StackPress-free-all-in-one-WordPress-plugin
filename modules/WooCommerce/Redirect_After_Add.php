@@ -2,12 +2,12 @@
 /**
  * WooCommerce Redirect After Add to Cart module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\WooCommerce;
+namespace StackPress\Modules\WooCommerce;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Redirect_After_Add extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Redirect after add to cart', 'dicestack' );
+		return __( 'Redirect after add to cart', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Take customers to the cart or checkout immediately after they add a product.', 'dicestack' );
+		return __( 'Take customers to the cart or checkout immediately after they add a product.', 'stackpress' );
 	}
 
 	/**
@@ -79,12 +79,12 @@ final class Redirect_After_Add extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'destination',
-				'label'   => __( 'Send customer to', 'dicestack' ),
+				'label'   => __( 'Send customer to', 'stackpress' ),
 				'type'    => 'select',
 				'default' => 'cart',
 				'options' => array(
-					'cart'     => __( 'Cart', 'dicestack' ),
-					'checkout' => __( 'Checkout', 'dicestack' ),
+					'cart'     => __( 'Cart', 'stackpress' ),
+					'checkout' => __( 'Checkout', 'stackpress' ),
 				),
 			),
 		);

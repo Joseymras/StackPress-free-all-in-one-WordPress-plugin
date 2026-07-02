@@ -2,12 +2,12 @@
 /**
  * Comment Link Limit module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Security;
+namespace StackPress\Modules\Security;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Comment_Link_Limit extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Comment link limit', 'dicestack' );
+		return __( 'Comment link limit', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Block comments that contain too many links — the top spam signal.', 'dicestack' );
+		return __( 'Block comments that contain too many links — the top spam signal.', 'stackpress' );
 	}
 
 	/**
@@ -72,7 +72,7 @@ final class Comment_Link_Limit extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'max_links',
-				'label'   => __( 'Maximum links allowed in a comment', 'dicestack' ),
+				'label'   => __( 'Maximum links allowed in a comment', 'stackpress' ),
 				'type'    => 'number',
 				'default' => 2,
 				'min'     => 0,
@@ -102,8 +102,8 @@ final class Comment_Link_Limit extends Abstract_Module {
 
 		if ( $links > $max ) {
 			wp_die(
-				esc_html__( 'Your comment contains too many links and was blocked.', 'dicestack' ),
-				esc_html__( 'Comment blocked', 'dicestack' ),
+				esc_html__( 'Your comment contains too many links and was blocked.', 'stackpress' ),
+				esc_html__( 'Comment blocked', 'stackpress' ),
 				array(
 					'response'  => 403,
 					'back_link' => true,

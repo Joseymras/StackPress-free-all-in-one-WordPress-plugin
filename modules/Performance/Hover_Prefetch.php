@@ -2,12 +2,12 @@
 /**
  * Hover Prefetch module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Performance;
+namespace StackPress\Modules\Performance;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Hover_Prefetch extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Instant hover prefetch', 'dicestack' );
+		return __( 'Instant hover prefetch', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Preload internal pages on link hover so navigation feels instant.', 'dicestack' );
+		return __( 'Preload internal pages on link hover so navigation feels instant.', 'stackpress' );
 	}
 
 	/**

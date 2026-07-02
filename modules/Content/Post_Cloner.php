@@ -2,12 +2,12 @@
 /**
  * Post Cloner module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Content;
+namespace StackPress\Modules\Content;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Post_Cloner extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Page & post cloner', 'dicestack' );
+		return __( 'Page & post cloner', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Duplicate any post, page, or product in one click — content and meta included.', 'dicestack' );
+		return __( 'Duplicate any post, page, or product in one click — content and meta included.', 'stackpress' );
 	}
 
 	/**
@@ -81,7 +81,7 @@ final class Post_Cloner extends Abstract_Module {
 		}
 		add_filter( 'post_row_actions', array( $this, 'add_action_link' ), 10, 2 );
 		add_filter( 'page_row_actions', array( $this, 'add_action_link' ), 10, 2 );
-		add_action( 'admin_action_dicestack_clone', array( $this, 'handle_clone' ) );
+		add_action( 'admin_action_stackpress_clone', array( $this, 'handle_clone' ) );
 	}
 
 	/**
@@ -96,10 +96,10 @@ final class Post_Cloner extends Abstract_Module {
 			return $actions;
 		}
 		$url = wp_nonce_url(
-			admin_url( 'admin.php?action=dicestack_clone&post=' . $post->ID ),
-			'dicestack_clone_' . $post->ID
+			admin_url( 'admin.php?action=stackpress_clone&post=' . $post->ID ),
+			'stackpress_clone_' . $post->ID
 		);
-		$actions['dicestack_clone'] = '<a href="' . esc_url( $url ) . '">' . esc_html__( 'Clone', 'dicestack' ) . '</a>';
+		$actions['stackpress_clone'] = '<a href="' . esc_url( $url ) . '">' . esc_html__( 'Clone', 'stackpress' ) . '</a>';
 		return $actions;
 	}
 
@@ -111,21 +111,21 @@ final class Post_Cloner extends Abstract_Module {
 	public function handle_clone() {
 		$post_id = isset( $_GET['post'] ) ? absint( $_GET['post'] ) : 0;
 
-		if ( ! $post_id || ! check_admin_referer( 'dicestack_clone_' . $post_id ) ) {
-			wp_die( esc_html__( 'Invalid clone request.', 'dicestack' ) );
+		if ( ! $post_id || ! check_admin_referer( 'stackpress_clone_' . $post_id ) ) {
+			wp_die( esc_html__( 'Invalid clone request.', 'stackpress' ) );
 		}
 		if ( ! current_user_can( 'edit_posts' ) ) {
-			wp_die( esc_html__( 'You are not allowed to clone content.', 'dicestack' ) );
+			wp_die( esc_html__( 'You are not allowed to clone content.', 'stackpress' ) );
 		}
 
 		$post = get_post( $post_id );
 		if ( ! $post ) {
-			wp_die( esc_html__( 'Original not found.', 'dicestack' ) );
+			wp_die( esc_html__( 'Original not found.', 'stackpress' ) );
 		}
 
 		$new_id = wp_insert_post(
 			array(
-				'post_title'   => $post->post_title . ' ' . __( '(copy)', 'dicestack' ),
+				'post_title'   => $post->post_title . ' ' . __( '(copy)', 'stackpress' ),
 				'post_content' => $post->post_content,
 				'post_excerpt' => $post->post_excerpt,
 				'post_status'  => 'draft',

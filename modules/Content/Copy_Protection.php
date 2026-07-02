@@ -2,12 +2,12 @@
 /**
  * Copy Protection module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Content;
+namespace StackPress\Modules\Content;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -29,14 +29,14 @@ final class Copy_Protection extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Content copy protection', 'dicestack' );
+		return __( 'Content copy protection', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Deter casual copying by disabling right-click and text selection for visitors.', 'dicestack' );
+		return __( 'Deter casual copying by disabling right-click and text selection for visitors.', 'stackpress' );
 	}
 
 	/**
@@ -73,7 +73,7 @@ final class Copy_Protection extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'disable_selection',
-				'label'   => __( 'Also disable text selection', 'dicestack' ),
+				'label'   => __( 'Also disable text selection', 'stackpress' ),
 				'type'    => 'toggle',
 				'default' => true,
 			),

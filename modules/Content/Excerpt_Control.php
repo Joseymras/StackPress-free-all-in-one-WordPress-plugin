@@ -2,12 +2,12 @@
 /**
  * Excerpt Control module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Content;
+namespace StackPress\Modules\Content;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -27,14 +27,14 @@ final class Excerpt_Control extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Excerpt control', 'dicestack' );
+		return __( 'Excerpt control', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Set the automatic excerpt length and the read-more text.', 'dicestack' );
+		return __( 'Set the automatic excerpt length and the read-more text.', 'stackpress' );
 	}
 
 	/**
@@ -71,7 +71,7 @@ final class Excerpt_Control extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'length',
-				'label'   => __( 'Excerpt length (words)', 'dicestack' ),
+				'label'   => __( 'Excerpt length (words)', 'stackpress' ),
 				'type'    => 'number',
 				'default' => 40,
 				'min'     => 5,
@@ -80,7 +80,7 @@ final class Excerpt_Control extends Abstract_Module {
 			),
 			array(
 				'key'     => 'more',
-				'label'   => __( 'Read-more text', 'dicestack' ),
+				'label'   => __( 'Read-more text', 'stackpress' ),
 				'type'    => 'text',
 				'default' => '…',
 			),

@@ -2,17 +2,17 @@
 /**
  * Breadcrumbs module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\SEO;
+namespace StackPress\Modules\SEO;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Outputs breadcrumb navigation via the [dicestack_breadcrumbs] shortcode. Pair
+ * Outputs breadcrumb navigation via the [stackpress_breadcrumbs] shortcode. Pair
  * with the Schema module for BreadcrumbList rich results.
  */
 final class Breadcrumbs extends Abstract_Module {
@@ -28,14 +28,14 @@ final class Breadcrumbs extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Breadcrumbs', 'dicestack' );
+		return __( 'Breadcrumbs', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Add breadcrumb navigation with [dicestack_breadcrumbs] to aid users and search engines.', 'dicestack' );
+		return __( 'Add breadcrumb navigation with [stackpress_breadcrumbs] to aid users and search engines.', 'stackpress' );
 	}
 
 	/**
@@ -72,15 +72,15 @@ final class Breadcrumbs extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'separator',
-				'label'   => __( 'Separator', 'dicestack' ),
+				'label'   => __( 'Separator', 'stackpress' ),
 				'type'    => 'text',
 				'default' => '/',
 			),
 			array(
 				'key'     => 'home_label',
-				'label'   => __( 'Home label', 'dicestack' ),
+				'label'   => __( 'Home label', 'stackpress' ),
 				'type'    => 'text',
-				'default' => __( 'Home', 'dicestack' ),
+				'default' => __( 'Home', 'stackpress' ),
 			),
 		);
 	}
@@ -89,7 +89,7 @@ final class Breadcrumbs extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function init() {
-		add_shortcode( 'dicestack_breadcrumbs', array( $this, 'render' ) );
+		add_shortcode( 'stackpress_breadcrumbs', array( $this, 'render' ) );
 	}
 
 	/**
@@ -104,7 +104,7 @@ final class Breadcrumbs extends Abstract_Module {
 		}
 
 		$sep   = ' <span class="sep">' . esc_html( (string) $this->get_setting( 'separator', '/' ) ) . '</span> ';
-		$home  = esc_html( (string) $this->get_setting( 'home_label', __( 'Home', 'dicestack' ) ) );
+		$home  = esc_html( (string) $this->get_setting( 'home_label', __( 'Home', 'stackpress' ) ) );
 		$crumbs = array();
 
 		$crumbs[] = '<a href="' . esc_url( home_url( '/' ) ) . '">' . $home . '</a>';
@@ -121,13 +121,13 @@ final class Breadcrumbs extends Abstract_Module {
 		} elseif ( is_category() || is_tag() || is_tax() ) {
 			$crumbs[] = '<span class="current">' . esc_html( single_term_title( '', false ) ) . '</span>';
 		} elseif ( is_search() ) {
-			$crumbs[] = '<span class="current">' . esc_html__( 'Search results', 'dicestack' ) . '</span>';
+			$crumbs[] = '<span class="current">' . esc_html__( 'Search results', 'stackpress' ) . '</span>';
 		} elseif ( is_404() ) {
-			$crumbs[] = '<span class="current">' . esc_html__( 'Not found', 'dicestack' ) . '</span>';
+			$crumbs[] = '<span class="current">' . esc_html__( 'Not found', 'stackpress' ) . '</span>';
 		} elseif ( is_archive() ) {
 			$crumbs[] = '<span class="current">' . esc_html( get_the_archive_title() ) . '</span>';
 		}
 
-		return '<nav class="dicestack-breadcrumbs" aria-label="' . esc_attr__( 'Breadcrumb', 'dicestack' ) . '">' . implode( $sep, $crumbs ) . '</nav>';
+		return '<nav class="stackpress-breadcrumbs" aria-label="' . esc_attr__( 'Breadcrumb', 'stackpress' ) . '">' . implode( $sep, $crumbs ) . '</nav>';
 	}
 }

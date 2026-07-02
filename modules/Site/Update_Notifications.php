@@ -2,12 +2,12 @@
 /**
  * Update Notifications module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Site;
+namespace StackPress\Modules\Site;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -20,7 +20,7 @@ final class Update_Notifications extends Abstract_Module {
 	/**
 	 * Cron hook name.
 	 */
-	const CRON_HOOK = 'dicestack_update_check';
+	const CRON_HOOK = 'stackpress_update_check';
 
 	/**
 	 * {@inheritDoc}
@@ -33,14 +33,14 @@ final class Update_Notifications extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Update notifications', 'dicestack' );
+		return __( 'Update notifications', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Get an email when core, plugin, or theme updates become available.', 'dicestack' );
+		return __( 'Get an email when core, plugin, or theme updates become available.', 'stackpress' );
 	}
 
 	/**
@@ -77,7 +77,7 @@ final class Update_Notifications extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'recipient',
-				'label'   => __( 'Notify this email', 'dicestack' ),
+				'label'   => __( 'Notify this email', 'stackpress' ),
 				'type'    => 'text',
 				'default' => get_option( 'admin_email' ),
 			),
@@ -90,7 +90,7 @@ final class Update_Notifications extends Abstract_Module {
 	public function init() {
 		add_action( self::CRON_HOOK, array( $this, 'check' ) );
 		add_action( 'init', array( $this, 'ensure_schedule' ) );
-		add_action( 'dicestack_module_disabled_' . $this->id(), array( $this, 'clear_schedule' ) );
+		add_action( 'stackpress_module_disabled_' . $this->id(), array( $this, 'clear_schedule' ) );
 	}
 
 	/**
@@ -141,22 +141,22 @@ final class Update_Notifications extends Abstract_Module {
 
 		$body  = sprintf(
 			/* translators: %s: site name. */
-			__( "Updates are available on %s:", 'dicestack' ),
+			__( "Updates are available on %s:", 'stackpress' ),
 			get_bloginfo( 'name' )
 		) . "\n\n";
 		/* translators: %d: number of core updates. */
-		$body .= sprintf( __( '- WordPress core: %d', 'dicestack' ), $wpcore ) . "\n";
+		$body .= sprintf( __( '- WordPress core: %d', 'stackpress' ), $wpcore ) . "\n";
 		/* translators: %d: number of plugin updates. */
-		$body .= sprintf( __( '- Plugins: %d', 'dicestack' ), $plugins ) . "\n";
+		$body .= sprintf( __( '- Plugins: %d', 'stackpress' ), $plugins ) . "\n";
 		/* translators: %d: number of theme updates. */
-		$body .= sprintf( __( '- Themes: %d', 'dicestack' ), $themes ) . "\n\n";
+		$body .= sprintf( __( '- Themes: %d', 'stackpress' ), $themes ) . "\n\n";
 		$body .= admin_url( 'update-core.php' ) . "\n";
 
 		wp_mail(
 			$recipient,
 			sprintf(
 				/* translators: 1: site name, 2: number of updates. */
-				__( '[%1$s] %2$d update(s) available', 'dicestack' ),
+				__( '[%1$s] %2$d update(s) available', 'stackpress' ),
 				get_bloginfo( 'name' ),
 				$count
 			),

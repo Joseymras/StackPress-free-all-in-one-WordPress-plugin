@@ -2,12 +2,12 @@
 /**
  * WooCommerce Add to Cart Text module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\WooCommerce;
+namespace StackPress\Modules\WooCommerce;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -27,14 +27,14 @@ final class Add_To_Cart_Text extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Add to cart button text', 'dicestack' );
+		return __( 'Add to cart button text', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Change the "Add to cart" wording across the shop.', 'dicestack' );
+		return __( 'Change the "Add to cart" wording across the shop.', 'stackpress' );
 	}
 
 	/**
@@ -78,9 +78,9 @@ final class Add_To_Cart_Text extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'text',
-				'label'   => __( 'Button text', 'dicestack' ),
+				'label'   => __( 'Button text', 'stackpress' ),
 				'type'    => 'text',
-				'default' => __( 'Add to cart', 'dicestack' ),
+				'default' => __( 'Add to cart', 'stackpress' ),
 			),
 		);
 	}

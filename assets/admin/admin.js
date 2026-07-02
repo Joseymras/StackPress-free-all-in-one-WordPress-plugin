@@ -1,10 +1,10 @@
 /**
- * DiceStack admin dashboard controller. Vanilla JS, no jQuery.
+ * StackPress admin dashboard controller. Vanilla JS, no jQuery.
  */
 ( function () {
 	'use strict';
 
-	var cfg = window.DiceStackAdmin || {};
+	var cfg = window.StackPressAdmin || {};
 
 	function post( action, data ) {
 		var body = new URLSearchParams();
@@ -28,7 +28,7 @@
 
 	/* ---------------- Live stat recalculation ---------------- */
 	function recalcStats() {
-		var cards = qsa( '.dicestack-card' );
+		var cards = qsa( '.stackpress-card' );
 		var active = 0, mem = 0, js = 0;
 		cards.forEach( function ( card ) {
 			if ( card.getAttribute( 'data-status' ) === 'enabled' ) {
@@ -37,85 +37,112 @@
 				js += parseFloat( card.getAttribute( 'data-js' ) ) || 0;
 			}
 		} );
-		var aEl = qs( '#dicestack-stat-active' );
-		var mEl = qs( '#dicestack-stat-mem' );
-		var jEl = qs( '#dicestack-stat-js' );
+		var aEl = qs( '#stackpress-stat-active' );
+		var mEl = qs( '#stackpress-stat-mem' );
+		var jEl = qs( '#stackpress-stat-js' );
 		if ( aEl ) { aEl.textContent = active; }
 		if ( mEl ) { mEl.textContent = mem.toLocaleString(); }
 		if ( jEl ) { jEl.textContent = Math.round( js ).toLocaleString(); }
 
 		var total = cards.length;
-		var fe = qs( '#dicestack-fc-enabled' ), fd = qs( '#dicestack-fc-disabled' ), fa = qs( '#dicestack-fc-all' );
+		var fe = qs( '#stackpress-fc-enabled' ), fd = qs( '#stackpress-fc-disabled' ), fa = qs( '#stackpress-fc-all' );
 		if ( fe ) { fe.textContent = active; }
 		if ( fd ) { fd.textContent = total - active; }
 		if ( fa ) { fa.textContent = total; }
-		var na = qs( '#dicestack-nav-active' );
+		var na = qs( '#stackpress-nav-active' );
 		if ( na ) { na.textContent = active; }
 	}
 
 	/* ---------------- Jump to a card ---------------- */
 	function jumpToCard( id ) {
-		qsa( '.dicestack-nav-item' ).forEach( function ( b ) { b.classList.remove( 'is-active' ); } );
-		var allBtn = qs( '.dicestack-nav-item[data-filter="all"]' );
+		qsa( '.stackpress-nav-item' ).forEach( function ( b ) { b.classList.remove( 'is-active' ); } );
+		var allBtn = qs( '.stackpress-nav-item[data-filter="all"]' );
 		if ( allBtn ) { allBtn.classList.add( 'is-active' ); }
-		qsa( '.dicestack-filter-btn' ).forEach( function ( b ) { b.classList.toggle( 'is-active', b.getAttribute( 'data-status' ) === 'all' ); } );
-		var search = qs( '#dicestack-search' );
+		qsa( '.stackpress-filter-btn' ).forEach( function ( b ) { b.classList.toggle( 'is-active', b.getAttribute( 'data-status' ) === 'all' ); } );
+		var search = qs( '#stackpress-search' );
 		if ( search ) { search.value = ''; }
 		applyFilters();
-		var card = qs( '.dicestack-card[data-module="' + id + '"]' );
+		var card = qs( '.stackpress-card[data-module="' + id + '"]' );
 		if ( card ) {
 			card.scrollIntoView( { behavior: 'smooth', block: 'center' } );
-			card.classList.add( 'dicestack-flash' );
-			setTimeout( function () { card.classList.remove( 'dicestack-flash' ); }, 1200 );
+			card.classList.add( 'stackpress-flash' );
+			setTimeout( function () { card.classList.remove( 'stackpress-flash' ); }, 1200 );
 		}
 	}
 
 	function toastContainer() {
-		var wrap = qs( '#dicestack-toasts' );
+		var wrap = qs( '#stackpress-toasts' );
 		if ( ! wrap ) {
 			wrap = document.createElement( 'div' );
-			wrap.id = 'dicestack-toasts';
+			wrap.id = 'stackpress-toasts';
 			document.body.appendChild( wrap );
 		}
 		return wrap;
 	}
 
+	function openTipModal() {
+		var modal = qs( '#stackpress-tip-modal' );
+		if ( modal ) { modal.hidden = false; }
+	}
+
+	function setTipFeatureMessage( feature ) {
+		var status = qs( '#stackpress-tip-status' );
+		var title = qs( '#stackpress-tip-title' );
+		var copy = {
+			'ai-seo-generator': 'Your support helps fund the AI SEO Generator roadmap.',
+			'cloud-backup': 'Your support helps fund the future StackPress cloud backup platform.',
+			'site-health-score': 'Your support helps fund the Site Health Score experience.',
+			'agency-dashboard': 'Your support helps fund the Agency Dashboard for multi-site management.'
+		};
+		if ( status ) {
+			status.textContent = copy[ feature ] || 'Choose an amount and pay securely with Paystack — all without leaving this page.';
+		}
+		if ( title ) {
+			title.textContent = feature ? 'Support StackPress Pro' : 'Support StackPress';
+		}
+	}
+
+	function closeTipModal() {
+		var modal = qs( '#stackpress-tip-modal' );
+		if ( modal ) { modal.hidden = true; }
+	}
+
 	/* ---------------- "Ready" toast after a reload (tools that add a page) ---------------- */
 	function showReadyToast() {
 		var raw;
-		try { raw = sessionStorage.getItem( 'dicestackJustEnabled' ); sessionStorage.removeItem( 'dicestackJustEnabled' ); } catch ( e ) { return; }
+		try { raw = sessionStorage.getItem( 'stackpressJustEnabled' ); sessionStorage.removeItem( 'stackpressJustEnabled' ); } catch ( e ) { return; }
 		if ( ! raw ) { return; }
 		var data;
 		try { data = JSON.parse( raw ); } catch ( e ) { return; }
 		if ( ! data || ! data.id ) { return; }
 
 		var toast = document.createElement( 'div' );
-		toast.className = 'dicestack-toast';
+		toast.className = 'stackpress-toast';
 		var h = document.createElement( 'div' );
-		h.className = 'dicestack-toast-h';
+		h.className = 'stackpress-toast-h';
 		h.textContent = '✓ ' + ( data.name || 'Tool' ) + ' ' + ( cfg.i18n.readyToOpen || 'is enabled and ready' );
 		toast.appendChild( h );
 		var p = document.createElement( 'div' );
-		p.className = 'dicestack-toast-d';
+		p.className = 'stackpress-toast-d';
 		p.textContent = cfg.i18n.clickOpen || 'It was added to your dashboard. Click Open to configure it now.';
 		toast.appendChild( p );
 		var actions = document.createElement( 'div' );
-		actions.className = 'dicestack-toast-a';
+		actions.className = 'stackpress-toast-a';
 		var open = document.createElement( 'button' );
 		open.type = 'button';
-		open.className = 'dicestack-toast-btn';
+		open.className = 'stackpress-toast-btn';
 		open.textContent = cfg.i18n.openIt || 'Open';
 		function remove() { if ( toast.parentNode ) { toast.parentNode.removeChild( toast ); } }
 		open.addEventListener( 'click', function () {
 			remove();
-			var card = qs( '.dicestack-card[data-module="' + data.id + '"]' );
-			var btn = card ? qs( '.dicestack-settings-toggle', card ) : null;
+			var card = qs( '.stackpress-card[data-module="' + data.id + '"]' );
+			var btn = card ? qs( '.stackpress-settings-toggle', card ) : null;
 			if ( btn && ! btn.disabled ) { btn.click(); }
 		} );
 		actions.appendChild( open );
 		toast.appendChild( actions );
 		var x = document.createElement( 'button' );
-		x.className = 'dicestack-toast-x';
+		x.className = 'stackpress-toast-x';
 		x.textContent = '×';
 		x.addEventListener( 'click', remove );
 		toast.appendChild( x );
@@ -126,48 +153,48 @@
 	/* ---------------- Toast on enable ---------------- */
 	function showToast( card ) {
 		var id   = card.getAttribute( 'data-module' );
-		var name = ( ( qs( '.dicestack-card-title', card ) || {} ).textContent || id ).trim();
-		var desc = ( ( qs( '.dicestack-card-desc', card ) || {} ).textContent || '' ).trim();
+		var name = ( ( qs( '.stackpress-card-title', card ) || {} ).textContent || id ).trim();
+		var desc = ( ( qs( '.stackpress-card-desc', card ) || {} ).textContent || '' ).trim();
 
-		var wrap = qs( '#dicestack-toasts' );
+		var wrap = qs( '#stackpress-toasts' );
 		if ( ! wrap ) {
 			wrap = document.createElement( 'div' );
-			wrap.id = 'dicestack-toasts';
+			wrap.id = 'stackpress-toasts';
 			document.body.appendChild( wrap );
 		}
 
 		var toast = document.createElement( 'div' );
-		toast.className = 'dicestack-toast';
+		toast.className = 'stackpress-toast';
 
 		var h = document.createElement( 'div' );
-		h.className = 'dicestack-toast-h';
+		h.className = 'stackpress-toast-h';
 		h.textContent = '✓ ' + name + ' ' + ( cfg.i18n.enabledLower || 'enabled' );
 		toast.appendChild( h );
 
 		if ( desc ) {
 			var p = document.createElement( 'div' );
-			p.className = 'dicestack-toast-d';
+			p.className = 'stackpress-toast-d';
 			p.textContent = desc;
 			toast.appendChild( p );
 		}
 
 		var actions = document.createElement( 'div' );
-		actions.className = 'dicestack-toast-a';
+		actions.className = 'stackpress-toast-a';
 
 		// Configure (opens this tool's settings modal) when it has settings.
-		var setBtn = qs( '.dicestack-settings-toggle', card );
+		var setBtn = qs( '.stackpress-settings-toggle', card );
 		if ( setBtn && ! setBtn.disabled ) {
 			var cfgLink = document.createElement( 'button' );
 			cfgLink.type = 'button';
-			cfgLink.className = 'dicestack-toast-btn';
+			cfgLink.className = 'stackpress-toast-btn';
 			cfgLink.textContent = cfg.i18n.configure || 'Configure';
 			cfgLink.addEventListener( 'click', function () { remove(); setBtn.click(); } );
 			actions.appendChild( cfgLink );
 		}
 
 		var help = document.createElement( 'a' );
-		help.className = 'dicestack-toast-link';
-		help.href = 'https://dicecodes.com/dicestack/docs/#mod-' + id;
+		help.className = 'stackpress-toast-link';
+		help.href = 'https://dicecodes.com/stackpress/docs/#mod-' + id;
 		help.target = '_blank';
 		help.rel = 'noopener';
 		help.textContent = cfg.i18n.howToUse || 'How to use';
@@ -176,7 +203,7 @@
 		toast.appendChild( actions );
 
 		var x = document.createElement( 'button' );
-		x.className = 'dicestack-toast-x';
+		x.className = 'stackpress-toast-x';
 		x.setAttribute( 'aria-label', 'Dismiss' );
 		x.textContent = '×';
 		function remove() { if ( toast.parentNode ) { toast.parentNode.removeChild( toast ); } }
@@ -189,9 +216,9 @@
 
 	/* ---------------- Toggle module ---------------- */
 	function bindToggles() {
-		qsa( '.dicestack-toggle-input' ).forEach( function ( input ) {
+		qsa( '.stackpress-toggle-input' ).forEach( function ( input ) {
 			input.addEventListener( 'change', function () {
-				var card = input.closest( '.dicestack-card' );
+				var card = input.closest( '.stackpress-card' );
 				var id = card.getAttribute( 'data-module' );
 				var enable = input.checked ? '1' : '0';
 
@@ -207,7 +234,7 @@
 
 				input.disabled = true;
 
-				post( 'dicestack_toggle_module', { module: id, enable: enable } ).then( function ( res ) {
+				post( 'stackpress_toggle_module', { module: id, enable: enable } ).then( function ( res ) {
 					input.disabled = false;
 					if ( ! res || ! res.success ) {
 						input.checked = ! input.checked;
@@ -217,7 +244,7 @@
 					card.setAttribute( 'data-status', on ? 'enabled' : 'disabled' );
 					card.classList.toggle( 'is-enabled', on );
 
-					var badge = qs( '.dicestack-status-badge', card );
+					var badge = qs( '.stackpress-status-badge', card );
 					if ( badge ) {
 						badge.textContent = on ? cfg.i18n.enabled : cfg.i18n.disabled;
 						badge.classList.toggle( 'is-on', on );
@@ -229,8 +256,8 @@
 						// Tools that add their own admin page only appear after a reload —
 						// reload, then prompt the user to open the newly added tool.
 						if ( card.getAttribute( 'data-haspage' ) === '1' ) {
-							var nm = ( ( qs( '.dicestack-card-title', card ) || {} ).textContent || id ).trim();
-							try { sessionStorage.setItem( 'dicestackJustEnabled', JSON.stringify( { id: id, name: nm } ) ); } catch ( e ) {}
+							var nm = ( ( qs( '.stackpress-card-title', card ) || {} ).textContent || id ).trim();
+							try { sessionStorage.setItem( 'stackpressJustEnabled', JSON.stringify( { id: id, name: nm } ) ); } catch ( e ) {}
 							window.location.reload();
 							return;
 						}
@@ -247,18 +274,18 @@
 	function updateChips( card, on ) {
 		var mem = parseInt( card.getAttribute( 'data-mem' ), 10 ) || 0;
 		var js = parseFloat( card.getAttribute( 'data-js' ) ) || 0;
-		var chips = qsa( '.dicestack-chip', card );
+		var chips = qsa( '.stackpress-chip', card );
 		if ( chips[ 0 ] ) { chips[ 0 ].innerHTML = '<i class="ti ti-cpu"></i>' + ( on ? mem.toLocaleString() + ' KB' : '0 KB' ); }
 		if ( chips[ 1 ] ) { chips[ 1 ].innerHTML = '<i class="ti ti-code"></i>' + ( on ? Math.round( js ).toLocaleString() + ' KB JS' : '0 KB JS' ); }
 	}
 
 	/* ---------------- Category nav ---------------- */
 	function bindNav() {
-		qsa( '.dicestack-nav-item' ).forEach( function ( btn ) {
+		qsa( '.stackpress-nav-item' ).forEach( function ( btn ) {
 			btn.addEventListener( 'click', function () {
-				qsa( '.dicestack-nav-item' ).forEach( function ( b ) { b.classList.remove( 'is-active' ); } );
+				qsa( '.stackpress-nav-item' ).forEach( function ( b ) { b.classList.remove( 'is-active' ); } );
 				btn.classList.add( 'is-active' );
-				var title = qs( '#dicestack-current-category' );
+				var title = qs( '#stackpress-current-category' );
 				if ( title ) { title.textContent = btn.querySelector( 'span' ).textContent; }
 				applyFilters();
 			} );
@@ -267,9 +294,9 @@
 
 	/* ---------------- Status filter ---------------- */
 	function bindStatusFilter() {
-		qsa( '.dicestack-filter-btn' ).forEach( function ( btn ) {
+		qsa( '.stackpress-filter-btn' ).forEach( function ( btn ) {
 			btn.addEventListener( 'click', function () {
-				qsa( '.dicestack-filter-btn' ).forEach( function ( b ) { b.classList.remove( 'is-active' ); } );
+				qsa( '.stackpress-filter-btn' ).forEach( function ( b ) { b.classList.remove( 'is-active' ); } );
 				btn.classList.add( 'is-active' );
 				applyFilters();
 			} );
@@ -278,7 +305,7 @@
 
 	/* ---------------- Search ---------------- */
 	function bindSearch() {
-		var input = qs( '#dicestack-search' );
+		var input = qs( '#stackpress-search' );
 		if ( ! input ) { return; }
 		var t;
 		input.addEventListener( 'input', function () {
@@ -288,14 +315,14 @@
 	}
 
 	function applyFilters() {
-		var navEl = qs( '.dicestack-nav-item.is-active' );
+		var navEl = qs( '.stackpress-nav-item.is-active' );
 		var filter = navEl ? navEl.getAttribute( 'data-filter' ) : 'all';
-		var statusEl = qs( '.dicestack-filter-btn.is-active' );
+		var statusEl = qs( '.stackpress-filter-btn.is-active' );
 		var status = statusEl ? statusEl.getAttribute( 'data-status' ) : 'all';
-		var term = ( qs( '#dicestack-search' ) || { value: '' } ).value.trim().toLowerCase();
+		var term = ( qs( '#stackpress-search' ) || { value: '' } ).value.trim().toLowerCase();
 
 		var visible = 0;
-		qsa( '.dicestack-card' ).forEach( function ( card ) {
+		qsa( '.stackpress-card' ).forEach( function ( card ) {
 			var match;
 			if ( filter === '__active' ) {
 				match = card.getAttribute( 'data-status' ) === 'enabled';
@@ -312,14 +339,14 @@
 			if ( show ) { visible++; }
 		} );
 
-		var empty = qs( '#dicestack-empty' );
+		var empty = qs( '#stackpress-empty' );
 		if ( empty ) {
 			if ( visible === 0 ) {
 				var msg = ( cfg.i18n && cfg.i18n.noMatch ) || 'No tools match.';
 				if ( filter === '__active' ) {
 					msg = ( cfg.i18n && cfg.i18n.noActive ) || 'No tools are enabled yet. Open Recommended setup to get started.';
 				} else if ( filter === '__unavailable' ) {
-					msg = ( cfg.i18n && cfg.i18n.allSupported ) || 'Good news — your server supports every DiceStack tool.';
+					msg = ( cfg.i18n && cfg.i18n.allSupported ) || 'Good news — your server supports every StackPress tool.';
 				}
 				empty.textContent = msg;
 				empty.hidden = false;
@@ -331,17 +358,17 @@
 
 	/* ---------------- Settings modal ---------------- */
 	function bindSettings() {
-		var modal = qs( '#dicestack-modal' );
+		var modal = qs( '#stackpress-modal' );
 		if ( ! modal ) { return; }
-		var body  = qs( '.dicestack-modal-body', modal );
-		var titleEl = qs( '.dicestack-modal-title', modal );
-		var subEl = qs( '.dicestack-modal-sub', modal );
+		var body  = qs( '.stackpress-modal-body', modal );
+		var titleEl = qs( '.stackpress-modal-title', modal );
+		var subEl = qs( '.stackpress-modal-sub', modal );
 
 		function openModal() { modal.removeAttribute( 'hidden' ); document.addEventListener( 'keydown', escClose ); }
 		function closeModal() { modal.setAttribute( 'hidden', '' ); body.innerHTML = ''; modal.classList.remove( 'is-wide' ); document.removeEventListener( 'keydown', escClose ); }
 		function escClose( e ) { if ( e.key === 'Escape' ) { closeModal(); } }
 
-		qsa( '.dicestack-modal-close, .dicestack-modal-backdrop', modal ).forEach( function ( e ) { e.addEventListener( 'click', closeModal ); } );
+		qsa( '.stackpress-modal-close, .stackpress-modal-backdrop', modal ).forEach( function ( e ) { e.addEventListener( 'click', closeModal ); } );
 
 		// Open a dedicated tool page inside the modal (chrome stripped via iframe).
 		function openPageModal( page, title ) {
@@ -349,11 +376,11 @@
 			subEl.textContent = '';
 			modal.classList.add( 'is-wide' );
 			openModal();
-			body.innerHTML = '<div class="dicestack-modal-loading">' + ( cfg.i18n.saving || 'Loading…' ) + '</div>';
+			body.innerHTML = '<div class="stackpress-modal-loading">' + ( cfg.i18n.saving || 'Loading…' ) + '</div>';
 			var frame = document.createElement( 'iframe' );
-			frame.className = 'dicestack-modal-frame';
-			frame.src = cfg.adminUrl + 'admin.php?page=' + encodeURIComponent( page ) + '&dicestack_modal=1';
-			frame.addEventListener( 'load', function () { var l = qs( '.dicestack-modal-loading', body ); if ( l ) { l.remove(); } } );
+			frame.className = 'stackpress-modal-frame';
+			frame.src = cfg.adminUrl + 'admin.php?page=' + encodeURIComponent( page ) + '&stackpress_modal=1';
+			frame.addEventListener( 'load', function () { var l = qs( '.stackpress-modal-loading', body ); if ( l ) { l.remove(); } } );
 			body.innerHTML = '';
 			body.appendChild( frame );
 		}
@@ -366,13 +393,13 @@
 			} );
 		} );
 
-		qsa( '.dicestack-card .dicestack-settings-toggle' ).forEach( function ( btn ) {
+		qsa( '.stackpress-card .stackpress-settings-toggle' ).forEach( function ( btn ) {
 			if ( btn.disabled ) { return; }
 			btn.addEventListener( 'click', function () {
-				var card = btn.closest( '.dicestack-card' );
+				var card = btn.closest( '.stackpress-card' );
 				var id   = card.getAttribute( 'data-module' );
 				var page = btn.getAttribute( 'data-page' );
-				var cardTitle = ( qs( '.dicestack-card-title', card ) || {} ).textContent || '';
+				var cardTitle = ( qs( '.stackpress-card-title', card ) || {} ).textContent || '';
 
 				if ( page ) {
 					// Dedicated tools load their own page inside the modal.
@@ -381,18 +408,18 @@
 				}
 
 				titleEl.textContent = cardTitle;
-				subEl.textContent   = ( qs( '.dicestack-card-desc', card ) || {} ).textContent || '';
+				subEl.textContent   = ( qs( '.stackpress-card-desc', card ) || {} ).textContent || '';
 				modal.classList.remove( 'is-wide' );
 				openModal();
 
-				body.innerHTML = '<p class="dicestack-no-settings">' + ( cfg.i18n.saving || 'Loading…' ) + '</p>';
-				post( 'dicestack_get_settings_form', { module: id } ).then( function ( res ) {
+				body.innerHTML = '<p class="stackpress-no-settings">' + ( cfg.i18n.saving || 'Loading…' ) + '</p>';
+				post( 'stackpress_get_settings_form', { module: id } ).then( function ( res ) {
 					if ( res && res.success ) {
 						// First-party, server-escaped HTML from a nonce+capability gated endpoint.
 						body.innerHTML = res.data.html;
 						bindForm( body, id, closeModal );
 					} else {
-						body.innerHTML = '<p class="dicestack-no-settings">' + cfg.i18n.error + '</p>';
+						body.innerHTML = '<p class="stackpress-no-settings">' + cfg.i18n.error + '</p>';
 					}
 				} );
 			} );
@@ -400,21 +427,21 @@
 	}
 
 	function bindForm( container, id, onClose ) {
-		var form = qs( '.dicestack-settings-form', container );
+		var form = qs( '.stackpress-settings-form', container );
 		if ( ! form ) { return; }
 
-		var cancel = qs( '.dicestack-settings-cancel', form );
+		var cancel = qs( '.stackpress-settings-cancel', form );
 		if ( cancel ) { cancel.addEventListener( 'click', function () { if ( onClose ) { onClose(); } } ); }
 
 		form.addEventListener( 'submit', function ( e ) {
 			e.preventDefault();
-			var status = qs( '.dicestack-settings-status', form );
+			var status = qs( '.stackpress-settings-status', form );
 			var data = new FormData( form );
 			var payload = { module: id };
 			data.forEach( function ( v, k ) { payload[ k ] = v; } );
 			if ( status ) { status.textContent = cfg.i18n.saving; }
 
-			post( 'dicestack_save_settings', payload ).then( function ( res ) {
+			post( 'stackpress_save_settings', payload ).then( function ( res ) {
 				if ( status ) { status.textContent = ( res && res.success ) ? cfg.i18n.saved : cfg.i18n.error; }
 				setTimeout( function () { if ( status ) { status.textContent = ''; } }, 1800 );
 			} );
@@ -423,17 +450,17 @@
 
 	/* ---------------- Expandable sidebar ---------------- */
 	function bindSidebarExpand() {
-		qsa( '.dicestack-nav-expand' ).forEach( function ( btn ) {
+		qsa( '.stackpress-nav-expand' ).forEach( function ( btn ) {
 			btn.addEventListener( 'click', function ( e ) {
 				e.stopPropagation();
 				var cat = btn.getAttribute( 'data-cat' );
-				var sub = qs( '.dicestack-nav-sub[data-cat="' + cat + '"]' );
+				var sub = qs( '.stackpress-nav-sub[data-cat="' + cat + '"]' );
 				btn.classList.toggle( 'is-open' );
 				if ( sub ) { sub.classList.toggle( 'is-open' ); }
 			} );
 		} );
 
-		qsa( '.dicestack-nav-sub button[data-jump]' ).forEach( function ( btn ) {
+		qsa( '.stackpress-nav-sub button[data-jump]' ).forEach( function ( btn ) {
 			btn.addEventListener( 'click', function () {
 				jumpToCard( btn.getAttribute( 'data-jump' ) );
 			} );
@@ -443,17 +470,17 @@
 	/* ---------------- Bulk enable / disable ---------------- */
 	function bindBulk() {
 		function run( enable ) {
-			var visible = qsa( '.dicestack-card' ).filter( function ( c ) { return ! c.classList.contains( 'is-hidden' ); } );
+			var visible = qsa( '.stackpress-card' ).filter( function ( c ) { return ! c.classList.contains( 'is-hidden' ); } );
 			var ids = visible.map( function ( c ) { return c.getAttribute( 'data-module' ); } );
 			if ( ! ids.length ) { return; }
 			var verb = enable ? cfg.i18n.enabled : cfg.i18n.disabled;
 			if ( ! window.confirm( ids.length + ' modules → ' + verb ) ) { return; }
-			post( 'dicestack_bulk_toggle', { enable: enable ? '1' : '0', modules: ids.join( ',' ) } ).then( function ( res ) {
+			post( 'stackpress_bulk_toggle', { enable: enable ? '1' : '0', modules: ids.join( ',' ) } ).then( function ( res ) {
 				if ( res && res.success ) { window.location.reload(); }
 			} );
 		}
-		var en = qs( '#dicestack-enable-all' );
-		var di = qs( '#dicestack-disable-all' );
+		var en = qs( '#stackpress-enable-all' );
+		var di = qs( '#stackpress-disable-all' );
 		if ( en ) { en.addEventListener( 'click', function () { run( true ); } ); }
 		if ( di ) { di.addEventListener( 'click', function () { run( false ); } ); }
 	}
@@ -467,5 +494,95 @@
 		bindSidebarExpand();
 		bindBulk();
 		showReadyToast();
+
+		var tipOpen = qs( '#stackpress-open-tip' );
+		var tipModal = qs( '#stackpress-tip-modal' );
+		var tipForm = qs( '#stackpress-tip-form' );
+		var tipStatus = qs( '#stackpress-tip-status' );
+		var tipSubmit = qs( '#stackpress-tip-submit' );
+		var tipAmount = qs( '#stackpress-tip-amount' );
+		var tipEmail = qs( '#stackpress-tip-email' );
+
+		if ( tipOpen ) {
+			tipOpen.addEventListener( 'click', function () {
+				setTipFeatureMessage( '' );
+				if ( cfg.tip && cfg.tip.enabled ) {
+					openTipModal();
+				} else if ( tipStatus ) {
+					tipStatus.textContent = cfg.tip && cfg.tip.disabledText ? cfg.tip.disabledText : 'Set your Paystack keys to enable this tip flow.';
+					openTipModal();
+				}
+			} );
+		}
+
+		qsa( '.stackpress-pro-cta' ).forEach( function ( btn ) {
+			btn.addEventListener( 'click', function () {
+				setTipFeatureMessage( btn.getAttribute( 'data-pro-feature' ) || '' );
+				if ( cfg.tip && cfg.tip.enabled ) {
+					openTipModal();
+				} else if ( tipStatus ) {
+					tipStatus.textContent = cfg.tip && cfg.tip.disabledText ? cfg.tip.disabledText : 'Set your Paystack keys to enable this tip flow.';
+					openTipModal();
+				}
+			} );
+		} );
+
+		qsa( '[data-close-tip]', document ).forEach( function ( el ) {
+			el.addEventListener( 'click', function () { closeTipModal(); } );
+		} );
+
+		if ( tipForm ) {
+			tipForm.addEventListener( 'submit', function ( e ) {
+				e.preventDefault();
+				if ( ! cfg.tip || ! cfg.tip.enabled ) {
+					if ( tipStatus ) { tipStatus.textContent = cfg.tip && cfg.tip.disabledText ? cfg.tip.disabledText : 'Set your Paystack keys to enable this tip flow.'; }
+					return;
+				}
+
+				var amount = parseInt( tipAmount && tipAmount.value ? tipAmount.value : '0', 10 ) || 0;
+				var email = tipEmail && tipEmail.value ? tipEmail.value.trim() : '';
+				if ( ! email ) { email = cfg.tip && cfg.tip.email ? cfg.tip.email : ''; }
+				if ( amount < 100 ) {
+					if ( tipStatus ) { tipStatus.textContent = 'Please choose at least 100 NGN.'; }
+					return;
+				}
+
+				if ( tipSubmit ) { tipSubmit.disabled = true; tipSubmit.textContent = 'Processing…'; }
+				if ( tipStatus ) { tipStatus.textContent = 'Preparing your secure payment…'; }
+
+				post( 'stackpress_create_tip_payment', { amount: amount, email: email } ).then( function ( res ) {
+					if ( ! res || ! res.success ) {
+						if ( tipStatus ) { tipStatus.textContent = res && res.data && res.data.message ? res.data.message : 'Tip setup is not available yet.'; }
+						if ( tipSubmit ) { tipSubmit.disabled = false; tipSubmit.textContent = cfg.tip && cfg.tip.button ? cfg.tip.button : 'Pay with Paystack'; }
+						return;
+					}
+
+					var data = res.data || {};
+					if ( window.PaystackPop && data.publicKey ) {
+						var handler = window.PaystackPop.setup( {
+							key: data.publicKey,
+							email: data.email || email,
+							amount: amount * 100,
+							currency: cfg.tip && cfg.tip.currency ? cfg.tip.currency : 'NGN',
+							ref: data.reference,
+							callback: function () {
+								closeTipModal();
+								if ( tipStatus ) { tipStatus.textContent = 'Thank you for your support!'; }
+							},
+							onClose: function () {
+								if ( tipStatus ) { tipStatus.textContent = 'Payment cancelled — you can try again anytime.'; }
+							}
+						} );
+						handler.openIframe();
+					} else if ( tipStatus ) {
+						tipStatus.textContent = 'Paystack could not be loaded. Please refresh and try again.';
+					}
+				} ).catch( function () {
+					if ( tipStatus ) { tipStatus.textContent = 'Unable to start the tip flow right now.'; }
+				} ).finally( function () {
+					if ( tipSubmit ) { tipSubmit.disabled = false; tipSubmit.textContent = cfg.tip && cfg.tip.button ? cfg.tip.button : 'Pay with Paystack'; }
+				} );
+			} );
+		}
 	} );
 } )();

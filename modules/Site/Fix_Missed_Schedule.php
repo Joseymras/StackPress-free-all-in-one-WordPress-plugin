@@ -2,12 +2,12 @@
 /**
  * Fix Missed Schedule module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Site;
+namespace StackPress\Modules\Site;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -20,7 +20,7 @@ final class Fix_Missed_Schedule extends Abstract_Module {
 	/**
 	 * Throttle transient.
 	 */
-	const THROTTLE = 'dicestack_missed_schedule_check';
+	const THROTTLE = 'stackpress_missed_schedule_check';
 
 	/**
 	 * {@inheritDoc}
@@ -33,14 +33,14 @@ final class Fix_Missed_Schedule extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Fix missed schedule', 'dicestack' );
+		return __( 'Fix missed schedule', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Automatically publish scheduled posts that WordPress failed to publish on time.', 'dicestack' );
+		return __( 'Automatically publish scheduled posts that WordPress failed to publish on time.', 'stackpress' );
 	}
 
 	/**

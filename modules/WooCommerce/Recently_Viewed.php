@@ -2,25 +2,25 @@
 /**
  * WooCommerce Recently Viewed Products module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\WooCommerce;
+namespace StackPress\Modules\WooCommerce;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
  * Tracks products a visitor has viewed (in a cookie) and shows them via the
- * [dicestack_recently_viewed] shortcode. Replaces YITH Recently Viewed.
+ * [stackpress_recently_viewed] shortcode. Replaces YITH Recently Viewed.
  */
 final class Recently_Viewed extends Abstract_Module {
 
 	/**
 	 * Cookie name.
 	 */
-	const COOKIE = 'dicestack_recently_viewed';
+	const COOKIE = 'stackpress_recently_viewed';
 
 	/**
 	 * {@inheritDoc}
@@ -33,14 +33,14 @@ final class Recently_Viewed extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Recently viewed products', 'dicestack' );
+		return __( 'Recently viewed products', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Show shoppers the products they recently looked at via [dicestack_recently_viewed].', 'dicestack' );
+		return __( 'Show shoppers the products they recently looked at via [stackpress_recently_viewed].', 'stackpress' );
 	}
 
 	/**
@@ -91,7 +91,7 @@ final class Recently_Viewed extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'count',
-				'label'   => __( 'Number of products to show', 'dicestack' ),
+				'label'   => __( 'Number of products to show', 'stackpress' ),
 				'type'    => 'number',
 				'default' => 4,
 				'min'     => 1,
@@ -106,7 +106,7 @@ final class Recently_Viewed extends Abstract_Module {
 	 */
 	public function init() {
 		add_action( 'template_redirect', array( $this, 'track' ) );
-		add_shortcode( 'dicestack_recently_viewed', array( $this, 'render' ) );
+		add_shortcode( 'stackpress_recently_viewed', array( $this, 'render' ) );
 	}
 
 	/**
@@ -172,6 +172,6 @@ final class Recently_Viewed extends Abstract_Module {
 
 		$shortcode = sprintf( '[products ids="%s" columns="%d" limit="%d"]', esc_attr( implode( ',', $ids ) ), min( 4, $count ), $count );
 
-		return '<div class="dicestack-recently-viewed"><h3>' . esc_html__( 'Recently viewed', 'dicestack' ) . '</h3>' . do_shortcode( $shortcode ) . '</div>';
+		return '<div class="stackpress-recently-viewed"><h3>' . esc_html__( 'Recently viewed', 'stackpress' ) . '</h3>' . do_shortcode( $shortcode ) . '</div>';
 	}
 }

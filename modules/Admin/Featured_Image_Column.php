@@ -2,12 +2,12 @@
 /**
  * Featured Image Column module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Admin;
+namespace StackPress\Modules\Admin;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -27,14 +27,14 @@ final class Featured_Image_Column extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Featured image column', 'dicestack' );
+		return __( 'Featured image column', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Preview featured images directly in the posts and pages list.', 'dicestack' );
+		return __( 'Preview featured images directly in the posts and pages list.', 'stackpress' );
 	}
 
 	/**
@@ -87,7 +87,7 @@ final class Featured_Image_Column extends Abstract_Module {
 		$new = array();
 		foreach ( $columns as $key => $label ) {
 			if ( 'title' === $key ) {
-				$new['dicestack_thumb'] = __( 'Image', 'dicestack' );
+				$new['stackpress_thumb'] = __( 'Image', 'stackpress' );
 			}
 			$new[ $key ] = $label;
 		}
@@ -102,7 +102,7 @@ final class Featured_Image_Column extends Abstract_Module {
 	 * @return void
 	 */
 	public function render_column( $column, $post_id ) {
-		if ( 'dicestack_thumb' !== $column ) {
+		if ( 'stackpress_thumb' !== $column ) {
 			return;
 		}
 		if ( has_post_thumbnail( $post_id ) ) {

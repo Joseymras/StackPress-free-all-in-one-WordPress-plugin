@@ -2,12 +2,12 @@
 /**
  * Media Alt Text module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Media;
+namespace StackPress\Modules\Media;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Media_Alt_Text extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Auto image alt text', 'dicestack' );
+		return __( 'Auto image alt text', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Generate alt text from the filename on upload for better accessibility and SEO.', 'dicestack' );
+		return __( 'Generate alt text from the filename on upload for better accessibility and SEO.', 'stackpress' );
 	}
 
 	/**

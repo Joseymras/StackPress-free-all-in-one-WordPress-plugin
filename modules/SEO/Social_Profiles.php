@@ -2,12 +2,12 @@
 /**
  * Social Profiles module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\SEO;
+namespace StackPress\Modules\SEO;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Social_Profiles extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Social profiles', 'dicestack' );
+		return __( 'Social profiles', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Tell search engines about your social accounts with sameAs structured data.', 'dicestack' );
+		return __( 'Tell search engines about your social accounts with sameAs structured data.', 'stackpress' );
 	}
 
 	/**
@@ -72,10 +72,10 @@ final class Social_Profiles extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'profiles',
-				'label'   => __( 'Social profile URLs', 'dicestack' ),
+				'label'   => __( 'Social profile URLs', 'stackpress' ),
 				'type'    => 'textarea',
 				'default' => '',
-				'help'    => __( 'One full URL per line (Facebook, X, LinkedIn, Instagram, etc.).', 'dicestack' ),
+				'help'    => __( 'One full URL per line (Facebook, X, LinkedIn, Instagram, etc.).', 'stackpress' ),
 			),
 		);
 	}

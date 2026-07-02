@@ -2,12 +2,12 @@
 /**
  * Redirect Manager module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\SEO;
+namespace StackPress\Modules\SEO;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Redirect_Manager extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Redirect manager', 'dicestack' );
+		return __( 'Redirect manager', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Create 301/302 redirects to fix broken URLs and preserve SEO.', 'dicestack' );
+		return __( 'Create 301/302 redirects to fix broken URLs and preserve SEO.', 'stackpress' );
 	}
 
 	/**
@@ -79,20 +79,20 @@ final class Redirect_Manager extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'type',
-				'label'   => __( 'Redirect type', 'dicestack' ),
+				'label'   => __( 'Redirect type', 'stackpress' ),
 				'type'    => 'select',
 				'default' => '301',
 				'options' => array(
-					'301' => __( '301 — permanent', 'dicestack' ),
-					'302' => __( '302 — temporary', 'dicestack' ),
+					'301' => __( '301 — permanent', 'stackpress' ),
+					'302' => __( '302 — temporary', 'stackpress' ),
 				),
 			),
 			array(
 				'key'     => 'rules',
-				'label'   => __( 'Redirect rules', 'dicestack' ),
+				'label'   => __( 'Redirect rules', 'stackpress' ),
 				'type'    => 'textarea',
 				'default' => '',
-				'help'    => __( 'One per line: /old-path => /new-path (or a full URL).', 'dicestack' ),
+				'help'    => __( 'One per line: /old-path => /new-path (or a full URL).', 'stackpress' ),
 			),
 		);
 	}

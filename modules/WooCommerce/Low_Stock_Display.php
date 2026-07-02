@@ -2,12 +2,12 @@
 /**
  * WooCommerce Low Stock Display module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\WooCommerce;
+namespace StackPress\Modules\WooCommerce;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Low_Stock_Display extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Low-stock urgency', 'dicestack' );
+		return __( 'Low-stock urgency', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Show "Only X left" on product pages when stock runs low to drive urgency.', 'dicestack' );
+		return __( 'Show "Only X left" on product pages when stock runs low to drive urgency.', 'stackpress' );
 	}
 
 	/**
@@ -79,7 +79,7 @@ final class Low_Stock_Display extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'threshold',
-				'label'   => __( 'Show when stock is at or below', 'dicestack' ),
+				'label'   => __( 'Show when stock is at or below', 'stackpress' ),
 				'type'    => 'number',
 				'default' => 5,
 				'min'     => 1,
@@ -113,9 +113,9 @@ final class Low_Stock_Display extends Abstract_Module {
 		}
 		$msg = sprintf(
 			/* translators: %d: units left. */
-			_n( 'Only %d left in stock — order soon!', 'Only %d left in stock — order soon!', $qty, 'dicestack' ),
+			_n( 'Only %d left in stock — order soon!', 'Only %d left in stock — order soon!', $qty, 'stackpress' ),
 			$qty
 		);
-		echo '<p class="dicestack-low-stock" style="color:#a32d2d;font-weight:500;">' . esc_html( $msg ) . '</p>';
+		echo '<p class="stackpress-low-stock" style="color:#a32d2d;font-weight:500;">' . esc_html( $msg ) . '</p>';
 	}
 }

@@ -2,12 +2,12 @@
 /**
  * Disable Comments module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Content;
+namespace StackPress\Modules\Content;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Disable_Comments extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Disable comments', 'dicestack' );
+		return __( 'Disable comments', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Switch off comments everywhere or just on pages and products.', 'dicestack' );
+		return __( 'Switch off comments everywhere or just on pages and products.', 'stackpress' );
 	}
 
 	/**
@@ -72,12 +72,12 @@ final class Disable_Comments extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'scope',
-				'label'   => __( 'Disable comments on', 'dicestack' ),
+				'label'   => __( 'Disable comments on', 'stackpress' ),
 				'type'    => 'select',
 				'default' => 'everywhere',
 				'options' => array(
-					'everywhere' => __( 'Everywhere', 'dicestack' ),
-					'pages'      => __( 'Pages only', 'dicestack' ),
+					'everywhere' => __( 'Everywhere', 'stackpress' ),
+					'pages'      => __( 'Pages only', 'stackpress' ),
 				),
 			),
 		);

@@ -2,17 +2,17 @@
 /**
  * Print Button module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Content;
+namespace StackPress\Modules\Content;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Adds a "Print this page" link to single posts (and a [dicestack_print] shortcode)
+ * Adds a "Print this page" link to single posts (and a [stackpress_print] shortcode)
  * — handy for recipes, guides, and documentation.
  */
 final class Print_Button extends Abstract_Module {
@@ -28,14 +28,14 @@ final class Print_Button extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Print button', 'dicestack' );
+		return __( 'Print button', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Add a print link to posts, or place one anywhere with [dicestack_print].', 'dicestack' );
+		return __( 'Add a print link to posts, or place one anywhere with [stackpress_print].', 'stackpress' );
 	}
 
 	/**
@@ -72,15 +72,15 @@ final class Print_Button extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'auto',
-				'label'   => __( 'Show automatically on posts', 'dicestack' ),
+				'label'   => __( 'Show automatically on posts', 'stackpress' ),
 				'type'    => 'toggle',
 				'default' => false,
 			),
 			array(
 				'key'     => 'label',
-				'label'   => __( 'Button text', 'dicestack' ),
+				'label'   => __( 'Button text', 'stackpress' ),
 				'type'    => 'text',
-				'default' => __( 'Print this page', 'dicestack' ),
+				'default' => __( 'Print this page', 'stackpress' ),
 			),
 		);
 	}
@@ -89,7 +89,7 @@ final class Print_Button extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function init() {
-		add_shortcode( 'dicestack_print', array( $this, 'button' ) );
+		add_shortcode( 'stackpress_print', array( $this, 'button' ) );
 		if ( ! empty( $this->get_setting( 'auto', false ) ) ) {
 			add_filter( 'the_content', array( $this, 'append' ), 48 );
 		}
@@ -101,8 +101,8 @@ final class Print_Button extends Abstract_Module {
 	 * @return string
 	 */
 	public function button() {
-		$label = esc_html( (string) $this->get_setting( 'label', __( 'Print this page', 'dicestack' ) ) );
-		return '<button type="button" class="dicestack-print" onclick="window.print()" style="background:#1b2a4a;color:#fff;border:0;padding:8px 16px;border-radius:6px;cursor:pointer;">&#128424; ' . $label . '</button>';
+		$label = esc_html( (string) $this->get_setting( 'label', __( 'Print this page', 'stackpress' ) ) );
+		return '<button type="button" class="stackpress-print" onclick="window.print()" style="background:#1b2a4a;color:#fff;border:0;padding:8px 16px;border-radius:6px;cursor:pointer;">&#128424; ' . $label . '</button>';
 	}
 
 	/**
@@ -115,6 +115,6 @@ final class Print_Button extends Abstract_Module {
 		if ( ! is_singular( 'post' ) || ! in_the_loop() || ! is_main_query() ) {
 			return $content;
 		}
-		return $content . '<p class="dicestack-print-wrap" style="margin-top:16px;">' . $this->button() . '</p>';
+		return $content . '<p class="stackpress-print-wrap" style="margin-top:16px;">' . $this->button() . '</p>';
 	}
 }

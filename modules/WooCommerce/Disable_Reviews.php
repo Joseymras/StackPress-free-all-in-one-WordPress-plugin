@@ -2,12 +2,12 @@
 /**
  * WooCommerce Disable Reviews module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\WooCommerce;
+namespace StackPress\Modules\WooCommerce;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Disable_Reviews extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Disable product reviews', 'dicestack' );
+		return __( 'Disable product reviews', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Remove product reviews and the reviews tab from your store.', 'dicestack' );
+		return __( 'Remove product reviews and the reviews tab from your store.', 'stackpress' );
 	}
 
 	/**

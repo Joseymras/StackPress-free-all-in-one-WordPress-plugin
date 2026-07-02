@@ -2,12 +2,12 @@
 /**
  * 404 Monitor module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\SEO;
+namespace StackPress\Modules\SEO;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -20,12 +20,12 @@ final class Four04_Monitor extends Abstract_Module {
 	/**
 	 * Option storing the 404 log.
 	 */
-	const LOG = 'dicestack_404_log';
+	const LOG = 'stackpress_404_log';
 
 	/**
 	 * Option storing redirects this module performs.
 	 */
-	const REDIRECTS = 'dicestack_404_redirects';
+	const REDIRECTS = 'stackpress_404_redirects';
 
 	/**
 	 * {@inheritDoc}
@@ -38,14 +38,14 @@ final class Four04_Monitor extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( '404 monitor', 'dicestack' );
+		return __( '404 monitor', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Log broken URLs visitors hit and redirect them in one click.', 'dicestack' );
+		return __( 'Log broken URLs visitors hit and redirect them in one click.', 'stackpress' );
 	}
 
 	/**
@@ -90,7 +90,7 @@ final class Four04_Monitor extends Abstract_Module {
 		add_action( 'template_redirect', array( $this, 'log_404' ), 20 );
 		if ( is_admin() ) {
 			add_action( 'admin_menu', array( $this, 'add_page' ) );
-			add_action( 'admin_post_dicestack_404_redirect', array( $this, 'handle_save_redirect' ) );
+			add_action( 'admin_post_stackpress_404_redirect', array( $this, 'handle_save_redirect' ) );
 		}
 	}
 
@@ -153,11 +153,11 @@ final class Four04_Monitor extends Abstract_Module {
 	 */
 	public function add_page() {
 		add_submenu_page(
-			'dicestack',
-			__( '404 monitor', 'dicestack' ),
-			__( '404 monitor', 'dicestack' ),
+			'stackpress',
+			__( '404 monitor', 'stackpress' ),
+			__( '404 monitor', 'stackpress' ),
 			'manage_options',
-			'dicestack-404',
+			'stackpress-404',
 			array( $this, 'render_page' )
 		);
 	}
@@ -168,8 +168,8 @@ final class Four04_Monitor extends Abstract_Module {
 	 * @return void
 	 */
 	public function handle_save_redirect() {
-		if ( ! current_user_can( 'manage_options' ) || ! check_admin_referer( 'dicestack_404' ) ) {
-			wp_die( esc_html__( 'Permission denied.', 'dicestack' ) );
+		if ( ! current_user_can( 'manage_options' ) || ! check_admin_referer( 'stackpress_404' ) ) {
+			wp_die( esc_html__( 'Permission denied.', 'stackpress' ) );
 		}
 		$from = isset( $_POST['from'] ) ? '/' . ltrim( sanitize_text_field( wp_unslash( $_POST['from'] ) ), '/' ) : '';
 		$to   = isset( $_POST['to'] ) ? sanitize_text_field( wp_unslash( $_POST['to'] ) ) : '';
@@ -179,7 +179,7 @@ final class Four04_Monitor extends Abstract_Module {
 			$map[ $from ] = $to;
 			update_option( self::REDIRECTS, $map );
 		}
-		wp_safe_redirect( admin_url( 'admin.php?page=dicestack-404' ) );
+		wp_safe_redirect( admin_url( 'admin.php?page=stackpress-404' ) );
 		exit;
 	}
 
@@ -195,20 +195,20 @@ final class Four04_Monitor extends Abstract_Module {
 		$map = is_array( $map ) ? $map : array();
 		uasort( $log, static function ( $a, $b ) { return $b['count'] - $a['count']; } );
 
-		echo '<div class="wrap"><h1>' . esc_html__( '404 monitor', 'dicestack' ) . '</h1>';
+		echo '<div class="wrap"><h1>' . esc_html__( '404 monitor', 'stackpress' ) . '</h1>';
 		if ( empty( $log ) ) {
-			echo '<p>' . esc_html__( 'No 404s logged yet.', 'dicestack' ) . '</p></div>';
+			echo '<p>' . esc_html__( 'No 404s logged yet.', 'stackpress' ) . '</p></div>';
 			return;
 		}
-		echo '<table class="widefat striped"><thead><tr><th>' . esc_html__( 'Broken URL', 'dicestack' ) . '</th><th>' . esc_html__( 'Hits', 'dicestack' ) . '</th><th>' . esc_html__( 'Redirect to', 'dicestack' ) . '</th></tr></thead><tbody>';
+		echo '<table class="widefat striped"><thead><tr><th>' . esc_html__( 'Broken URL', 'stackpress' ) . '</th><th>' . esc_html__( 'Hits', 'stackpress' ) . '</th><th>' . esc_html__( 'Redirect to', 'stackpress' ) . '</th></tr></thead><tbody>';
 		foreach ( $log as $path => $info ) {
 			$current = isset( $map[ $path ] ) ? $map[ $path ] : '';
 			echo '<tr><td><code>' . esc_html( $path ) . '</code></td><td>' . esc_html( number_format_i18n( $info['count'] ) ) . '</td><td>';
 			echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" style="display:flex;gap:6px;">';
-			wp_nonce_field( 'dicestack_404' );
-			echo '<input type="hidden" name="action" value="dicestack_404_redirect" /><input type="hidden" name="from" value="' . esc_attr( $path ) . '" />';
+			wp_nonce_field( 'stackpress_404' );
+			echo '<input type="hidden" name="action" value="stackpress_404_redirect" /><input type="hidden" name="from" value="' . esc_attr( $path ) . '" />';
 			echo '<input type="text" name="to" value="' . esc_attr( $current ) . '" placeholder="/new-page" class="regular-text" />';
-			echo '<button class="button">' . esc_html__( 'Save', 'dicestack' ) . '</button>';
+			echo '<button class="button">' . esc_html__( 'Save', 'stackpress' ) . '</button>';
 			echo '</form></td></tr>';
 		}
 		echo '</tbody></table></div>';

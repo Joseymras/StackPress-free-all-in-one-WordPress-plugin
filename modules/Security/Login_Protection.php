@@ -2,12 +2,12 @@
 /**
  * Login Protection module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Security;
+namespace StackPress\Modules\Security;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -20,7 +20,7 @@ final class Login_Protection extends Abstract_Module {
 	/**
 	 * Transient prefix for attempt counters.
 	 */
-	const PREFIX = 'dicestack_login_';
+	const PREFIX = 'stackpress_login_';
 
 	/**
 	 * {@inheritDoc}
@@ -33,14 +33,14 @@ final class Login_Protection extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Login protection', 'dicestack' );
+		return __( 'Login protection', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Limit failed login attempts per IP and lock out brute-force bots.', 'dicestack' );
+		return __( 'Limit failed login attempts per IP and lock out brute-force bots.', 'stackpress' );
 	}
 
 	/**
@@ -84,7 +84,7 @@ final class Login_Protection extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'max_attempts',
-				'label'   => __( 'Max failed attempts before lockout', 'dicestack' ),
+				'label'   => __( 'Max failed attempts before lockout', 'stackpress' ),
 				'type'    => 'number',
 				'default' => 5,
 				'min'     => 2,
@@ -93,7 +93,7 @@ final class Login_Protection extends Abstract_Module {
 			),
 			array(
 				'key'     => 'lockout_minutes',
-				'label'   => __( 'Lockout duration (minutes)', 'dicestack' ),
+				'label'   => __( 'Lockout duration (minutes)', 'stackpress' ),
 				'type'    => 'number',
 				'default' => 15,
 				'min'     => 1,
@@ -123,10 +123,10 @@ final class Login_Protection extends Abstract_Module {
 		if ( is_array( $data ) && isset( $data['locked_until'] ) && time() < $data['locked_until'] ) {
 			$minutes = max( 1, (int) ceil( ( $data['locked_until'] - time() ) / 60 ) );
 			return new \WP_Error(
-				'dicestack_locked',
+				'stackpress_locked',
 				sprintf(
 					/* translators: %d: minutes remaining. */
-					esc_html__( 'Too many failed attempts. Try again in %d minutes.', 'dicestack' ),
+					esc_html__( 'Too many failed attempts. Try again in %d minutes.', 'stackpress' ),
 					$minutes
 				)
 			);

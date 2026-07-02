@@ -2,12 +2,12 @@
 /**
  * WooCommerce Catalog Mode module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\WooCommerce;
+namespace StackPress\Modules\WooCommerce;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Catalog_Mode extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Catalog mode', 'dicestack' );
+		return __( 'Catalog mode', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Hide Add to Cart buttons (and optionally prices) to run an enquiry-only catalog.', 'dicestack' );
+		return __( 'Hide Add to Cart buttons (and optionally prices) to run an enquiry-only catalog.', 'stackpress' );
 	}
 
 	/**
@@ -79,7 +79,7 @@ final class Catalog_Mode extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'hide_prices',
-				'label'   => __( 'Also hide prices', 'dicestack' ),
+				'label'   => __( 'Also hide prices', 'stackpress' ),
 				'type'    => 'toggle',
 				'default' => false,
 			),

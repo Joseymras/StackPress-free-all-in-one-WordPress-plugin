@@ -2,12 +2,12 @@
 /**
  * Reviews Showcase module (no API key required).
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Content;
+namespace StackPress\Modules\Content;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -17,14 +17,14 @@ defined( 'ABSPATH' ) || exit;
  *    Review + AggregateRating schema. 100% free, nothing external.
  *  - Embed: paste any third-party review widget embed code (Trustindex, Elfsight,
  *    a Google Maps embed, etc.) and it is output as-is.
- * Use [dicestack_reviews] anywhere.
+ * Use [stackpress_reviews] anywhere.
  */
 final class Google_Reviews extends Abstract_Module {
 
 	/**
 	 * Option storing manual reviews.
 	 */
-	const OPTION = 'dicestack_reviews';
+	const OPTION = 'stackpress_reviews';
 
 	/**
 	 * {@inheritDoc}
@@ -37,14 +37,14 @@ final class Google_Reviews extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Reviews showcase', 'dicestack' );
+		return __( 'Reviews showcase', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Show Google/customer reviews with [dicestack_reviews] — no API key needed.', 'dicestack' );
+		return __( 'Show Google/customer reviews with [stackpress_reviews] — no API key needed.', 'stackpress' );
 	}
 
 	/**
@@ -81,31 +81,31 @@ final class Google_Reviews extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'mode',
-				'label'   => __( 'How to show reviews', 'dicestack' ),
+				'label'   => __( 'How to show reviews', 'stackpress' ),
 				'type'    => 'select',
 				'default' => 'manual',
 				'options' => array(
-					'manual' => __( 'Manual reviews (no API, add them yourself)', 'dicestack' ),
-					'embed'  => __( 'Paste an embed code (Trustindex, Elfsight, Maps…)', 'dicestack' ),
+					'manual' => __( 'Manual reviews (no API, add them yourself)', 'stackpress' ),
+					'embed'  => __( 'Paste an embed code (Trustindex, Elfsight, Maps…)', 'stackpress' ),
 				),
 			),
 			array(
 				'key'     => 'design',
-				'label'   => __( 'Manual layout', 'dicestack' ),
+				'label'   => __( 'Manual layout', 'stackpress' ),
 				'type'    => 'select',
 				'default' => 'grid',
 				'options' => array(
-					'grid'  => __( 'Cards grid', 'dicestack' ),
-					'list'  => __( 'Simple list', 'dicestack' ),
-					'badge' => __( 'Compact rating badge', 'dicestack' ),
+					'grid'  => __( 'Cards grid', 'stackpress' ),
+					'list'  => __( 'Simple list', 'stackpress' ),
+					'badge' => __( 'Compact rating badge', 'stackpress' ),
 				),
 			),
 			array(
 				'key'     => 'embed_code',
-				'label'   => __( 'Embed code (for embed mode)', 'dicestack' ),
+				'label'   => __( 'Embed code (for embed mode)', 'stackpress' ),
 				'type'    => 'textarea',
 				'default' => '',
-				'help'    => __( 'Paste the widget code from any free reviews service. Only admins can save this.', 'dicestack' ),
+				'help'    => __( 'Paste the widget code from any free reviews service. Only admins can save this.', 'stackpress' ),
 			),
 		);
 	}
@@ -164,13 +164,13 @@ final class Google_Reviews extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function init() {
-		add_shortcode( 'dicestack_reviews', array( $this, 'render' ) );
-		add_shortcode( 'dicestack_google_reviews', array( $this, 'render' ) ); // back-compat alias.
+		add_shortcode( 'stackpress_reviews', array( $this, 'render' ) );
+		add_shortcode( 'stackpress_google_reviews', array( $this, 'render' ) ); // back-compat alias.
 
 		if ( is_admin() ) {
 			add_action( 'admin_menu', array( $this, 'add_page' ) );
-			add_action( 'admin_post_dicestack_add_review', array( $this, 'handle_add' ) );
-			add_action( 'admin_post_dicestack_delete_review', array( $this, 'handle_delete' ) );
+			add_action( 'admin_post_stackpress_add_review', array( $this, 'handle_add' ) );
+			add_action( 'admin_post_stackpress_delete_review', array( $this, 'handle_delete' ) );
 		}
 	}
 
@@ -181,11 +181,11 @@ final class Google_Reviews extends Abstract_Module {
 	 */
 	public function add_page() {
 		add_submenu_page(
-			'dicestack',
-			__( 'Reviews', 'dicestack' ),
-			__( 'Reviews', 'dicestack' ),
+			'stackpress',
+			__( 'Reviews', 'stackpress' ),
+			__( 'Reviews', 'stackpress' ),
 			'manage_options',
-			'dicestack-reviews',
+			'stackpress-reviews',
 			array( $this, 'render_page' )
 		);
 	}
@@ -196,8 +196,8 @@ final class Google_Reviews extends Abstract_Module {
 	 * @return void
 	 */
 	public function handle_add() {
-		if ( ! current_user_can( 'manage_options' ) || ! check_admin_referer( 'dicestack_review' ) ) {
-			wp_die( esc_html__( 'Permission denied.', 'dicestack' ) );
+		if ( ! current_user_can( 'manage_options' ) || ! check_admin_referer( 'stackpress_review' ) ) {
+			wp_die( esc_html__( 'Permission denied.', 'stackpress' ) );
 		}
 		$reviews   = $this->reviews();
 		$reviews[] = array(
@@ -207,7 +207,7 @@ final class Google_Reviews extends Abstract_Module {
 			'text'   => isset( $_POST['text'] ) ? sanitize_textarea_field( wp_unslash( $_POST['text'] ) ) : '',
 		);
 		update_option( self::OPTION, $reviews );
-		wp_safe_redirect( admin_url( 'admin.php?page=dicestack-reviews' ) );
+		wp_safe_redirect( admin_url( 'admin.php?page=stackpress-reviews' ) );
 		exit;
 	}
 
@@ -217,8 +217,8 @@ final class Google_Reviews extends Abstract_Module {
 	 * @return void
 	 */
 	public function handle_delete() {
-		if ( ! current_user_can( 'manage_options' ) || ! check_admin_referer( 'dicestack_review' ) ) {
-			wp_die( esc_html__( 'Permission denied.', 'dicestack' ) );
+		if ( ! current_user_can( 'manage_options' ) || ! check_admin_referer( 'stackpress_review' ) ) {
+			wp_die( esc_html__( 'Permission denied.', 'stackpress' ) );
 		}
 		$index   = isset( $_GET['i'] ) ? absint( $_GET['i'] ) : -1;
 		$reviews = $this->reviews();
@@ -226,7 +226,7 @@ final class Google_Reviews extends Abstract_Module {
 			unset( $reviews[ $index ] );
 			update_option( self::OPTION, array_values( $reviews ) );
 		}
-		wp_safe_redirect( admin_url( 'admin.php?page=dicestack-reviews' ) );
+		wp_safe_redirect( admin_url( 'admin.php?page=stackpress-reviews' ) );
 		exit;
 	}
 
@@ -237,34 +237,34 @@ final class Google_Reviews extends Abstract_Module {
 	 */
 	public function render_page() {
 		$reviews = $this->reviews();
-		echo '<div class="wrap"><h1>' . esc_html__( 'Reviews', 'dicestack' ) . '</h1>';
+		echo '<div class="wrap"><h1>' . esc_html__( 'Reviews', 'stackpress' ) . '</h1>';
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- display-only flag.
 		if ( isset( $_GET['settings-saved'] ) ) {
-			echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__( 'Settings saved.', 'dicestack' ) . '</p></div>';
+			echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__( 'Settings saved.', 'stackpress' ) . '</p></div>';
 		}
-		echo '<p>' . esc_html__( 'Add reviews here, then place [dicestack_reviews] on any page. No API key required.', 'dicestack' ) . '</p>';
-		echo \DiceStack\Admin\Settings_Renderer::page_form( $this ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped internally.
+		echo '<p>' . esc_html__( 'Add reviews here, then place [stackpress_reviews] on any page. No API key required.', 'stackpress' ) . '</p>';
+		echo \StackPress\Admin\Settings_Renderer::page_form( $this ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped internally.
 
 		if ( $reviews ) {
-			echo '<table class="widefat striped" style="margin-bottom:20px;"><thead><tr><th>' . esc_html__( 'Name', 'dicestack' ) . '</th><th>' . esc_html__( 'Rating', 'dicestack' ) . '</th><th>' . esc_html__( 'Review', 'dicestack' ) . '</th><th></th></tr></thead><tbody>';
+			echo '<table class="widefat striped" style="margin-bottom:20px;"><thead><tr><th>' . esc_html__( 'Name', 'stackpress' ) . '</th><th>' . esc_html__( 'Rating', 'stackpress' ) . '</th><th>' . esc_html__( 'Review', 'stackpress' ) . '</th><th></th></tr></thead><tbody>';
 			foreach ( $reviews as $i => $r ) {
-				$del = wp_nonce_url( admin_url( 'admin-post.php?action=dicestack_delete_review&i=' . $i ), 'dicestack_review' );
-				echo '<tr><td>' . esc_html( $r['name'] ) . '</td><td>' . esc_html( str_repeat( '★', (int) $r['rating'] ) ) . '</td><td>' . esc_html( wp_trim_words( $r['text'], 16 ) ) . '</td><td><a href="' . esc_url( $del ) . '" class="button-link-delete">' . esc_html__( 'Delete', 'dicestack' ) . '</a></td></tr>';
+				$del = wp_nonce_url( admin_url( 'admin-post.php?action=stackpress_delete_review&i=' . $i ), 'stackpress_review' );
+				echo '<tr><td>' . esc_html( $r['name'] ) . '</td><td>' . esc_html( str_repeat( '★', (int) $r['rating'] ) ) . '</td><td>' . esc_html( wp_trim_words( $r['text'], 16 ) ) . '</td><td><a href="' . esc_url( $del ) . '" class="button-link-delete">' . esc_html__( 'Delete', 'stackpress' ) . '</a></td></tr>';
 			}
 			echo '</tbody></table>';
 		}
 
-		echo '<h2>' . esc_html__( 'Add a review', 'dicestack' ) . '</h2>';
+		echo '<h2>' . esc_html__( 'Add a review', 'stackpress' ) . '</h2>';
 		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '">';
-		wp_nonce_field( 'dicestack_review' );
-		echo '<input type="hidden" name="action" value="dicestack_add_review" />';
+		wp_nonce_field( 'stackpress_review' );
+		echo '<input type="hidden" name="action" value="stackpress_add_review" />';
 		echo '<table class="form-table">';
-		echo '<tr><th>' . esc_html__( 'Name', 'dicestack' ) . '</th><td><input type="text" name="name" class="regular-text" required /></td></tr>';
-		echo '<tr><th>' . esc_html__( 'Rating', 'dicestack' ) . '</th><td><select name="rating"><option>5</option><option>4</option><option>3</option><option>2</option><option>1</option></select></td></tr>';
-		echo '<tr><th>' . esc_html__( 'Date (optional)', 'dicestack' ) . '</th><td><input type="text" name="date" class="regular-text" placeholder="e.g. June 2026" /></td></tr>';
-		echo '<tr><th>' . esc_html__( 'Review text', 'dicestack' ) . '</th><td><textarea name="text" rows="4" class="large-text" required></textarea></td></tr>';
+		echo '<tr><th>' . esc_html__( 'Name', 'stackpress' ) . '</th><td><input type="text" name="name" class="regular-text" required /></td></tr>';
+		echo '<tr><th>' . esc_html__( 'Rating', 'stackpress' ) . '</th><td><select name="rating"><option>5</option><option>4</option><option>3</option><option>2</option><option>1</option></select></td></tr>';
+		echo '<tr><th>' . esc_html__( 'Date (optional)', 'stackpress' ) . '</th><td><input type="text" name="date" class="regular-text" placeholder="e.g. June 2026" /></td></tr>';
+		echo '<tr><th>' . esc_html__( 'Review text', 'stackpress' ) . '</th><td><textarea name="text" rows="4" class="large-text" required></textarea></td></tr>';
 		echo '</table>';
-		echo '<p><button type="submit" class="button button-primary">' . esc_html__( 'Add review', 'dicestack' ) . '</button></p>';
+		echo '<p><button type="submit" class="button button-primary">' . esc_html__( 'Add review', 'stackpress' ) . '</button></p>';
 		echo '</form></div>';
 	}
 
@@ -318,16 +318,16 @@ final class Google_Reviews extends Abstract_Module {
 		$ld = '<script type="application/ld+json">' . wp_json_encode( $schema ) . '</script>';
 
 		if ( 'badge' === $design ) {
-			return '<div class="dicestack-reviews-badge" style="display:inline-flex;align-items:center;gap:8px;border:1px solid #e4e7ec;border-radius:8px;padding:10px 14px;">'
+			return '<div class="stackpress-reviews-badge" style="display:inline-flex;align-items:center;gap:8px;border:1px solid #e4e7ec;border-radius:8px;padding:10px 14px;">'
 				. '<strong style="font-size:20px;">' . esc_html( number_format_i18n( $avg, 1 ) ) . '</strong>'
 				. $this->stars( (int) round( $avg ) )
-				. '<span style="color:#6b7280;">' . esc_html( sprintf( /* translators: %d: count. */ _n( '%d review', '%d reviews', $count, 'dicestack' ), $count ) ) . '</span></div>' . $ld;
+				. '<span style="color:#6b7280;">' . esc_html( sprintf( /* translators: %d: count. */ _n( '%d review', '%d reviews', $count, 'stackpress' ), $count ) ) . '</span></div>' . $ld;
 		}
 
 		$wrap = 'grid' === $design ? 'display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;' : '';
-		$html = '<div class="dicestack-reviews dicestack-reviews-' . esc_attr( $design ) . '" style="' . esc_attr( $wrap ) . '">';
+		$html = '<div class="stackpress-reviews stackpress-reviews-' . esc_attr( $design ) . '" style="' . esc_attr( $wrap ) . '">';
 		foreach ( $reviews as $r ) {
-			$html .= '<div class="dicestack-review" style="border:1px solid #e4e7ec;border-radius:10px;padding:14px;">';
+			$html .= '<div class="stackpress-review" style="border:1px solid #e4e7ec;border-radius:10px;padding:14px;">';
 			$html .= '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><strong>' . esc_html( $r['name'] ) . '</strong>' . $this->stars( (int) $r['rating'] ) . '</div>';
 			if ( ! empty( $r['date'] ) ) {
 				$html .= '<div style="font-size:12px;color:#9aa3af;margin-bottom:6px;">' . esc_html( $r['date'] ) . '</div>';

@@ -2,12 +2,12 @@
 /**
  * Search Term Highlight module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Content;
+namespace StackPress\Modules\Content;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -27,14 +27,14 @@ final class Search_Highlight extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Search term highlight', 'dicestack' );
+		return __( 'Search term highlight', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Highlight the searched words in your search results.', 'dicestack' );
+		return __( 'Highlight the searched words in your search results.', 'stackpress' );
 	}
 
 	/**

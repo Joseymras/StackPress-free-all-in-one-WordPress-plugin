@@ -2,12 +2,12 @@
 /**
  * Dashboard Cleanup module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Admin;
+namespace StackPress\Modules\Admin;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Dashboard_Cleanup extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Dashboard cleanup', 'dicestack' );
+		return __( 'Dashboard cleanup', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Hide default dashboard widgets and the WordPress logo for a cleaner admin.', 'dicestack' );
+		return __( 'Hide default dashboard widgets and the WordPress logo for a cleaner admin.', 'stackpress' );
 	}
 
 	/**
@@ -72,13 +72,13 @@ final class Dashboard_Cleanup extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'remove_widgets',
-				'label'   => __( 'Remove default dashboard widgets', 'dicestack' ),
+				'label'   => __( 'Remove default dashboard widgets', 'stackpress' ),
 				'type'    => 'toggle',
 				'default' => true,
 			),
 			array(
 				'key'     => 'remove_wp_logo',
-				'label'   => __( 'Remove the WordPress logo from the admin bar', 'dicestack' ),
+				'label'   => __( 'Remove the WordPress logo from the admin bar', 'stackpress' ),
 				'type'    => 'toggle',
 				'default' => false,
 			),

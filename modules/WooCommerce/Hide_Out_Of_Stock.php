@@ -2,12 +2,12 @@
 /**
  * WooCommerce Hide Out-of-Stock module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\WooCommerce;
+namespace StackPress\Modules\WooCommerce;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Hide_Out_Of_Stock extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Hide out-of-stock products', 'dicestack' );
+		return __( 'Hide out-of-stock products', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Remove out-of-stock items from shop and category pages.', 'dicestack' );
+		return __( 'Remove out-of-stock items from shop and category pages.', 'stackpress' );
 	}
 
 	/**

@@ -2,12 +2,12 @@
 /**
  * Minify HTML module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Performance;
+namespace StackPress\Modules\Performance;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -29,14 +29,14 @@ final class Minify_HTML extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Minify HTML', 'dicestack' );
+		return __( 'Minify HTML', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Strip needless whitespace from page HTML for a slightly smaller download.', 'dicestack' );
+		return __( 'Strip needless whitespace from page HTML for a slightly smaller download.', 'stackpress' );
 	}
 
 	/**
@@ -108,7 +108,7 @@ final class Minify_HTML extends Abstract_Module {
 		$html      = preg_replace_callback(
 			'#<(pre|textarea|script|style)\b[^>]*>.*?</\1>#is',
 			function ( $m ) use ( &$protected ) {
-				$key               = '%%DICESTACK' . count( $protected ) . '%%';
+				$key               = '%%STACKPRESS' . count( $protected ) . '%%';
 				$protected[ $key ] = $m[0];
 				return $key;
 			},

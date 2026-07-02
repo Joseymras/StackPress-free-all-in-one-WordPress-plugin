@@ -2,12 +2,12 @@
 /**
  * Last Login tracker module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Admin;
+namespace StackPress\Modules\Admin;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -20,7 +20,7 @@ final class Last_Login extends Abstract_Module {
 	/**
 	 * Meta key for the last-login timestamp.
 	 */
-	const META = 'dicestack_last_login';
+	const META = 'stackpress_last_login';
 
 	/**
 	 * {@inheritDoc}
@@ -33,14 +33,14 @@ final class Last_Login extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Last login tracker', 'dicestack' );
+		return __( 'Last login tracker', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Record when each user last logged in and show it on the Users screen.', 'dicestack' );
+		return __( 'Record when each user last logged in and show it on the Users screen.', 'stackpress' );
 	}
 
 	/**
@@ -102,7 +102,7 @@ final class Last_Login extends Abstract_Module {
 	 * @return array
 	 */
 	public function add_column( $columns ) {
-		$columns['dicestack_last_login'] = __( 'Last login', 'dicestack' );
+		$columns['stackpress_last_login'] = __( 'Last login', 'stackpress' );
 		return $columns;
 	}
 
@@ -115,17 +115,17 @@ final class Last_Login extends Abstract_Module {
 	 * @return string
 	 */
 	public function render_column( $output, $column_name, $user_id ) {
-		if ( 'dicestack_last_login' !== $column_name ) {
+		if ( 'stackpress_last_login' !== $column_name ) {
 			return $output;
 		}
 		$ts = (int) get_user_meta( $user_id, self::META, true );
 		if ( ! $ts ) {
-			return esc_html__( 'Never', 'dicestack' );
+			return esc_html__( 'Never', 'stackpress' );
 		}
 		return esc_html(
 			sprintf(
 				/* translators: %s: human-readable time difference. */
-				__( '%s ago', 'dicestack' ),
+				__( '%s ago', 'stackpress' ),
 				human_time_diff( $ts, time() )
 			)
 		);

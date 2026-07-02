@@ -2,12 +2,12 @@
 /**
  * Login Math Captcha module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Security;
+namespace StackPress\Modules\Security;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -29,14 +29,14 @@ final class Login_Captcha extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Login math captcha', 'dicestack' );
+		return __( 'Login math captcha', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Require a simple sum to log in, blocking automated login bots — no external service.', 'dicestack' );
+		return __( 'Require a simple sum to log in, blocking automated login bots — no external service.', 'stackpress' );
 	}
 
 	/**
@@ -73,7 +73,7 @@ final class Login_Captcha extends Abstract_Module {
 	 * @return string
 	 */
 	private function hash( $answer ) {
-		return wp_hash( 'dicestack_login_math_' . $answer );
+		return wp_hash( 'stackpress_login_math_' . $answer );
 	}
 
 	/**
@@ -92,9 +92,9 @@ final class Login_Captcha extends Abstract_Module {
 	public function field() {
 		$a   = wp_rand( 1, 9 );
 		$b   = wp_rand( 1, 9 );
-		echo '<p><label for="dicestack_login_math">' . sprintf( /* translators: 1: first number, 2: second number. */ esc_html__( 'What is %1$d + %2$d?', 'dicestack' ), (int) $a, (int) $b ) . '<br/>';
-		echo '<input type="text" name="dicestack_login_math" id="dicestack_login_math" class="input" size="20" autocomplete="off" /></label>';
-		echo '<input type="hidden" name="dicestack_login_math_h" value="' . esc_attr( $this->hash( $a + $b ) ) . '" /></p>';
+		echo '<p><label for="stackpress_login_math">' . sprintf( /* translators: 1: first number, 2: second number. */ esc_html__( 'What is %1$d + %2$d?', 'stackpress' ), (int) $a, (int) $b ) . '<br/>';
+		echo '<input type="text" name="stackpress_login_math" id="stackpress_login_math" class="input" size="20" autocomplete="off" /></label>';
+		echo '<input type="hidden" name="stackpress_login_math_h" value="' . esc_attr( $this->hash( $a + $b ) ) . '" /></p>';
 	}
 
 	/**
@@ -111,15 +111,15 @@ final class Login_Captcha extends Abstract_Module {
 		// phpcs:disable WordPress.Security.NonceVerification.Missing -- core login flow; reading our captcha fields only.
 		// Fail open when our field wasn't rendered (custom login form, caching),
 		// so legitimate logins are never blocked by a missing captcha.
-		if ( empty( $_POST['log'] ) || empty( $_POST['dicestack_login_math_h'] ) ) {
+		if ( empty( $_POST['log'] ) || empty( $_POST['stackpress_login_math_h'] ) ) {
 			return $user;
 		}
-		$answer = isset( $_POST['dicestack_login_math'] ) ? absint( wp_unslash( $_POST['dicestack_login_math'] ) ) : -1;
-		$hash   = sanitize_text_field( wp_unslash( $_POST['dicestack_login_math_h'] ) );
+		$answer = isset( $_POST['stackpress_login_math'] ) ? absint( wp_unslash( $_POST['stackpress_login_math'] ) ) : -1;
+		$hash   = sanitize_text_field( wp_unslash( $_POST['stackpress_login_math_h'] ) );
 		// phpcs:enable WordPress.Security.NonceVerification.Missing
 
 		if ( ! hash_equals( $hash, $this->hash( $answer ) ) ) {
-			return new \WP_Error( 'dicestack_login_captcha', __( '<strong>Error:</strong> Incorrect answer to the math question.', 'dicestack' ) );
+			return new \WP_Error( 'stackpress_login_captcha', __( '<strong>Error:</strong> Incorrect answer to the math question.', 'stackpress' ) );
 		}
 		return $user;
 	}

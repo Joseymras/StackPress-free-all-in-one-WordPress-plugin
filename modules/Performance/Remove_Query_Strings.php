@@ -2,12 +2,12 @@
 /**
  * Remove Query Strings module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Performance;
+namespace StackPress\Modules\Performance;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Remove_Query_Strings extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Remove asset query strings', 'dicestack' );
+		return __( 'Remove asset query strings', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Strip ?ver= from CSS/JS URLs so caches and CDNs store them reliably.', 'dicestack' );
+		return __( 'Strip ?ver= from CSS/JS URLs so caches and CDNs store them reliably.', 'stackpress' );
 	}
 
 	/**

@@ -2,12 +2,12 @@
 /**
  * Comment Author No Link module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Forms;
+namespace StackPress\Modules\Forms;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Comment_Author_No_Link extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Unlink comment authors', 'dicestack' );
+		return __( 'Unlink comment authors', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Remove the website link from commenter names to discourage spam.', 'dicestack' );
+		return __( 'Remove the website link from commenter names to discourage spam.', 'stackpress' );
 	}
 
 	/**

@@ -2,12 +2,12 @@
 /**
  * Editor Fullscreen Off module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Admin;
+namespace StackPress\Modules\Admin;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Editor_Fullscreen_Off extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Disable editor fullscreen', 'dicestack' );
+		return __( 'Disable editor fullscreen', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Keep the admin menu visible by turning off the editor\'s fullscreen mode.', 'dicestack' );
+		return __( 'Keep the admin menu visible by turning off the editor\'s fullscreen mode.', 'stackpress' );
 	}
 
 	/**

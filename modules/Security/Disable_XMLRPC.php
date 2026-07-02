@@ -2,12 +2,12 @@
 /**
  * Disable XML-RPC module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Security;
+namespace StackPress\Modules\Security;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Disable_XMLRPC extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Disable XML-RPC', 'dicestack' );
+		return __( 'Disable XML-RPC', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Turn off the XML-RPC API to close a common brute-force and DDoS vector.', 'dicestack' );
+		return __( 'Turn off the XML-RPC API to close a common brute-force and DDoS vector.', 'stackpress' );
 	}
 
 	/**

@@ -2,12 +2,12 @@
 /**
  * Disable Update Emails module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Site;
+namespace StackPress\Modules\Site;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Disable_Update_Emails extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Silence auto-update emails', 'dicestack' );
+		return __( 'Silence auto-update emails', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Stop the result emails WordPress sends after automatic updates.', 'dicestack' );
+		return __( 'Stop the result emails WordPress sends after automatic updates.', 'stackpress' );
 	}
 
 	/**
@@ -72,7 +72,7 @@ final class Disable_Update_Emails extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'keep_critical',
-				'label'   => __( 'Still send emails for failed updates', 'dicestack' ),
+				'label'   => __( 'Still send emails for failed updates', 'stackpress' ),
 				'type'    => 'toggle',
 				'default' => true,
 			),

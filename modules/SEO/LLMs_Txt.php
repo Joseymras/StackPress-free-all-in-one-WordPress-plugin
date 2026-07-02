@@ -2,12 +2,12 @@
 /**
  * llms.txt Generator module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\SEO;
+namespace StackPress\Modules\SEO;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -29,14 +29,14 @@ final class LLMs_Txt extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'llms.txt for AI', 'dicestack' );
+		return __( 'llms.txt for AI', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Publish an llms.txt so AI assistants can understand and cite your site.', 'dicestack' );
+		return __( 'Publish an llms.txt so AI assistants can understand and cite your site.', 'stackpress' );
 	}
 
 	/**
@@ -73,13 +73,13 @@ final class LLMs_Txt extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'tagline',
-				'label'   => __( 'One-line site summary', 'dicestack' ),
+				'label'   => __( 'One-line site summary', 'stackpress' ),
 				'type'    => 'text',
 				'default' => get_bloginfo( 'description' ),
 			),
 			array(
 				'key'     => 'extra',
-				'label'   => __( 'Extra notes for AI (optional)', 'dicestack' ),
+				'label'   => __( 'Extra notes for AI (optional)', 'stackpress' ),
 				'type'    => 'textarea',
 				'default' => '',
 			),
@@ -114,15 +114,15 @@ final class LLMs_Txt extends Abstract_Module {
 		if ( '' !== trim( $tagline ) ) {
 			echo '> ' . esc_html( $tagline ) . "\n\n";
 		}
-		echo esc_html__( 'Site URL', 'dicestack' ) . ': ' . esc_url_raw( home_url( '/' ) ) . "\n\n";
+		echo esc_html__( 'Site URL', 'stackpress' ) . ': ' . esc_url_raw( home_url( '/' ) ) . "\n\n";
 
-		echo '## ' . esc_html__( 'Key pages', 'dicestack' ) . "\n\n";
+		echo '## ' . esc_html__( 'Key pages', 'stackpress' ) . "\n\n";
 		$pages = get_pages( array( 'sort_column' => 'menu_order', 'number' => 25 ) );
 		foreach ( (array) $pages as $page ) {
 			echo '- [' . esc_html( get_the_title( $page ) ) . '](' . esc_url_raw( get_permalink( $page ) ) . ")\n";
 		}
 
-		echo "\n## " . esc_html__( 'Recent posts', 'dicestack' ) . "\n\n";
+		echo "\n## " . esc_html__( 'Recent posts', 'stackpress' ) . "\n\n";
 		$posts = get_posts( array( 'numberposts' => 15 ) );
 		foreach ( (array) $posts as $post ) {
 			echo '- [' . esc_html( get_the_title( $post ) ) . '](' . esc_url_raw( get_permalink( $post ) ) . ")\n";
@@ -130,7 +130,7 @@ final class LLMs_Txt extends Abstract_Module {
 
 		$extra = (string) $this->get_setting( 'extra', '' );
 		if ( '' !== trim( $extra ) ) {
-			echo "\n## " . esc_html__( 'Notes', 'dicestack' ) . "\n\n" . esc_html( $extra ) . "\n";
+			echo "\n## " . esc_html__( 'Notes', 'stackpress' ) . "\n\n" . esc_html( $extra ) . "\n";
 		}
 
 		exit;

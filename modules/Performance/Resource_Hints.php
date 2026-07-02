@@ -2,12 +2,12 @@
 /**
  * Resource Hints (preconnect) module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Performance;
+namespace StackPress\Modules\Performance;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Resource_Hints extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Preconnect & DNS prefetch', 'dicestack' );
+		return __( 'Preconnect & DNS prefetch', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Open connections to fonts, CDNs, and analytics earlier for faster loads.', 'dicestack' );
+		return __( 'Open connections to fonts, CDNs, and analytics earlier for faster loads.', 'stackpress' );
 	}
 
 	/**
@@ -79,10 +79,10 @@ final class Resource_Hints extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'origins',
-				'label'   => __( 'Origins to preconnect', 'dicestack' ),
+				'label'   => __( 'Origins to preconnect', 'stackpress' ),
 				'type'    => 'textarea',
 				'default' => "https://fonts.googleapis.com\nhttps://fonts.gstatic.com",
-				'help'    => __( 'One origin per line, e.g. https://fonts.gstatic.com', 'dicestack' ),
+				'help'    => __( 'One origin per line, e.g. https://fonts.gstatic.com', 'stackpress' ),
 			),
 		);
 	}

@@ -2,12 +2,12 @@
 /**
  * Responsive Tables module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Content;
+namespace StackPress\Modules\Content;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Responsive_Tables extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Responsive tables', 'dicestack' );
+		return __( 'Responsive tables', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Make wide content tables scroll horizontally on mobile instead of overflowing.', 'dicestack' );
+		return __( 'Make wide content tables scroll horizontally on mobile instead of overflowing.', 'stackpress' );
 	}
 
 	/**
@@ -84,7 +84,7 @@ final class Responsive_Tables extends Abstract_Module {
 		}
 		return preg_replace(
 			'/<table(.*?)<\/table>/is',
-			'<div class="dicestack-table-wrap" style="overflow-x:auto;-webkit-overflow-scrolling:touch;"><table$1</table></div>',
+			'<div class="stackpress-table-wrap" style="overflow-x:auto;-webkit-overflow-scrolling:touch;"><table$1</table></div>',
 			$content
 		);
 	}

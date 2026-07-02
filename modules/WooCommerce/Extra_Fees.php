@@ -2,12 +2,12 @@
 /**
  * WooCommerce Extra Fees module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\WooCommerce;
+namespace StackPress\Modules\WooCommerce;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Extra_Fees extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Extra checkout fees', 'dicestack' );
+		return __( 'Extra checkout fees', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Add a handling or processing fee to every order — flat amount, percentage, or both.', 'dicestack' );
+		return __( 'Add a handling or processing fee to every order — flat amount, percentage, or both.', 'stackpress' );
 	}
 
 	/**
@@ -86,13 +86,13 @@ final class Extra_Fees extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'label',
-				'label'   => __( 'Fee label', 'dicestack' ),
+				'label'   => __( 'Fee label', 'stackpress' ),
 				'type'    => 'text',
-				'default' => __( 'Handling fee', 'dicestack' ),
+				'default' => __( 'Handling fee', 'stackpress' ),
 			),
 			array(
 				'key'     => 'flat',
-				'label'   => __( 'Flat fee amount', 'dicestack' ),
+				'label'   => __( 'Flat fee amount', 'stackpress' ),
 				'type'    => 'number',
 				'default' => 0,
 				'min'     => 0,
@@ -100,7 +100,7 @@ final class Extra_Fees extends Abstract_Module {
 			),
 			array(
 				'key'     => 'percent',
-				'label'   => __( 'Percentage fee (% of subtotal)', 'dicestack' ),
+				'label'   => __( 'Percentage fee (% of subtotal)', 'stackpress' ),
 				'type'    => 'number',
 				'default' => 0,
 				'min'     => 0,
@@ -109,7 +109,7 @@ final class Extra_Fees extends Abstract_Module {
 			),
 			array(
 				'key'     => 'taxable',
-				'label'   => __( 'Fee is taxable', 'dicestack' ),
+				'label'   => __( 'Fee is taxable', 'stackpress' ),
 				'type'    => 'toggle',
 				'default' => false,
 			),
@@ -145,7 +145,7 @@ final class Extra_Fees extends Abstract_Module {
 			return;
 		}
 
-		$label   = (string) $this->get_setting( 'label', __( 'Handling fee', 'dicestack' ) );
+		$label   = (string) $this->get_setting( 'label', __( 'Handling fee', 'stackpress' ) );
 		$taxable = ! empty( $this->get_setting( 'taxable', false ) );
 		$cart->add_fee( $label, round( $amount, 2 ), $taxable );
 	}

@@ -2,10 +2,10 @@
 /**
  * Module registry: the master catalog of categories and modules.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack;
+namespace StackPress;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -39,52 +39,52 @@ final class Module_Registry {
 	public function categories() {
 		return array(
 			'security'      => array(
-				'label' => __( 'Security', 'dicestack' ),
+				'label' => __( 'Security', 'stackpress' ),
 				'icon'  => 'shield-lock',
 				'color' => 'red',
 			),
 			'performance'   => array(
-				'label' => __( 'Performance', 'dicestack' ),
+				'label' => __( 'Performance', 'stackpress' ),
 				'icon'  => 'bolt',
 				'color' => 'blue',
 			),
 			'seo'           => array(
-				'label' => __( 'SEO', 'dicestack' ),
+				'label' => __( 'SEO', 'stackpress' ),
 				'icon'  => 'search',
 				'color' => 'green',
 			),
 			'forms'         => array(
-				'label' => __( 'Forms', 'dicestack' ),
+				'label' => __( 'Forms', 'stackpress' ),
 				'icon'  => 'forms',
 				'color' => 'purple',
 			),
 			'woocommerce'   => array(
-				'label' => __( 'WooCommerce', 'dicestack' ),
+				'label' => __( 'WooCommerce', 'stackpress' ),
 				'icon'  => 'shopping-cart',
 				'color' => 'amber',
 			),
 			'media'         => array(
-				'label' => __( 'Media', 'dicestack' ),
+				'label' => __( 'Media', 'stackpress' ),
 				'icon'  => 'photo',
 				'color' => 'teal',
 			),
 			'content'       => array(
-				'label' => __( 'Content & Marketing', 'dicestack' ),
+				'label' => __( 'Content & Marketing', 'stackpress' ),
 				'icon'  => 'speakerphone',
 				'color' => 'pink',
 			),
 			'admin'         => array(
-				'label' => __( 'Admin & Developer', 'dicestack' ),
+				'label' => __( 'Admin & Developer', 'stackpress' ),
 				'icon'  => 'tool',
 				'color' => 'gray',
 			),
 			'site'          => array(
-				'label' => __( 'Site Management', 'dicestack' ),
+				'label' => __( 'Site Management', 'stackpress' ),
 				'icon'  => 'server',
 				'color' => 'blue',
 			),
 			'accessibility' => array(
-				'label' => __( 'Accessibility & Legal', 'dicestack' ),
+				'label' => __( 'Accessibility & Legal', 'stackpress' ),
 				'icon'  => 'accessible',
 				'color' => 'purple',
 			),
@@ -120,12 +120,12 @@ final class Module_Registry {
 	 * @return string Absolute path.
 	 */
 	private function class_path( $class ) {
-		$relative = substr( $class, strlen( 'DiceStack\\' ) );
+		$relative = substr( $class, strlen( 'StackPress\\' ) );
 		if ( strpos( $relative, 'Modules\\' ) === 0 ) {
 			$relative = substr( $relative, strlen( 'Modules\\' ) );
-			$base     = DICESTACK_PATH . 'modules/';
+			$base     = STACKPRESS_PATH . 'modules/';
 		} else {
-			$base = DICESTACK_PATH . 'includes/';
+			$base = STACKPRESS_PATH . 'includes/';
 		}
 		return $base . str_replace( '\\', '/', $relative ) . '.php';
 	}
@@ -442,7 +442,7 @@ final class Module_Registry {
 					if ( ! class_exists( 'WooCommerce' ) ) {
 						$missing[] = array(
 							'slug'    => 'woocommerce',
-							'label'   => __( 'WooCommerce', 'dicestack' ),
+							'label'   => __( 'WooCommerce', 'stackpress' ),
 							'install' => 'plugin-install.php?s=woocommerce&tab=search&type=term',
 						);
 					}
@@ -463,7 +463,7 @@ final class Module_Registry {
 		if ( ! $module ) {
 			return array();
 		}
-		return \DiceStack\Environment::missing( $module->requirements() );
+		return \StackPress\Environment::missing( $module->requirements() );
 	}
 
 	/**
@@ -486,7 +486,7 @@ final class Module_Registry {
 	public function module_badge( $id ) {
 		static $essential = null, $recommended = null;
 		if ( null === $essential ) {
-			$essential   = \DiceStack\Core::recommended_defaults();
+			$essential   = \StackPress\Core::recommended_defaults();
 			$recommended = array(
 				'page_cache',
 				'minify_css',
@@ -513,14 +513,14 @@ final class Module_Registry {
 		}
 		if ( in_array( $id, $essential, true ) ) {
 			return array(
-				'label'  => __( 'Essential', 'dicestack' ),
+				'label'  => __( 'Essential', 'stackpress' ),
 				'key'    => 'essential',
 				'weight' => 3,
 			);
 		}
 		if ( in_array( $id, $recommended, true ) ) {
 			return array(
-				'label'  => __( 'Recommended', 'dicestack' ),
+				'label'  => __( 'Recommended', 'stackpress' ),
 				'key'    => 'recommended',
 				'weight' => 2,
 			);
@@ -541,24 +541,24 @@ final class Module_Registry {
 	 */
 	public function settings_pages() {
 		return array(
-			'theme_styler'         => 'dicestack-styler',
-			'object_cache'         => 'dicestack-object-cache',
-			'backup_restore'       => 'dicestack-backups',
-			'cloud_backup'         => 'dicestack-cloud',
-			'cloudflare'           => 'dicestack-cloudflare',
-			'image_optimizer'      => 'dicestack-optimize-images',
-			'google_reviews'       => 'dicestack-reviews',
-			'seo_checker'          => 'dicestack-seo-checker',
-			'activity_log'         => 'dicestack-activity-log',
-			'error_monitor'        => 'dicestack-errors',
-			'four04_monitor'       => 'dicestack-404',
-			'master_search'        => 'dicestack-search',
-			'file_manager'         => 'dicestack-files',
-			'db_search_replace'    => 'dicestack-search-replace',
-			'config_export_import' => 'dicestack-config',
-			'monthly_report'       => 'dicestack-report',
-			'shortcode_generator'  => 'dicestack-shortcodes',
-			'admin_menu_editor'    => 'dicestack-admin-menu',
+			'theme_styler'         => 'stackpress-styler',
+			'object_cache'         => 'stackpress-object-cache',
+			'backup_restore'       => 'stackpress-backups',
+			'cloud_backup'         => 'stackpress-cloud',
+			'cloudflare'           => 'stackpress-cloudflare',
+			'image_optimizer'      => 'stackpress-optimize-images',
+			'google_reviews'       => 'stackpress-reviews',
+			'seo_checker'          => 'stackpress-seo-checker',
+			'activity_log'         => 'stackpress-activity-log',
+			'error_monitor'        => 'stackpress-errors',
+			'four04_monitor'       => 'stackpress-404',
+			'master_search'        => 'stackpress-search',
+			'file_manager'         => 'stackpress-files',
+			'db_search_replace'    => 'stackpress-search-replace',
+			'config_export_import' => 'stackpress-config',
+			'monthly_report'       => 'stackpress-report',
+			'shortcode_generator'  => 'stackpress-shortcodes',
+			'admin_menu_editor'    => 'stackpress-admin-menu',
 		);
 	}
 

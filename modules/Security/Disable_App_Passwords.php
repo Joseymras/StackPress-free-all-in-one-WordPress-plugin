@@ -2,12 +2,12 @@
 /**
  * Disable Application Passwords module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Security;
+namespace StackPress\Modules\Security;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Disable_App_Passwords extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Disable application passwords', 'dicestack' );
+		return __( 'Disable application passwords', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Turn off WordPress application passwords if you don\'t use external API clients.', 'dicestack' );
+		return __( 'Turn off WordPress application passwords if you don\'t use external API clients.', 'stackpress' );
 	}
 
 	/**

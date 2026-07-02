@@ -2,12 +2,12 @@
 /**
  * WooCommerce Product Labels module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\WooCommerce;
+namespace StackPress\Modules\WooCommerce;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Product_Labels extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Product labels & badges', 'dicestack' );
+		return __( 'Product labels & badges', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Show Sale, New, Featured, and Out-of-stock badges on product images.', 'dicestack' );
+		return __( 'Show Sale, New, Featured, and Out-of-stock badges on product images.', 'stackpress' );
 	}
 
 	/**
@@ -86,23 +86,23 @@ final class Product_Labels extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'new_days',
-				'label'   => __( 'Mark products "New" for (days after publish)', 'dicestack' ),
+				'label'   => __( 'Mark products "New" for (days after publish)', 'stackpress' ),
 				'type'    => 'number',
 				'default' => 30,
 				'min'     => 0,
 				'max'     => 365,
 				'step'    => 1,
-				'help'    => __( 'Set to 0 to disable the New badge.', 'dicestack' ),
+				'help'    => __( 'Set to 0 to disable the New badge.', 'stackpress' ),
 			),
 			array(
 				'key'     => 'show_featured',
-				'label'   => __( 'Show a "Featured" badge', 'dicestack' ),
+				'label'   => __( 'Show a "Featured" badge', 'stackpress' ),
 				'type'    => 'toggle',
 				'default' => true,
 			),
 			array(
 				'key'     => 'show_outofstock',
-				'label'   => __( 'Show an "Out of stock" badge', 'dicestack' ),
+				'label'   => __( 'Show an "Out of stock" badge', 'stackpress' ),
 				'type'    => 'toggle',
 				'default' => true,
 			),
@@ -124,7 +124,7 @@ final class Product_Labels extends Abstract_Module {
 	 * @return void
 	 */
 	public function styles() {
-		echo '<style>.dicestack-badges{position:absolute;top:8px;left:8px;z-index:5;display:flex;flex-direction:column;gap:4px}.dicestack-badge-wc{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;color:#fff;line-height:1.6}.dicestack-b-sale{background:#d4537e}.dicestack-b-new{background:#0aa2c0}.dicestack-b-feat{background:#854f0b}.dicestack-b-oos{background:#6b7280}</style>';
+		echo '<style>.stackpress-badges{position:absolute;top:8px;left:8px;z-index:5;display:flex;flex-direction:column;gap:4px}.stackpress-badge-wc{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;color:#fff;line-height:1.6}.stackpress-b-sale{background:#d4537e}.stackpress-b-new{background:#0aa2c0}.stackpress-b-feat{background:#854f0b}.stackpress-b-oos{background:#6b7280}</style>';
 	}
 
 	/**
@@ -141,32 +141,32 @@ final class Product_Labels extends Abstract_Module {
 		$badges = array();
 
 		if ( $product->is_on_sale() ) {
-			$badges[] = array( 'sale', __( 'Sale', 'dicestack' ) );
+			$badges[] = array( 'sale', __( 'Sale', 'stackpress' ) );
 		}
 
 		$new_days = (int) $this->get_setting( 'new_days', 30 );
 		if ( $new_days > 0 ) {
 			$created = $product->get_date_created();
 			if ( $created && ( time() - $created->getTimestamp() ) < ( $new_days * DAY_IN_SECONDS ) ) {
-				$badges[] = array( 'new', __( 'New', 'dicestack' ) );
+				$badges[] = array( 'new', __( 'New', 'stackpress' ) );
 			}
 		}
 
 		if ( ! empty( $this->get_setting( 'show_featured', true ) ) && $product->is_featured() ) {
-			$badges[] = array( 'feat', __( 'Featured', 'dicestack' ) );
+			$badges[] = array( 'feat', __( 'Featured', 'stackpress' ) );
 		}
 
 		if ( ! empty( $this->get_setting( 'show_outofstock', true ) ) && ! $product->is_in_stock() ) {
-			$badges[] = array( 'oos', __( 'Out of stock', 'dicestack' ) );
+			$badges[] = array( 'oos', __( 'Out of stock', 'stackpress' ) );
 		}
 
 		if ( empty( $badges ) ) {
 			return;
 		}
 
-		echo '<span class="dicestack-badges">';
+		echo '<span class="stackpress-badges">';
 		foreach ( $badges as $badge ) {
-			echo '<span class="dicestack-badge-wc dicestack-b-' . esc_attr( $badge[0] ) . '">' . esc_html( $badge[1] ) . '</span>';
+			echo '<span class="stackpress-badge-wc stackpress-b-' . esc_attr( $badge[0] ) . '">' . esc_html( $badge[1] ) . '</span>';
 		}
 		echo '</span>';
 	}

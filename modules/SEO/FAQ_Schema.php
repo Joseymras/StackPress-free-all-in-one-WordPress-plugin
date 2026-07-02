@@ -2,18 +2,18 @@
 /**
  * FAQ Schema module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\SEO;
+namespace StackPress\Modules\SEO;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
  * Renders an accessible FAQ block and matching FAQPage JSON-LD via
- * [dicestack_faq] ... [/dicestack_faq] with one "Question|Answer" per line.
+ * [stackpress_faq] ... [/stackpress_faq] with one "Question|Answer" per line.
  */
 final class FAQ_Schema extends Abstract_Module {
 
@@ -28,14 +28,14 @@ final class FAQ_Schema extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'FAQ with schema', 'dicestack' );
+		return __( 'FAQ with schema', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Add an FAQ section with rich-result schema using [dicestack_faq].', 'dicestack' );
+		return __( 'Add an FAQ section with rich-result schema using [stackpress_faq].', 'stackpress' );
 	}
 
 	/**
@@ -76,7 +76,7 @@ final class FAQ_Schema extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function init() {
-		add_shortcode( 'dicestack_faq', array( $this, 'render' ) );
+		add_shortcode( 'stackpress_faq', array( $this, 'render' ) );
 	}
 
 	/**
@@ -107,7 +107,7 @@ final class FAQ_Schema extends Abstract_Module {
 			return '';
 		}
 
-		$html = '<div class="dicestack-faq">';
+		$html = '<div class="stackpress-faq">';
 		$ld   = array();
 		foreach ( $pairs as $pair ) {
 			$html .= '<details style="border:1px solid #e4e7ec;border-radius:8px;padding:10px 14px;margin-bottom:8px;">';

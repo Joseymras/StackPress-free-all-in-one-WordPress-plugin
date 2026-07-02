@@ -1,8 +1,8 @@
 <?php
 /**
- * DICESTACK_OBJECT_CACHE_DROPIN
+ * STACKPRESS_OBJECT_CACHE_DROPIN
  *
- * DiceStack persistent object cache drop-in for Redis / Memcached.
+ * StackPress persistent object cache drop-in for Redis / Memcached.
  *
  * Fail-safe by design: it always keeps a per-request runtime cache, and if the
  * Redis/Memcached backend is unreachable it simply behaves as a normal
@@ -14,7 +14,7 @@
  *   Memcached: WP_CACHE_HOST, WP_CACHE_PORT
  *   General:   WP_CACHE_KEY_SALT (namespace, to isolate sites sharing a server)
  *
- * @package DiceStack
+ * @package StackPress
  */
 
 defined( 'ABSPATH' ) || exit;

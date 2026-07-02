@@ -2,12 +2,12 @@
 /**
  * Disable Block CSS module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Performance;
+namespace StackPress\Modules\Performance;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -29,14 +29,14 @@ final class Disable_Block_CSS extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Disable block CSS', 'dicestack' );
+		return __( 'Disable block CSS', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Remove Gutenberg block CSS on classic-theme sites that don\'t use blocks.', 'dicestack' );
+		return __( 'Remove Gutenberg block CSS on classic-theme sites that don\'t use blocks.', 'stackpress' );
 	}
 
 	/**

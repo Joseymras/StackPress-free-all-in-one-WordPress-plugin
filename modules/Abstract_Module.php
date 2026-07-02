@@ -1,11 +1,11 @@
 <?php
 /**
- * Base class for all DiceStack modules.
+ * Base class for all StackPress modules.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules;
+namespace StackPress\Modules;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -100,7 +100,7 @@ abstract class Abstract_Module {
 	}
 
 	/**
-	 * Server capabilities this module needs (keys from DiceStack\Environment).
+	 * Server capabilities this module needs (keys from StackPress\Environment).
 	 * The dashboard hides the toggle and explains how to enable any missing
 	 * capability instead of letting the user turn on a module that can't run.
 	 * Empty array = runs anywhere. Supported keys: object_cache_backend, redis,
@@ -170,7 +170,7 @@ abstract class Abstract_Module {
 	 * @return string
 	 */
 	final public function settings_option_key() {
-		return 'dicestack_settings_' . $this->id();
+		return 'stackpress_settings_' . $this->id();
 	}
 
 	/**
@@ -284,6 +284,6 @@ abstract class Abstract_Module {
 	 * @return bool
 	 */
 	final public function is_active() {
-		return \DiceStack\Core::instance()->is_module_active( $this->id() );
+		return \StackPress\Core::instance()->is_module_active( $this->id() );
 	}
 }

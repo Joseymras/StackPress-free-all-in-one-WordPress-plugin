@@ -2,12 +2,12 @@
 /**
  * Disable front-end Dashicons module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Performance;
+namespace StackPress\Modules\Performance;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Disable_Dashicons extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Disable front-end Dashicons', 'dicestack' );
+		return __( 'Disable front-end Dashicons', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Skip loading the Dashicons stylesheet for logged-out visitors who do not need it.', 'dicestack' );
+		return __( 'Skip loading the Dashicons stylesheet for logged-out visitors who do not need it.', 'stackpress' );
 	}
 
 	/**

@@ -2,10 +2,10 @@
 /**
  * Core bootstrap.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack;
+namespace StackPress;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -21,17 +21,17 @@ final class Core {
 	/**
 	 * Option key holding the array of active module IDs.
 	 */
-	const ACTIVE_OPTION = 'dicestack_active_modules';
+	const ACTIVE_OPTION = 'stackpress_active_modules';
 
 	/**
 	 * Option key holding the "first run completed" flag.
 	 */
-	const SETUP_OPTION = 'dicestack_setup_complete';
+	const SETUP_OPTION = 'stackpress_setup_complete';
 
 	/**
 	 * Option key holding modules auto-disabled after a fatal error.
 	 */
-	const FAILURES_OPTION = 'dicestack_module_failures';
+	const FAILURES_OPTION = 'stackpress_module_failures';
 
 	/**
 	 * Singleton instance.
@@ -108,24 +108,24 @@ final class Core {
 
 		// Developer command-line interface.
 		if ( defined( 'WP_CLI' ) && WP_CLI && class_exists( '\WP_CLI' ) ) {
-			\WP_CLI::add_command( 'dicestack', new CLI() );
+			\WP_CLI::add_command( 'stackpress', new CLI() );
 		}
 
-		// Recovery hatch: define( 'DICESTACK_SAFE_MODE', true ) in wp-config.php to load
+		// Recovery hatch: define( 'STACKPRESS_SAFE_MODE', true ) in wp-config.php to load
 		// the dashboard but NONE of the modules, so a locked-out admin can recover.
-		if ( defined( 'DICESTACK_SAFE_MODE' ) && DICESTACK_SAFE_MODE ) {
-			do_action( 'dicestack_loaded', $this );
+		if ( defined( 'STACKPRESS_SAFE_MODE' ) && STACKPRESS_SAFE_MODE ) {
+			do_action( 'stackpress_loaded', $this );
 			return;
 		}
 
 		$this->load_active_modules();
 
 		/**
-		 * Fires after DiceStack has loaded all active modules.
+		 * Fires after StackPress has loaded all active modules.
 		 *
 		 * @param Core $core The core instance.
 		 */
-		do_action( 'dicestack_loaded', $this );
+		do_action( 'stackpress_loaded', $this );
 	}
 
 	/**
@@ -230,8 +230,8 @@ final class Core {
 		 *
 		 * @param string $module_id Module identifier.
 		 */
-		do_action( 'dicestack_module_enabled', $module_id );
-		do_action( "dicestack_module_enabled_{$module_id}" );
+		do_action( 'stackpress_module_enabled', $module_id );
+		do_action( "stackpress_module_enabled_{$module_id}" );
 		return true;
 	}
 
@@ -256,8 +256,8 @@ final class Core {
 		 *
 		 * @param string $module_id Module identifier.
 		 */
-		do_action( 'dicestack_module_disabled', $module_id );
-		do_action( "dicestack_module_disabled_{$module_id}" );
+		do_action( 'stackpress_module_disabled', $module_id );
+		do_action( "stackpress_module_disabled_{$module_id}" );
 		return true;
 	}
 
@@ -271,10 +271,10 @@ final class Core {
 		// so the plugin is useful out of the box. Existing installs are untouched.
 		if ( false === get_option( self::ACTIVE_OPTION, false ) ) {
 			$registry = self::instance()->registry();
-			$covered  = \DiceStack\Environment::detected_plugins();
+			$covered  = \StackPress\Environment::detected_plugins();
 			$safe     = array();
 			foreach ( self::recommended_defaults() as $id ) {
-				$feature = \DiceStack\Environment::module_feature( $id );
+				$feature = \StackPress\Environment::module_feature( $id );
 				if ( '' !== $feature && isset( $covered[ $feature ] ) ) {
 					continue; // Another active plugin already handles this — don't clash.
 				}

@@ -2,12 +2,12 @@
 /**
  * Robots.txt manager module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\SEO;
+namespace StackPress\Modules\SEO;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Robots_Txt extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Robots.txt manager', 'dicestack' );
+		return __( 'Robots.txt manager', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Edit your robots.txt rules from the dashboard — no FTP needed.', 'dicestack' );
+		return __( 'Edit your robots.txt rules from the dashboard — no FTP needed.', 'stackpress' );
 	}
 
 	/**
@@ -72,10 +72,10 @@ final class Robots_Txt extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'rules',
-				'label'   => __( 'robots.txt content', 'dicestack' ),
+				'label'   => __( 'robots.txt content', 'stackpress' ),
 				'type'    => 'textarea',
 				'default' => "User-agent: *\nDisallow: /wp-admin/\nAllow: /wp-admin/admin-ajax.php",
-				'help'    => __( 'These rules replace the default WordPress robots.txt output.', 'dicestack' ),
+				'help'    => __( 'These rules replace the default WordPress robots.txt output.', 'stackpress' ),
 			),
 		);
 	}

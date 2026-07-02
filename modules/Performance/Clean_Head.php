@@ -2,12 +2,12 @@
 /**
  * Clean Head module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Performance;
+namespace StackPress\Modules\Performance;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Clean_Head extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Clean up <head>', 'dicestack' );
+		return __( 'Clean up <head>', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Remove shortlink, RSD, WLW manifest, and adjacent-post link tags from the head.', 'dicestack' );
+		return __( 'Remove shortlink, RSD, WLW manifest, and adjacent-post link tags from the head.', 'stackpress' );
 	}
 
 	/**

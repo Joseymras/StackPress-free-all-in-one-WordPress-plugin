@@ -2,12 +2,12 @@
 /**
  * Focus Outline module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Accessibility;
+namespace StackPress\Modules\Accessibility;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Focus_Outline extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Visible focus outline', 'dicestack' );
+		return __( 'Visible focus outline', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Show a clear keyboard focus outline on links, buttons, and fields for accessibility.', 'dicestack' );
+		return __( 'Show a clear keyboard focus outline on links, buttons, and fields for accessibility.', 'stackpress' );
 	}
 
 	/**
@@ -72,7 +72,7 @@ final class Focus_Outline extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'color',
-				'label'   => __( 'Outline colour', 'dicestack' ),
+				'label'   => __( 'Outline colour', 'stackpress' ),
 				'type'    => 'color',
 				'default' => '#0aa2c0',
 			),
@@ -93,6 +93,6 @@ final class Focus_Outline extends Abstract_Module {
 	 */
 	public function output() {
 		$color = sanitize_hex_color( (string) $this->get_setting( 'color', '#0aa2c0' ) ) ?: '#0aa2c0';
-		echo '<style id="dicestack-focus">a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{outline:3px solid ' . esc_attr( $color ) . '!important;outline-offset:2px!important;}</style>';
+		echo '<style id="stackpress-focus">a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{outline:3px solid ' . esc_attr( $color ) . '!important;outline-offset:2px!important;}</style>';
 	}
 }

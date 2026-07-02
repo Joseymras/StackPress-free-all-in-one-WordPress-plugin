@@ -2,12 +2,12 @@
 /**
  * Broken Image Finder module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Media;
+namespace StackPress\Modules\Media;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Broken_Image_Finder extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Broken image finder', 'dicestack' );
+		return __( 'Broken image finder', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Find images in your content whose files are missing, so you can fix them.', 'dicestack' );
+		return __( 'Find images in your content whose files are missing, so you can fix them.', 'stackpress' );
 	}
 
 	/**
@@ -81,11 +81,11 @@ final class Broken_Image_Finder extends Abstract_Module {
 	 */
 	public function add_page() {
 		add_submenu_page(
-			'dicestack',
-			__( 'Broken images', 'dicestack' ),
-			__( 'Broken images', 'dicestack' ),
+			'stackpress',
+			__( 'Broken images', 'stackpress' ),
+			__( 'Broken images', 'stackpress' ),
 			'manage_options',
-			'dicestack-broken-images',
+			'stackpress-broken-images',
 			array( $this, 'render_page' )
 		);
 	}
@@ -138,12 +138,12 @@ final class Broken_Image_Finder extends Abstract_Module {
 	 */
 	public function render_page() {
 		$broken = $this->scan();
-		echo '<div class="wrap"><h1>' . esc_html__( 'Broken images', 'dicestack' ) . '</h1>';
+		echo '<div class="wrap"><h1>' . esc_html__( 'Broken images', 'stackpress' ) . '</h1>';
 		if ( empty( $broken ) ) {
-			echo '<p>' . esc_html__( 'No broken local images found in your recent content.', 'dicestack' ) . '</p></div>';
+			echo '<p>' . esc_html__( 'No broken local images found in your recent content.', 'stackpress' ) . '</p></div>';
 			return;
 		}
-		echo '<table class="widefat striped"><thead><tr><th>' . esc_html__( 'Post', 'dicestack' ) . '</th><th>' . esc_html__( 'Missing image', 'dicestack' ) . '</th></tr></thead><tbody>';
+		echo '<table class="widefat striped"><thead><tr><th>' . esc_html__( 'Post', 'stackpress' ) . '</th><th>' . esc_html__( 'Missing image', 'stackpress' ) . '</th></tr></thead><tbody>';
 		foreach ( $broken as $b ) {
 			echo '<tr><td><a href="' . esc_url( $b['edit'] ) . '">' . esc_html( $b['title'] ) . '</a></td><td><code style="font-size:11px;">' . esc_html( $b['url'] ) . '</code></td></tr>';
 		}

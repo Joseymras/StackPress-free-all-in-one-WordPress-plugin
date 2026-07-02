@@ -2,12 +2,12 @@
 /**
  * Limit Post Revisions module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Site;
+namespace StackPress\Modules\Site;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -27,14 +27,14 @@ final class Limit_Revisions extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Limit post revisions', 'dicestack' );
+		return __( 'Limit post revisions', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Keep only the most recent revisions per post to reduce database bloat.', 'dicestack' );
+		return __( 'Keep only the most recent revisions per post to reduce database bloat.', 'stackpress' );
 	}
 
 	/**
@@ -71,13 +71,13 @@ final class Limit_Revisions extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'keep',
-				'label'   => __( 'Revisions to keep per post', 'dicestack' ),
+				'label'   => __( 'Revisions to keep per post', 'stackpress' ),
 				'type'    => 'number',
 				'default' => 5,
 				'min'     => 0,
 				'max'     => 100,
 				'step'    => 1,
-				'help'    => __( '0 disables revisions entirely.', 'dicestack' ),
+				'help'    => __( '0 disables revisions entirely.', 'stackpress' ),
 			),
 		);
 	}

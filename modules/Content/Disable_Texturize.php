@@ -2,12 +2,12 @@
 /**
  * Disable Texturize module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Content;
+namespace StackPress\Modules\Content;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Disable_Texturize extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Disable smart punctuation', 'dicestack' );
+		return __( 'Disable smart punctuation', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Stop WordPress converting straight quotes and dashes to "smart" characters.', 'dicestack' );
+		return __( 'Stop WordPress converting straight quotes and dashes to "smart" characters.', 'stackpress' );
 	}
 
 	/**

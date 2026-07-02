@@ -2,10 +2,10 @@
 /**
  * Server capability detection.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack;
+namespace StackPress;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -44,69 +44,69 @@ final class Environment {
 
 		self::$cache = array(
 			'object_cache_backend' => array(
-				'label'     => __( 'Redis or Memcached', 'dicestack' ),
+				'label'     => __( 'Redis or Memcached', 'stackpress' ),
 				'available' => $redis || $memcached,
-				'hint'      => __( 'Ask your host to enable the Redis or Memcached PHP extension (most managed hosts offer it on request or in the control panel).', 'dicestack' ),
+				'hint'      => __( 'Ask your host to enable the Redis or Memcached PHP extension (most managed hosts offer it on request or in the control panel).', 'stackpress' ),
 			),
 			'redis'                => array(
-				'label'     => __( 'Redis PHP extension', 'dicestack' ),
+				'label'     => __( 'Redis PHP extension', 'stackpress' ),
 				'available' => $redis,
-				'hint'      => __( 'Install the phpredis extension, or ask your host to enable Redis.', 'dicestack' ),
+				'hint'      => __( 'Install the phpredis extension, or ask your host to enable Redis.', 'stackpress' ),
 			),
 			'memcached'            => array(
-				'label'     => __( 'Memcached PHP extension', 'dicestack' ),
+				'label'     => __( 'Memcached PHP extension', 'stackpress' ),
 				'available' => $memcached,
-				'hint'      => __( 'Install the Memcached extension, or ask your host to enable it.', 'dicestack' ),
+				'hint'      => __( 'Install the Memcached extension, or ask your host to enable it.', 'stackpress' ),
 			),
 			'image_lib'            => array(
-				'label'     => __( 'Imagick or GD image library', 'dicestack' ),
+				'label'     => __( 'Imagick or GD image library', 'stackpress' ),
 				'available' => $imagick || $gd,
-				'hint'      => __( 'Ask your host to enable the Imagick (preferred) or GD PHP extension.', 'dicestack' ),
+				'hint'      => __( 'Ask your host to enable the Imagick (preferred) or GD PHP extension.', 'stackpress' ),
 			),
 			'imagick'              => array(
-				'label'     => __( 'Imagick extension', 'dicestack' ),
+				'label'     => __( 'Imagick extension', 'stackpress' ),
 				'available' => $imagick,
-				'hint'      => __( 'Ask your host to enable the Imagick PHP extension.', 'dicestack' ),
+				'hint'      => __( 'Ask your host to enable the Imagick PHP extension.', 'stackpress' ),
 			),
 			'gd'                   => array(
-				'label'     => __( 'GD image library', 'dicestack' ),
+				'label'     => __( 'GD image library', 'stackpress' ),
 				'available' => $gd,
-				'hint'      => __( 'Ask your host to enable the GD PHP extension.', 'dicestack' ),
+				'hint'      => __( 'Ask your host to enable the GD PHP extension.', 'stackpress' ),
 			),
 			'webp'                 => array(
-				'label'     => __( 'WebP support', 'dicestack' ),
+				'label'     => __( 'WebP support', 'stackpress' ),
 				'available' => $webp,
-				'hint'      => __( 'WebP needs Imagick or GD built with WebP support. Ask your host to enable it.', 'dicestack' ),
+				'hint'      => __( 'WebP needs Imagick or GD built with WebP support. Ask your host to enable it.', 'stackpress' ),
 			),
 			'avif'                 => array(
-				'label'     => __( 'AVIF support', 'dicestack' ),
+				'label'     => __( 'AVIF support', 'stackpress' ),
 				'available' => $avif,
-				'hint'      => __( 'AVIF needs a recent Imagick or GD (PHP 8.1+). Ask your host to enable it.', 'dicestack' ),
+				'hint'      => __( 'AVIF needs a recent Imagick or GD (PHP 8.1+). Ask your host to enable it.', 'stackpress' ),
 			),
 			'zip'                  => array(
-				'label'     => __( 'ZipArchive extension', 'dicestack' ),
+				'label'     => __( 'ZipArchive extension', 'stackpress' ),
 				'available' => class_exists( 'ZipArchive' ),
-				'hint'      => __( 'Ask your host to enable the PHP zip extension (needed to create backup archives).', 'dicestack' ),
+				'hint'      => __( 'Ask your host to enable the PHP zip extension (needed to create backup archives).', 'stackpress' ),
 			),
 			'exif'                 => array(
-				'label'     => __( 'EXIF extension', 'dicestack' ),
+				'label'     => __( 'EXIF extension', 'stackpress' ),
 				'available' => extension_loaded( 'exif' ),
-				'hint'      => __( 'Ask your host to enable the PHP exif extension.', 'dicestack' ),
+				'hint'      => __( 'Ask your host to enable the PHP exif extension.', 'stackpress' ),
 			),
 			'curl'                 => array(
-				'label'     => __( 'cURL extension', 'dicestack' ),
+				'label'     => __( 'cURL extension', 'stackpress' ),
 				'available' => function_exists( 'curl_init' ),
-				'hint'      => __( 'Ask your host to enable the PHP cURL extension.', 'dicestack' ),
+				'hint'      => __( 'Ask your host to enable the PHP cURL extension.', 'stackpress' ),
 			),
 			'opcache'              => array(
-				'label'     => __( 'OPcache', 'dicestack' ),
+				'label'     => __( 'OPcache', 'stackpress' ),
 				'available' => function_exists( 'opcache_get_status' ) || ( function_exists( 'ini_get' ) && ini_get( 'opcache.enable' ) ),
-				'hint'      => __( 'Ask your host to enable PHP OPcache for faster execution.', 'dicestack' ),
+				'hint'      => __( 'Ask your host to enable PHP OPcache for faster execution.', 'stackpress' ),
 			),
 			'gzip'                 => array(
-				'label'     => __( 'Gzip compression', 'dicestack' ),
+				'label'     => __( 'Gzip compression', 'stackpress' ),
 				'available' => function_exists( 'gzencode' ),
-				'hint'      => __( 'Ask your host to enable the PHP zlib extension.', 'dicestack' ),
+				'hint'      => __( 'Ask your host to enable the PHP zlib extension.', 'stackpress' ),
 			),
 		);
 
@@ -163,7 +163,7 @@ final class Environment {
 	}
 
 	/**
-	 * Detect other active plugins that already provide a feature area, so DiceStack
+	 * Detect other active plugins that already provide a feature area, so StackPress
 	 * never recommends turning on something that would clash (two SEO plugins,
 	 * two page caches, etc.). Returns feature => "Plugin name".
 	 *
@@ -240,7 +240,7 @@ final class Environment {
 	}
 
 	/**
-	 * Map an DiceStack module id to the feature area it competes in (or '' if none).
+	 * Map an StackPress module id to the feature area it competes in (or '' if none).
 	 * Used to avoid recommending a tool another plugin already handles.
 	 *
 	 * @param string $id Module id.

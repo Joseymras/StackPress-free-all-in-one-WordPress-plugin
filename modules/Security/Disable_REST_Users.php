@@ -2,12 +2,12 @@
 /**
  * Disable REST Users Endpoint module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Security;
+namespace StackPress\Modules\Security;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Disable_REST_Users extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Block REST user listing', 'dicestack' );
+		return __( 'Block REST user listing', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Stop the REST API exposing your usernames to logged-out visitors.', 'dicestack' );
+		return __( 'Stop the REST API exposing your usernames to logged-out visitors.', 'stackpress' );
 	}
 
 	/**

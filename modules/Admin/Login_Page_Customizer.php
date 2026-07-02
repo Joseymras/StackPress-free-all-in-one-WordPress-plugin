@@ -2,12 +2,12 @@
 /**
  * Login Page Customizer module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Admin;
+namespace StackPress\Modules\Admin;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Login_Page_Customizer extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Login page customizer', 'dicestack' );
+		return __( 'Login page customizer', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Add your logo and brand colours to the WordPress login screen.', 'dicestack' );
+		return __( 'Add your logo and brand colours to the WordPress login screen.', 'stackpress' );
 	}
 
 	/**
@@ -79,19 +79,19 @@ final class Login_Page_Customizer extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'logo',
-				'label'   => __( 'Logo URL', 'dicestack' ),
+				'label'   => __( 'Logo URL', 'stackpress' ),
 				'type'    => 'url',
 				'default' => '',
 			),
 			array(
 				'key'     => 'bg_color',
-				'label'   => __( 'Page background colour', 'dicestack' ),
+				'label'   => __( 'Page background colour', 'stackpress' ),
 				'type'    => 'color',
 				'default' => '#1b2a4a',
 			),
 			array(
 				'key'     => 'button_color',
-				'label'   => __( 'Button colour', 'dicestack' ),
+				'label'   => __( 'Button colour', 'stackpress' ),
 				'type'    => 'color',
 				'default' => '#0aa2c0',
 			),

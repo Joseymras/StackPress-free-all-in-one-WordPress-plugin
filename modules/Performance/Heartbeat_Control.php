@@ -2,12 +2,12 @@
 /**
  * Heartbeat Control module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Performance;
+namespace StackPress\Modules\Performance;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Heartbeat_Control extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Heartbeat control', 'dicestack' );
+		return __( 'Heartbeat control', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Reduce or disable the Heartbeat API to lower server CPU usage.', 'dicestack' );
+		return __( 'Reduce or disable the Heartbeat API to lower server CPU usage.', 'stackpress' );
 	}
 
 	/**
@@ -79,23 +79,23 @@ final class Heartbeat_Control extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'frontend',
-				'label'   => __( 'Heartbeat on the front end', 'dicestack' ),
+				'label'   => __( 'Heartbeat on the front end', 'stackpress' ),
 				'type'    => 'select',
 				'default' => 'disable',
 				'options' => array(
-					'default' => __( 'Default (keep on)', 'dicestack' ),
-					'disable' => __( 'Disable', 'dicestack' ),
+					'default' => __( 'Default (keep on)', 'stackpress' ),
+					'disable' => __( 'Disable', 'stackpress' ),
 				),
 			),
 			array(
 				'key'     => 'interval',
-				'label'   => __( 'Admin/editor interval (seconds)', 'dicestack' ),
+				'label'   => __( 'Admin/editor interval (seconds)', 'stackpress' ),
 				'type'    => 'number',
 				'default' => 60,
 				'min'     => 15,
 				'max'     => 300,
 				'step'    => 5,
-				'help'    => __( 'WordPress default is 15–60s. A higher value means fewer background requests.', 'dicestack' ),
+				'help'    => __( 'WordPress default is 15–60s. A higher value means fewer background requests.', 'stackpress' ),
 			),
 		);
 	}

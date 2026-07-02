@@ -2,12 +2,12 @@
 /**
  * Block wp-admin for Subscribers module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Security;
+namespace StackPress\Modules\Security;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Block_Admin_Subscribers extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Restrict dashboard access', 'dicestack' );
+		return __( 'Restrict dashboard access', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Keep subscribers and customers out of wp-admin by redirecting them to the site.', 'dicestack' );
+		return __( 'Keep subscribers and customers out of wp-admin by redirecting them to the site.', 'stackpress' );
 	}
 
 	/**

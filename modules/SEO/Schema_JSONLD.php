@@ -2,19 +2,19 @@
 /**
  * Schema / JSON-LD structured data module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\SEO;
+namespace StackPress\Modules\SEO;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
  * Outputs Schema.org JSON-LD (Organization/WebSite, Article, BreadcrumbList).
  * This is the feature the research found is paywalled almost everywhere —
- * DiceStack ships it free.
+ * StackPress ships it free.
  */
 final class Schema_JSONLD extends Abstract_Module {
 
@@ -29,14 +29,14 @@ final class Schema_JSONLD extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Schema / structured data', 'dicestack' );
+		return __( 'Schema / structured data', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Add JSON-LD schema for rich results: organization, articles, and breadcrumbs.', 'dicestack' );
+		return __( 'Add JSON-LD schema for rich results: organization, articles, and breadcrumbs.', 'stackpress' );
 	}
 
 	/**
@@ -80,36 +80,36 @@ final class Schema_JSONLD extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'org_type',
-				'label'   => __( 'Site represents', 'dicestack' ),
+				'label'   => __( 'Site represents', 'stackpress' ),
 				'type'    => 'select',
 				'default' => 'Organization',
 				'options' => array(
-					'Organization' => __( 'An organization / business', 'dicestack' ),
-					'Person'       => __( 'A person', 'dicestack' ),
+					'Organization' => __( 'An organization / business', 'stackpress' ),
+					'Person'       => __( 'A person', 'stackpress' ),
 				),
 			),
 			array(
 				'key'     => 'org_name',
-				'label'   => __( 'Name', 'dicestack' ),
+				'label'   => __( 'Name', 'stackpress' ),
 				'type'    => 'text',
 				'default' => '',
-				'help'    => __( 'Leave blank to use your site title.', 'dicestack' ),
+				'help'    => __( 'Leave blank to use your site title.', 'stackpress' ),
 			),
 			array(
 				'key'     => 'logo',
-				'label'   => __( 'Logo URL', 'dicestack' ),
+				'label'   => __( 'Logo URL', 'stackpress' ),
 				'type'    => 'url',
 				'default' => '',
 			),
 			array(
 				'key'     => 'article_schema',
-				'label'   => __( 'Output Article schema on posts', 'dicestack' ),
+				'label'   => __( 'Output Article schema on posts', 'stackpress' ),
 				'type'    => 'toggle',
 				'default' => true,
 			),
 			array(
 				'key'     => 'breadcrumb_schema',
-				'label'   => __( 'Output BreadcrumbList schema', 'dicestack' ),
+				'label'   => __( 'Output BreadcrumbList schema', 'stackpress' ),
 				'type'    => 'toggle',
 				'default' => true,
 			),
@@ -177,7 +177,7 @@ final class Schema_JSONLD extends Abstract_Module {
 				array(
 					'@type'    => 'ListItem',
 					'position' => 1,
-					'name'     => __( 'Home', 'dicestack' ),
+					'name'     => __( 'Home', 'stackpress' ),
 					'item'     => home_url( '/' ),
 				),
 				array(

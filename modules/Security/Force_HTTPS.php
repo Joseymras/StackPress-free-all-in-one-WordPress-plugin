@@ -2,12 +2,12 @@
 /**
  * Force HTTPS module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Security;
+namespace StackPress\Modules\Security;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -29,14 +29,14 @@ final class Force_HTTPS extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Force HTTPS', 'dicestack' );
+		return __( 'Force HTTPS', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Send visitors to the secure https version of every page.', 'dicestack' );
+		return __( 'Send visitors to the secure https version of every page.', 'stackpress' );
 	}
 
 	/**

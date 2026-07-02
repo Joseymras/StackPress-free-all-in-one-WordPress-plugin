@@ -9,7 +9,7 @@ Drop the listing assets here. These are **not** shipped in the plugin zip (exclu
 
 | File | Shown as | Suggested shot |
 |---|---|---|
-| `screenshot-1.png` | Screenshot 1 | The DiceStack dashboard — all 185 tools with the RAM/JS/DB cost chips |
+| `screenshot-1.png` | Screenshot 1 | The StackPress dashboard — all 185 tools with the RAM/JS/DB cost chips |
 | `screenshot-2.png` | Screenshot 2 | A category (e.g. WooCommerce) with enable toggles + a conflict warning |
 | `screenshot-3.png` | Screenshot 3 | A tool's settings modal open |
 | `screenshot-4.png` | Screenshot 4 | Recommended setup / Agency Mode |

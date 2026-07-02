@@ -2,12 +2,12 @@
 /**
  * Cloud Backup module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Site;
+namespace StackPress\Modules\Site;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -29,14 +29,14 @@ final class Cloud_Backup extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Cloud backup', 'dicestack' );
+		return __( 'Cloud backup', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Send backups off-site to FTP, WebDAV (Nextcloud), email, or Google Drive.', 'dicestack' );
+		return __( 'Send backups off-site to FTP, WebDAV (Nextcloud), email, or Google Drive.', 'stackpress' );
 	}
 
 	/**
@@ -65,9 +65,9 @@ final class Cloud_Backup extends Abstract_Module {
 	 */
 	public function external_service() {
 		return array(
-			'service' => __( 'Your chosen destination (FTP/WebDAV/email/Google Drive)', 'dicestack' ),
-			'url'     => 'https://dicecodes.com/dicestack-wordpress-plugin/',
-			'data'    => __( 'Your backup archive is uploaded to the destination you configure.', 'dicestack' ),
+			'service' => __( 'Your chosen destination (FTP/WebDAV/email/Google Drive)', 'stackpress' ),
+			'url'     => 'https://dicecodes.com/stackpress-wordpress-plugin/',
+			'data'    => __( 'Your backup archive is uploaded to the destination you configure.', 'stackpress' ),
 		);
 	}
 
@@ -91,33 +91,33 @@ final class Cloud_Backup extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'destination',
-				'label'   => __( 'Send backups to', 'dicestack' ),
+				'label'   => __( 'Send backups to', 'stackpress' ),
 				'type'    => 'select',
 				'default' => 'none',
 				'options' => array(
-					'none'   => __( 'Nowhere (off)', 'dicestack' ),
-					'ftp'    => __( 'FTP / FTPS (just host + login)', 'dicestack' ),
-					'webdav' => __( 'WebDAV — Nextcloud/ownCloud (URL + login)', 'dicestack' ),
-					'email'  => __( 'Email (small backups only)', 'dicestack' ),
-					'gdrive' => __( 'Google Drive (one-time connect)', 'dicestack' ),
+					'none'   => __( 'Nowhere (off)', 'stackpress' ),
+					'ftp'    => __( 'FTP / FTPS (just host + login)', 'stackpress' ),
+					'webdav' => __( 'WebDAV — Nextcloud/ownCloud (URL + login)', 'stackpress' ),
+					'email'  => __( 'Email (small backups only)', 'stackpress' ),
+					'gdrive' => __( 'Google Drive (one-time connect)', 'stackpress' ),
 				),
 			),
 			// FTP.
-			array( 'key' => 'ftp_host', 'label' => __( 'FTP host', 'dicestack' ), 'type' => 'text', 'default' => '' ),
-			array( 'key' => 'ftp_port', 'label' => __( 'FTP port', 'dicestack' ), 'type' => 'number', 'default' => 21, 'min' => 1, 'max' => 65535, 'step' => 1 ),
-			array( 'key' => 'ftp_user', 'label' => __( 'FTP username', 'dicestack' ), 'type' => 'text', 'default' => '' ),
-			array( 'key' => 'ftp_pass', 'label' => __( 'FTP password', 'dicestack' ), 'type' => 'password', 'default' => '' ),
-			array( 'key' => 'ftp_dir', 'label' => __( 'FTP folder', 'dicestack' ), 'type' => 'text', 'default' => '/', 'help' => __( 'Remote folder to store backups in.', 'dicestack' ) ),
-			array( 'key' => 'ftp_ssl', 'label' => __( 'Use FTPS (secure)', 'dicestack' ), 'type' => 'toggle', 'default' => true ),
+			array( 'key' => 'ftp_host', 'label' => __( 'FTP host', 'stackpress' ), 'type' => 'text', 'default' => '' ),
+			array( 'key' => 'ftp_port', 'label' => __( 'FTP port', 'stackpress' ), 'type' => 'number', 'default' => 21, 'min' => 1, 'max' => 65535, 'step' => 1 ),
+			array( 'key' => 'ftp_user', 'label' => __( 'FTP username', 'stackpress' ), 'type' => 'text', 'default' => '' ),
+			array( 'key' => 'ftp_pass', 'label' => __( 'FTP password', 'stackpress' ), 'type' => 'password', 'default' => '' ),
+			array( 'key' => 'ftp_dir', 'label' => __( 'FTP folder', 'stackpress' ), 'type' => 'text', 'default' => '/', 'help' => __( 'Remote folder to store backups in.', 'stackpress' ) ),
+			array( 'key' => 'ftp_ssl', 'label' => __( 'Use FTPS (secure)', 'stackpress' ), 'type' => 'toggle', 'default' => true ),
 			// WebDAV.
-			array( 'key' => 'webdav_url', 'label' => __( 'WebDAV URL', 'dicestack' ), 'type' => 'url', 'default' => '', 'help' => __( 'e.g. https://cloud.example.com/remote.php/dav/files/you/Backups/', 'dicestack' ) ),
-			array( 'key' => 'webdav_user', 'label' => __( 'WebDAV username', 'dicestack' ), 'type' => 'text', 'default' => '' ),
-			array( 'key' => 'webdav_pass', 'label' => __( 'WebDAV password / app password', 'dicestack' ), 'type' => 'password', 'default' => '' ),
+			array( 'key' => 'webdav_url', 'label' => __( 'WebDAV URL', 'stackpress' ), 'type' => 'url', 'default' => '', 'help' => __( 'e.g. https://cloud.example.com/remote.php/dav/files/you/Backups/', 'stackpress' ) ),
+			array( 'key' => 'webdav_user', 'label' => __( 'WebDAV username', 'stackpress' ), 'type' => 'text', 'default' => '' ),
+			array( 'key' => 'webdav_pass', 'label' => __( 'WebDAV password / app password', 'stackpress' ), 'type' => 'password', 'default' => '' ),
 			// Email.
-			array( 'key' => 'email_to', 'label' => __( 'Email backups to', 'dicestack' ), 'type' => 'text', 'default' => get_option( 'admin_email' ) ),
+			array( 'key' => 'email_to', 'label' => __( 'Email backups to', 'stackpress' ), 'type' => 'text', 'default' => get_option( 'admin_email' ) ),
 			// Google Drive.
-			array( 'key' => 'gdrive_token', 'label' => __( 'Google Drive access token', 'dicestack' ), 'type' => 'password', 'default' => '', 'help' => __( 'Click "Connect Google Drive" on the Cloud backup page to obtain this automatically.', 'dicestack' ) ),
-			array( 'key' => 'gdrive_folder', 'label' => __( 'Google Drive folder ID (optional)', 'dicestack' ), 'type' => 'text', 'default' => '' ),
+			array( 'key' => 'gdrive_token', 'label' => __( 'Google Drive access token', 'stackpress' ), 'type' => 'password', 'default' => '', 'help' => __( 'Click "Connect Google Drive" on the Cloud backup page to obtain this automatically.', 'stackpress' ) ),
+			array( 'key' => 'gdrive_folder', 'label' => __( 'Google Drive folder ID (optional)', 'stackpress' ), 'type' => 'text', 'default' => '' ),
 		);
 	}
 
@@ -125,11 +125,11 @@ final class Cloud_Backup extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function init() {
-		add_action( 'dicestack_backup_created', array( $this, 'upload' ) );
+		add_action( 'stackpress_backup_created', array( $this, 'upload' ) );
 
 		if ( is_admin() ) {
 			add_action( 'admin_menu', array( $this, 'add_page' ) );
-			add_action( 'admin_post_dicestack_cloud_test', array( $this, 'handle_test' ) );
+			add_action( 'admin_post_stackpress_cloud_test', array( $this, 'handle_test' ) );
 			add_action( 'admin_init', array( $this, 'capture_gdrive_token' ) );
 		}
 	}
@@ -140,22 +140,22 @@ final class Cloud_Backup extends Abstract_Module {
 	 * @return void
 	 */
 	public function capture_gdrive_token() {
-		if ( ! current_user_can( 'manage_options' ) || empty( $_GET['dicestack_gdrive_token'] ) ) {
+		if ( ! current_user_can( 'manage_options' ) || empty( $_GET['stackpress_gdrive_token'] ) ) {
 			return;
 		}
 		// Verify the state nonce we round-tripped through the connector so a
 		// forged link cannot silently repoint backups to an attacker's Drive.
-		$state = isset( $_GET['dicestack_state'] ) ? sanitize_text_field( wp_unslash( $_GET['dicestack_state'] ) ) : '';
-		if ( ! wp_verify_nonce( $state, 'dicestack_gdrive_connect' ) ) {
+		$state = isset( $_GET['stackpress_state'] ) ? sanitize_text_field( wp_unslash( $_GET['stackpress_state'] ) ) : '';
+		if ( ! wp_verify_nonce( $state, 'stackpress_gdrive_connect' ) ) {
 			return;
 		}
-		$token    = sanitize_text_field( wp_unslash( $_GET['dicestack_gdrive_token'] ) );
+		$token    = sanitize_text_field( wp_unslash( $_GET['stackpress_gdrive_token'] ) );
 		$settings = $this->get_settings();
 		$settings['gdrive_token'] = $token;
 		$settings['destination']  = 'gdrive';
 		update_option( $this->settings_option_key(), $settings );
 
-		wp_safe_redirect( admin_url( 'admin.php?page=dicestack-cloud' ) );
+		wp_safe_redirect( admin_url( 'admin.php?page=stackpress-cloud' ) );
 		exit;
 	}
 
@@ -190,12 +190,12 @@ final class Cloud_Backup extends Abstract_Module {
 
 		$ok = ( true === $result );
 		update_option(
-			'dicestack_cloud_last',
+			'stackpress_cloud_last',
 			array(
 				'time'    => time(),
 				'ok'      => $ok,
 				'dest'    => $dest,
-				'message' => is_wp_error( $result ) ? $result->get_error_message() : ( $ok ? __( 'Uploaded', 'dicestack' ) : __( 'Failed', 'dicestack' ) ),
+				'message' => is_wp_error( $result ) ? $result->get_error_message() : ( $ok ? __( 'Uploaded', 'stackpress' ) : __( 'Failed', 'stackpress' ) ),
 			),
 			false
 		);
@@ -210,7 +210,7 @@ final class Cloud_Backup extends Abstract_Module {
 	 */
 	private function upload_ftp( $file ) {
 		if ( ! function_exists( 'ftp_connect' ) ) {
-			return new \WP_Error( 'no_ftp', __( 'PHP FTP support is not available on this server.', 'dicestack' ) );
+			return new \WP_Error( 'no_ftp', __( 'PHP FTP support is not available on this server.', 'stackpress' ) );
 		}
 		$host = (string) $this->get_setting( 'ftp_host', '' );
 		$port = (int) $this->get_setting( 'ftp_port', 21 );
@@ -219,11 +219,11 @@ final class Cloud_Backup extends Abstract_Module {
 		// phpcs:disable WordPress.PHP.NoSilencedErrors.Discouraged
 		$conn = $ssl && function_exists( 'ftp_ssl_connect' ) ? @ftp_ssl_connect( $host, $port, 20 ) : @ftp_connect( $host, $port, 20 );
 		if ( ! $conn ) {
-			return new \WP_Error( 'ftp_connect', __( 'Could not connect to the FTP server.', 'dicestack' ) );
+			return new \WP_Error( 'ftp_connect', __( 'Could not connect to the FTP server.', 'stackpress' ) );
 		}
 		if ( ! @ftp_login( $conn, (string) $this->get_setting( 'ftp_user', '' ), (string) $this->get_setting( 'ftp_pass', '' ) ) ) {
 			@ftp_close( $conn );
-			return new \WP_Error( 'ftp_login', __( 'FTP login failed.', 'dicestack' ) );
+			return new \WP_Error( 'ftp_login', __( 'FTP login failed.', 'stackpress' ) );
 		}
 		@ftp_pasv( $conn, true );
 		$dir = trailingslashit( (string) $this->get_setting( 'ftp_dir', '/' ) );
@@ -231,7 +231,7 @@ final class Cloud_Backup extends Abstract_Module {
 		@ftp_close( $conn );
 		// phpcs:enable WordPress.PHP.NoSilencedErrors.Discouraged
 
-		return $ok ? true : new \WP_Error( 'ftp_put', __( 'FTP upload failed (check the folder path and permissions).', 'dicestack' ) );
+		return $ok ? true : new \WP_Error( 'ftp_put', __( 'FTP upload failed (check the folder path and permissions).', 'stackpress' ) );
 	}
 
 	/**
@@ -243,12 +243,12 @@ final class Cloud_Backup extends Abstract_Module {
 	private function upload_webdav( $file ) {
 		$url = trailingslashit( (string) $this->get_setting( 'webdav_url', '' ) ) . rawurlencode( basename( $file ) );
 		if ( '' === trim( (string) $this->get_setting( 'webdav_url', '' ) ) ) {
-			return new \WP_Error( 'webdav_url', __( 'WebDAV URL is empty.', 'dicestack' ) );
+			return new \WP_Error( 'webdav_url', __( 'WebDAV URL is empty.', 'stackpress' ) );
 		}
 		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- reading our own backup file to upload.
 		$body = file_get_contents( $file );
 		if ( false === $body ) {
-			return new \WP_Error( 'read', __( 'Could not read the backup file.', 'dicestack' ) );
+			return new \WP_Error( 'read', __( 'Could not read the backup file.', 'stackpress' ) );
 		}
 		$auth     = base64_encode( $this->get_setting( 'webdav_user', '' ) . ':' . $this->get_setting( 'webdav_pass', '' ) );
 		$response = wp_remote_request(
@@ -264,7 +264,7 @@ final class Cloud_Backup extends Abstract_Module {
 			return $response;
 		}
 		$code = wp_remote_retrieve_response_code( $response );
-		return ( $code >= 200 && $code < 300 ) ? true : new \WP_Error( 'webdav', __( 'WebDAV upload failed (HTTP ', 'dicestack' ) . $code . ').' );
+		return ( $code >= 200 && $code < 300 ) ? true : new \WP_Error( 'webdav', __( 'WebDAV upload failed (HTTP ', 'stackpress' ) . $code . ').' );
 	}
 
 	/**
@@ -276,17 +276,17 @@ final class Cloud_Backup extends Abstract_Module {
 	private function upload_email( $file ) {
 		// Guard against emailing very large files.
 		if ( filesize( $file ) > 20 * 1024 * 1024 ) {
-			return new \WP_Error( 'too_big', __( 'Backup is over 20 MB — too large to email. Use FTP, WebDAV, or Google Drive.', 'dicestack' ) );
+			return new \WP_Error( 'too_big', __( 'Backup is over 20 MB — too large to email. Use FTP, WebDAV, or Google Drive.', 'stackpress' ) );
 		}
 		$to = sanitize_email( (string) $this->get_setting( 'email_to', get_option( 'admin_email' ) ) );
 		$ok = wp_mail(
 			$to,
-			'[' . get_bloginfo( 'name' ) . '] ' . __( 'Site backup', 'dicestack' ),
-			__( 'Your latest DiceStack backup is attached.', 'dicestack' ),
+			'[' . get_bloginfo( 'name' ) . '] ' . __( 'Site backup', 'stackpress' ),
+			__( 'Your latest StackPress backup is attached.', 'stackpress' ),
 			array(),
 			array( $file )
 		);
-		return $ok ? true : new \WP_Error( 'mail', __( 'Email send failed.', 'dicestack' ) );
+		return $ok ? true : new \WP_Error( 'mail', __( 'Email send failed.', 'stackpress' ) );
 	}
 
 	/**
@@ -298,12 +298,12 @@ final class Cloud_Backup extends Abstract_Module {
 	private function upload_gdrive( $file ) {
 		$token = trim( (string) $this->get_setting( 'gdrive_token', '' ) );
 		if ( '' === $token ) {
-			return new \WP_Error( 'no_token', __( 'Connect Google Drive first to get an access token.', 'dicestack' ) );
+			return new \WP_Error( 'no_token', __( 'Connect Google Drive first to get an access token.', 'stackpress' ) );
 		}
 		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- reading our own backup file.
 		$content  = file_get_contents( $file );
 		if ( false === $content ) {
-			return new \WP_Error( 'read', __( 'Could not read the backup file.', 'dicestack' ) );
+			return new \WP_Error( 'read', __( 'Could not read the backup file.', 'stackpress' ) );
 		}
 		$folder   = trim( (string) $this->get_setting( 'gdrive_folder', '' ) );
 		$metadata = array( 'name' => basename( $file ) );
@@ -331,9 +331,9 @@ final class Cloud_Backup extends Abstract_Module {
 		}
 		$code = wp_remote_retrieve_response_code( $response );
 		if ( 401 === $code ) {
-			return new \WP_Error( 'token_expired', __( 'Google token expired — reconnect Google Drive.', 'dicestack' ) );
+			return new \WP_Error( 'token_expired', __( 'Google token expired — reconnect Google Drive.', 'stackpress' ) );
 		}
-		return ( $code >= 200 && $code < 300 ) ? true : new \WP_Error( 'gdrive', __( 'Google Drive upload failed.', 'dicestack' ) );
+		return ( $code >= 200 && $code < 300 ) ? true : new \WP_Error( 'gdrive', __( 'Google Drive upload failed.', 'stackpress' ) );
 	}
 
 	/**
@@ -343,11 +343,11 @@ final class Cloud_Backup extends Abstract_Module {
 	 */
 	public function add_page() {
 		add_submenu_page(
-			'dicestack',
-			__( 'Cloud backup', 'dicestack' ),
-			__( 'Cloud backup', 'dicestack' ),
+			'stackpress',
+			__( 'Cloud backup', 'stackpress' ),
+			__( 'Cloud backup', 'stackpress' ),
 			'manage_options',
-			'dicestack-cloud',
+			'stackpress-cloud',
 			array( $this, 'render_page' )
 		);
 	}
@@ -358,16 +358,16 @@ final class Cloud_Backup extends Abstract_Module {
 	 * @return void
 	 */
 	public function handle_test() {
-		if ( ! current_user_can( 'manage_options' ) || ! check_admin_referer( 'dicestack_cloud_test' ) ) {
-			wp_die( esc_html__( 'Permission denied.', 'dicestack' ) );
+		if ( ! current_user_can( 'manage_options' ) || ! check_admin_referer( 'stackpress_cloud_test' ) ) {
+			wp_die( esc_html__( 'Permission denied.', 'stackpress' ) );
 		}
 		$uploads = wp_get_upload_dir();
-		$files   = glob( trailingslashit( $uploads['basedir'] ) . 'dicestack-backups/dicestack-backup-*.zip' );
+		$files   = glob( trailingslashit( $uploads['basedir'] ) . 'stackpress-backups/stackpress-backup-*.zip' );
 		if ( ! empty( $files ) ) {
 			usort( $files, static function ( $a, $b ) { return filemtime( $b ) - filemtime( $a ); } );
 			$this->upload( $files[0] );
 		}
-		wp_safe_redirect( admin_url( 'admin.php?page=dicestack-cloud' ) );
+		wp_safe_redirect( admin_url( 'admin.php?page=stackpress-cloud' ) );
 		exit;
 	}
 
@@ -377,34 +377,34 @@ final class Cloud_Backup extends Abstract_Module {
 	 * @return void
 	 */
 	public function render_page() {
-		$last = get_option( 'dicestack_cloud_last', array() );
+		$last = get_option( 'stackpress_cloud_last', array() );
 		// Round-trip a state nonce through the connector; verified on return.
-		$return = add_query_arg( 'dicestack_state', wp_create_nonce( 'dicestack_gdrive_connect' ), admin_url( 'admin.php?page=dicestack-cloud' ) );
-		$relay  = 'https://dicecodes.com/dicestack-wordpress-plugin/connect/google?return=' . rawurlencode( $return );
+		$return = add_query_arg( 'stackpress_state', wp_create_nonce( 'stackpress_gdrive_connect' ), admin_url( 'admin.php?page=stackpress-cloud' ) );
+		$relay  = 'https://dicecodes.com/stackpress-wordpress-plugin/connect/google?return=' . rawurlencode( $return );
 
-		echo '<div class="wrap"><h1>' . esc_html__( 'Cloud backup', 'dicestack' ) . '</h1>';
+		echo '<div class="wrap"><h1>' . esc_html__( 'Cloud backup', 'stackpress' ) . '</h1>';
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- display-only flag.
 		if ( isset( $_GET['settings-saved'] ) ) {
-			echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__( 'Settings saved.', 'dicestack' ) . '</p></div>';
+			echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__( 'Settings saved.', 'stackpress' ) . '</p></div>';
 		}
-		echo '<p>' . esc_html__( 'Choose where backups go and enter the connection details below. FTP, WebDAV, and Email need only your login — no API key.', 'dicestack' ) . '</p>';
-		echo '<h2>' . esc_html__( 'Destination settings', 'dicestack' ) . '</h2>';
-		echo \DiceStack\Admin\Settings_Renderer::page_form( $this ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped internally.
+		echo '<p>' . esc_html__( 'Choose where backups go and enter the connection details below. FTP, WebDAV, and Email need only your login — no API key.', 'stackpress' ) . '</p>';
+		echo '<h2>' . esc_html__( 'Destination settings', 'stackpress' ) . '</h2>';
+		echo \StackPress\Admin\Settings_Renderer::page_form( $this ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped internally.
 
 		if ( is_array( $last ) && ! empty( $last['time'] ) ) {
 			$cls = ! empty( $last['ok'] ) ? 'notice-success' : 'notice-error';
-			echo '<div class="notice ' . esc_attr( $cls ) . '"><p>' . esc_html( sprintf( /* translators: 1: status, 2: time. */ __( 'Last cloud upload: %1$s (%2$s ago)', 'dicestack' ), $last['message'], human_time_diff( (int) $last['time'], time() ) ) ) . '</p></div>';
+			echo '<div class="notice ' . esc_attr( $cls ) . '"><p>' . esc_html( sprintf( /* translators: 1: status, 2: time. */ __( 'Last cloud upload: %1$s (%2$s ago)', 'stackpress' ), $last['message'], human_time_diff( (int) $last['time'], time() ) ) ) . '</p></div>';
 		}
 
-		echo '<h2>' . esc_html__( 'Google Drive', 'dicestack' ) . '</h2>';
-		echo '<p>' . esc_html__( 'One-click connect (no API key) — authorises via the Dice Codes connector, then pastes your token back automatically:', 'dicestack' ) . '</p>';
-		echo '<p><a class="button button-primary" href="' . esc_url( $relay ) . '">' . esc_html__( 'Connect Google Drive', 'dicestack' ) . '</a></p>';
+		echo '<h2>' . esc_html__( 'Google Drive', 'stackpress' ) . '</h2>';
+		echo '<p>' . esc_html__( 'One-click connect (no API key) — authorises via the Dice Codes connector, then pastes your token back automatically:', 'stackpress' ) . '</p>';
+		echo '<p><a class="button button-primary" href="' . esc_url( $relay ) . '">' . esc_html__( 'Connect Google Drive', 'stackpress' ) . '</a></p>';
 
-		echo '<h2>' . esc_html__( 'Send latest backup now', 'dicestack' ) . '</h2>';
+		echo '<h2>' . esc_html__( 'Send latest backup now', 'stackpress' ) . '</h2>';
 		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '">';
-		wp_nonce_field( 'dicestack_cloud_test' );
-		echo '<input type="hidden" name="action" value="dicestack_cloud_test" />';
-		echo '<button type="submit" class="button">' . esc_html__( 'Upload latest backup to cloud', 'dicestack' ) . '</button>';
+		wp_nonce_field( 'stackpress_cloud_test' );
+		echo '<input type="hidden" name="action" value="stackpress_cloud_test" />';
+		echo '<button type="submit" class="button">' . esc_html__( 'Upload latest backup to cloud', 'stackpress' ) . '</button>';
 		echo '</form></div>';
 	}
 }

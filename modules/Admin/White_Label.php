@@ -2,17 +2,17 @@
 /**
  * White Label module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Admin;
+namespace StackPress\Modules\Admin;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Renames the DiceStack admin menu so agencies can present the toolkit under their
+ * Renames the StackPress admin menu so agencies can present the toolkit under their
  * own brand to clients.
  */
 final class White_Label extends Abstract_Module {
@@ -28,14 +28,14 @@ final class White_Label extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'White label', 'dicestack' );
+		return __( 'White label', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Rename the DiceStack menu to your own brand for client sites.', 'dicestack' );
+		return __( 'Rename the StackPress menu to your own brand for client sites.', 'stackpress' );
 	}
 
 	/**
@@ -79,10 +79,10 @@ final class White_Label extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'menu_label',
-				'label'   => __( 'Menu label', 'dicestack' ),
+				'label'   => __( 'Menu label', 'stackpress' ),
 				'type'    => 'text',
-				'default' => 'DiceStack',
-				'help'    => __( 'What the toolkit is called in the admin sidebar.', 'dicestack' ),
+				'default' => 'StackPress',
+				'help'    => __( 'What the toolkit is called in the admin sidebar.', 'stackpress' ),
 			),
 		);
 	}
@@ -95,18 +95,18 @@ final class White_Label extends Abstract_Module {
 	}
 
 	/**
-	 * Rename the DiceStack top-level menu.
+	 * Rename the StackPress top-level menu.
 	 *
 	 * @return void
 	 */
 	public function rename() {
 		global $menu;
-		$label = trim( (string) $this->get_setting( 'menu_label', 'DiceStack' ) );
-		if ( '' === $label || 'DiceStack' === $label || ! is_array( $menu ) ) {
+		$label = trim( (string) $this->get_setting( 'menu_label', 'StackPress' ) );
+		if ( '' === $label || 'StackPress' === $label || ! is_array( $menu ) ) {
 			return;
 		}
 		foreach ( $menu as $i => $item ) {
-			if ( isset( $item[2] ) && 'dicestack' === $item[2] ) {
+			if ( isset( $item[2] ) && 'stackpress' === $item[2] ) {
 				$menu[ $i ][0] = esc_html( $label );
 				$menu[ $i ][3] = esc_attr( $label );
 				break;

@@ -2,12 +2,12 @@
 /**
  * WooCommerce Custom Order Statuses module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\WooCommerce;
+namespace StackPress\Modules\WooCommerce;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Custom_Order_Statuses extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Custom order statuses', 'dicestack' );
+		return __( 'Custom order statuses', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Add your own order statuses like Packaging or Dispatched to match your workflow.', 'dicestack' );
+		return __( 'Add your own order statuses like Packaging or Dispatched to match your workflow.', 'stackpress' );
 	}
 
 	/**
@@ -86,10 +86,10 @@ final class Custom_Order_Statuses extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'statuses',
-				'label'   => __( 'Custom statuses', 'dicestack' ),
+				'label'   => __( 'Custom statuses', 'stackpress' ),
 				'type'    => 'textarea',
 				'default' => "packaging|Packaging\ndispatched|Dispatched",
-				'help'    => __( 'One per line as slug|Label, e.g. packaging|Packaging', 'dicestack' ),
+				'help'    => __( 'One per line as slug|Label, e.g. packaging|Packaging', 'stackpress' ),
 			),
 		);
 	}
@@ -148,7 +148,7 @@ final class Custom_Order_Statuses extends Abstract_Module {
 						'singular' => $count_label,
 						'plural'   => $count_label,
 						'context'  => null,
-						'domain'   => 'dicestack',
+						'domain'   => 'stackpress',
 					),
 				)
 			);

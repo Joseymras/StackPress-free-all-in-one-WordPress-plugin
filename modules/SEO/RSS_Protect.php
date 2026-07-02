@@ -2,12 +2,12 @@
 /**
  * RSS Protect module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\SEO;
+namespace StackPress\Modules\SEO;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class RSS_Protect extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'RSS source credit', 'dicestack' );
+		return __( 'RSS source credit', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Add a link back to the original post in your RSS feed to fight content scrapers.', 'dicestack' );
+		return __( 'Add a link back to the original post in your RSS feed to fight content scrapers.', 'stackpress' );
 	}
 
 	/**
@@ -82,7 +82,7 @@ final class RSS_Protect extends Abstract_Module {
 	public function append( $content ) {
 		$credit = sprintf(
 			/* translators: 1: post link, 2: site name. */
-			__( 'The post appeared first on %2$s: %1$s', 'dicestack' ),
+			__( 'The post appeared first on %2$s: %1$s', 'stackpress' ),
 			esc_url( get_permalink() ),
 			esc_html( get_bloginfo( 'name' ) )
 		);

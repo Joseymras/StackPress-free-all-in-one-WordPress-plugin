@@ -2,12 +2,12 @@
 /**
  * Meta Tags (SEO) module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\SEO;
+namespace StackPress\Modules\SEO;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -20,12 +20,12 @@ final class Meta_Tags extends Abstract_Module {
 	/**
 	 * Meta key for the custom description.
 	 */
-	const META_DESC = '_dicestack_meta_description';
+	const META_DESC = '_stackpress_meta_description';
 
 	/**
 	 * Meta key for the custom SEO title.
 	 */
-	const META_TITLE = '_dicestack_meta_title';
+	const META_TITLE = '_stackpress_meta_title';
 
 	/**
 	 * {@inheritDoc}
@@ -38,14 +38,14 @@ final class Meta_Tags extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'SEO meta tags', 'dicestack' );
+		return __( 'SEO meta tags', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Add meta descriptions, Open Graph, and Twitter Card tags for better search and social sharing.', 'dicestack' );
+		return __( 'Add meta descriptions, Open Graph, and Twitter Card tags for better search and social sharing.', 'stackpress' );
 	}
 
 	/**
@@ -89,19 +89,19 @@ final class Meta_Tags extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'enable_og',
-				'label'   => __( 'Output Open Graph tags (Facebook, LinkedIn)', 'dicestack' ),
+				'label'   => __( 'Output Open Graph tags (Facebook, LinkedIn)', 'stackpress' ),
 				'type'    => 'toggle',
 				'default' => true,
 			),
 			array(
 				'key'     => 'enable_twitter',
-				'label'   => __( 'Output Twitter Card tags', 'dicestack' ),
+				'label'   => __( 'Output Twitter Card tags', 'stackpress' ),
 				'type'    => 'toggle',
 				'default' => true,
 			),
 			array(
 				'key'     => 'title_separator',
-				'label'   => __( 'Title separator', 'dicestack' ),
+				'label'   => __( 'Title separator', 'stackpress' ),
 				'type'    => 'select',
 				'default' => 'dash',
 				'options' => array(
@@ -224,8 +224,8 @@ final class Meta_Tags extends Abstract_Module {
 	public function add_meta_box() {
 		foreach ( get_post_types( array( 'public' => true ) ) as $type ) {
 			add_meta_box(
-				'dicestack_seo',
-				__( 'DiceStack SEO', 'dicestack' ),
+				'stackpress_seo',
+				__( 'StackPress SEO', 'stackpress' ),
 				array( $this, 'render_meta_box' ),
 				$type,
 				'normal',
@@ -241,18 +241,18 @@ final class Meta_Tags extends Abstract_Module {
 	 * @return void
 	 */
 	public function render_meta_box( $post ) {
-		wp_nonce_field( 'dicestack_seo_save', 'dicestack_seo_nonce' );
+		wp_nonce_field( 'stackpress_seo_save', 'stackpress_seo_nonce' );
 		$title = get_post_meta( $post->ID, self::META_TITLE, true );
 		$desc  = get_post_meta( $post->ID, self::META_DESC, true );
 		?>
 		<p>
-			<label for="dicestack_seo_title"><strong><?php esc_html_e( 'SEO title', 'dicestack' ); ?></strong></label><br />
-			<input type="text" id="dicestack_seo_title" name="dicestack_seo_title" value="<?php echo esc_attr( $title ); ?>" class="widefat" maxlength="70" />
+			<label for="stackpress_seo_title"><strong><?php esc_html_e( 'SEO title', 'stackpress' ); ?></strong></label><br />
+			<input type="text" id="stackpress_seo_title" name="stackpress_seo_title" value="<?php echo esc_attr( $title ); ?>" class="widefat" maxlength="70" />
 		</p>
 		<p>
-			<label for="dicestack_seo_desc"><strong><?php esc_html_e( 'Meta description', 'dicestack' ); ?></strong></label><br />
-			<textarea id="dicestack_seo_desc" name="dicestack_seo_desc" rows="3" class="widefat" maxlength="160"><?php echo esc_textarea( $desc ); ?></textarea>
-			<span class="description"><?php esc_html_e( 'Recommended: up to 160 characters.', 'dicestack' ); ?></span>
+			<label for="stackpress_seo_desc"><strong><?php esc_html_e( 'Meta description', 'stackpress' ); ?></strong></label><br />
+			<textarea id="stackpress_seo_desc" name="stackpress_seo_desc" rows="3" class="widefat" maxlength="160"><?php echo esc_textarea( $desc ); ?></textarea>
+			<span class="description"><?php esc_html_e( 'Recommended: up to 160 characters.', 'stackpress' ); ?></span>
 		</p>
 		<?php
 	}
@@ -265,7 +265,7 @@ final class Meta_Tags extends Abstract_Module {
 	 * @return void
 	 */
 	public function save_meta_box( $post_id, $post ) {
-		if ( ! isset( $_POST['dicestack_seo_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['dicestack_seo_nonce'] ) ), 'dicestack_seo_save' ) ) {
+		if ( ! isset( $_POST['stackpress_seo_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['stackpress_seo_nonce'] ) ), 'stackpress_seo_save' ) ) {
 			return;
 		}
 		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
@@ -275,8 +275,8 @@ final class Meta_Tags extends Abstract_Module {
 			return;
 		}
 
-		$title = isset( $_POST['dicestack_seo_title'] ) ? sanitize_text_field( wp_unslash( $_POST['dicestack_seo_title'] ) ) : '';
-		$desc  = isset( $_POST['dicestack_seo_desc'] ) ? sanitize_textarea_field( wp_unslash( $_POST['dicestack_seo_desc'] ) ) : '';
+		$title = isset( $_POST['stackpress_seo_title'] ) ? sanitize_text_field( wp_unslash( $_POST['stackpress_seo_title'] ) ) : '';
+		$desc  = isset( $_POST['stackpress_seo_desc'] ) ? sanitize_textarea_field( wp_unslash( $_POST['stackpress_seo_desc'] ) ) : '';
 
 		update_post_meta( $post_id, self::META_TITLE, $title );
 		update_post_meta( $post_id, self::META_DESC, $desc );

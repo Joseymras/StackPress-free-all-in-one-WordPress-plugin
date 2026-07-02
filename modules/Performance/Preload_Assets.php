@@ -2,12 +2,12 @@
 /**
  * Preload Assets module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Performance;
+namespace StackPress\Modules\Performance;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Preload_Assets extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Preload key assets', 'dicestack' );
+		return __( 'Preload key assets', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Preload critical fonts or stylesheets so they load earlier.', 'dicestack' );
+		return __( 'Preload critical fonts or stylesheets so they load earlier.', 'stackpress' );
 	}
 
 	/**
@@ -72,17 +72,17 @@ final class Preload_Assets extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'fonts',
-				'label'   => __( 'Font URLs to preload', 'dicestack' ),
+				'label'   => __( 'Font URLs to preload', 'stackpress' ),
 				'type'    => 'textarea',
 				'default' => '',
-				'help'    => __( 'One full .woff2 URL per line.', 'dicestack' ),
+				'help'    => __( 'One full .woff2 URL per line.', 'stackpress' ),
 			),
 			array(
 				'key'     => 'styles',
-				'label'   => __( 'Stylesheet URLs to preload', 'dicestack' ),
+				'label'   => __( 'Stylesheet URLs to preload', 'stackpress' ),
 				'type'    => 'textarea',
 				'default' => '',
-				'help'    => __( 'One full .css URL per line.', 'dicestack' ),
+				'help'    => __( 'One full .css URL per line.', 'stackpress' ),
 			),
 		);
 	}

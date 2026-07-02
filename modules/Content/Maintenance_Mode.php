@@ -2,12 +2,12 @@
 /**
  * Maintenance Mode module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Content;
+namespace StackPress\Modules\Content;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Maintenance_Mode extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Maintenance mode', 'dicestack' );
+		return __( 'Maintenance mode', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Show a coming-soon page to visitors while you work, with admins still able to browse.', 'dicestack' );
+		return __( 'Show a coming-soon page to visitors while you work, with admins still able to browse.', 'stackpress' );
 	}
 
 	/**
@@ -79,38 +79,38 @@ final class Maintenance_Mode extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'heading',
-				'label'   => __( 'Heading', 'dicestack' ),
+				'label'   => __( 'Heading', 'stackpress' ),
 				'type'    => 'text',
-				'default' => __( 'We\'ll be right back', 'dicestack' ),
+				'default' => __( 'We\'ll be right back', 'stackpress' ),
 			),
 			array(
 				'key'     => 'message',
-				'label'   => __( 'Message', 'dicestack' ),
+				'label'   => __( 'Message', 'stackpress' ),
 				'type'    => 'textarea',
-				'default' => __( 'Our site is undergoing scheduled maintenance. Please check back soon.', 'dicestack' ),
+				'default' => __( 'Our site is undergoing scheduled maintenance. Please check back soon.', 'stackpress' ),
 			),
 			array(
 				'key'     => 'bg_color',
-				'label'   => __( 'Background colour', 'dicestack' ),
+				'label'   => __( 'Background colour', 'stackpress' ),
 				'type'    => 'color',
 				'default' => '#1b2a4a',
 			),
 			array(
 				'key'     => 'status',
-				'label'   => __( 'Tell search engines', 'dicestack' ),
+				'label'   => __( 'Tell search engines', 'stackpress' ),
 				'type'    => 'select',
 				'default' => 'maintenance',
 				'options' => array(
-					'maintenance' => __( '503 — temporary maintenance (recommended)', 'dicestack' ),
-					'coming'      => __( '200 — coming soon (new site)', 'dicestack' ),
+					'maintenance' => __( '503 — temporary maintenance (recommended)', 'stackpress' ),
+					'coming'      => __( '200 — coming soon (new site)', 'stackpress' ),
 				),
 			),
 			array(
 				'key'     => 'bypass_key',
-				'label'   => __( 'Shareable bypass key', 'dicestack' ),
+				'label'   => __( 'Shareable bypass key', 'stackpress' ),
 				'type'    => 'text',
 				'default' => '',
-				'help'    => __( 'Set a secret word, then share yoursite.com/?dicestack_preview=THATWORD to let clients preview the live site. The bypass is remembered for 12 hours.', 'dicestack' ),
+				'help'    => __( 'Set a secret word, then share yoursite.com/?stackpress_preview=THATWORD to let clients preview the live site. The bypass is remembered for 12 hours.', 'stackpress' ),
 			),
 		);
 	}
@@ -136,17 +136,17 @@ final class Maintenance_Mode extends Abstract_Module {
 			return;
 		}
 
-		// Shareable bypass: ?dicestack_preview=KEY sets a 12h cookie.
+		// Shareable bypass: ?stackpress_preview=KEY sets a 12h cookie.
 		$key = trim( (string) $this->get_setting( 'bypass_key', '' ) );
 		if ( '' !== $key ) {
 			// phpcs:disable WordPress.Security.NonceVerification.Recommended -- secret-key preview link, no state change beyond a preview cookie.
-			if ( isset( $_GET['dicestack_preview'] ) && hash_equals( $key, sanitize_text_field( wp_unslash( $_GET['dicestack_preview'] ) ) ) ) {
+			if ( isset( $_GET['stackpress_preview'] ) && hash_equals( $key, sanitize_text_field( wp_unslash( $_GET['stackpress_preview'] ) ) ) ) {
 				if ( ! headers_sent() ) {
-					setcookie( 'dicestack_preview', $key, time() + 12 * HOUR_IN_SECONDS, COOKIEPATH ? COOKIEPATH : '/', COOKIE_DOMAIN );
+					setcookie( 'stackpress_preview', $key, time() + 12 * HOUR_IN_SECONDS, COOKIEPATH ? COOKIEPATH : '/', COOKIE_DOMAIN );
 				}
 				return;
 			}
-			if ( isset( $_COOKIE['dicestack_preview'] ) && hash_equals( $key, sanitize_text_field( wp_unslash( $_COOKIE['dicestack_preview'] ) ) ) ) {
+			if ( isset( $_COOKIE['stackpress_preview'] ) && hash_equals( $key, sanitize_text_field( wp_unslash( $_COOKIE['stackpress_preview'] ) ) ) ) {
 				return;
 			}
 			// phpcs:enable WordPress.Security.NonceVerification.Recommended
@@ -170,8 +170,8 @@ final class Maintenance_Mode extends Abstract_Module {
 		echo '<!DOCTYPE html><html ' . get_language_attributes() . '><head><meta charset="utf-8" />'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo '<meta name="viewport" content="width=device-width, initial-scale=1" />';
 		echo '<title>' . $heading . ' — ' . $title . '</title>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		echo '<style>body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:' . esc_attr( $color ) . ';color:#fff;display:flex;align-items:center;justify-content:center;min-height:100vh;text-align:center;padding:24px}.dicestack-mm{max-width:560px}.dicestack-mm h1{font-size:34px;margin:0 0 14px}.dicestack-mm p{font-size:17px;line-height:1.6;opacity:.85}</style>';
-		echo '</head><body><div class="dicestack-mm"><h1>' . $heading . '</h1><p>' . $message . '</p></div></body></html>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo '<style>body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:' . esc_attr( $color ) . ';color:#fff;display:flex;align-items:center;justify-content:center;min-height:100vh;text-align:center;padding:24px}.stackpress-mm{max-width:560px}.stackpress-mm h1{font-size:34px;margin:0 0 14px}.stackpress-mm p{font-size:17px;line-height:1.6;opacity:.85}</style>';
+		echo '</head><body><div class="stackpress-mm"><h1>' . $heading . '</h1><p>' . $message . '</p></div></body></html>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		exit;
 	}
 }

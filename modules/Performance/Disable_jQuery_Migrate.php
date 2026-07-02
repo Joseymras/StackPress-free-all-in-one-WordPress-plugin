@@ -2,12 +2,12 @@
 /**
  * Disable jQuery Migrate module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Performance;
+namespace StackPress\Modules\Performance;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Disable_jQuery_Migrate extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Disable jQuery Migrate', 'dicestack' );
+		return __( 'Disable jQuery Migrate', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Stop loading the legacy jQuery Migrate script on the front end.', 'dicestack' );
+		return __( 'Stop loading the legacy jQuery Migrate script on the front end.', 'stackpress' );
 	}
 
 	/**

@@ -2,12 +2,12 @@
 /**
  * Allow Extra File Types module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Media;
+namespace StackPress\Modules\Media;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Allow_File_Types extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Allow extra file types', 'dicestack' );
+		return __( 'Allow extra file types', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Permit WebP, AVIF, and other useful upload types that WordPress blocks by default.', 'dicestack' );
+		return __( 'Permit WebP, AVIF, and other useful upload types that WordPress blocks by default.', 'stackpress' );
 	}
 
 	/**
@@ -72,19 +72,19 @@ final class Allow_File_Types extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'webp',
-				'label'   => __( 'Allow WebP', 'dicestack' ),
+				'label'   => __( 'Allow WebP', 'stackpress' ),
 				'type'    => 'toggle',
 				'default' => true,
 			),
 			array(
 				'key'     => 'avif',
-				'label'   => __( 'Allow AVIF', 'dicestack' ),
+				'label'   => __( 'Allow AVIF', 'stackpress' ),
 				'type'    => 'toggle',
 				'default' => true,
 			),
 			array(
 				'key'     => 'fonts',
-				'label'   => __( 'Allow web fonts (woff, woff2)', 'dicestack' ),
+				'label'   => __( 'Allow web fonts (woff, woff2)', 'stackpress' ),
 				'type'    => 'toggle',
 				'default' => false,
 			),

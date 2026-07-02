@@ -2,12 +2,12 @@
 /**
  * WooCommerce Default Catalog Order module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\WooCommerce;
+namespace StackPress\Modules\WooCommerce;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -27,14 +27,14 @@ final class Default_Catalog_Order extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Default catalog sorting', 'dicestack' );
+		return __( 'Default catalog sorting', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Choose how products are sorted by default in the shop.', 'dicestack' );
+		return __( 'Choose how products are sorted by default in the shop.', 'stackpress' );
 	}
 
 	/**
@@ -78,16 +78,16 @@ final class Default_Catalog_Order extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'orderby',
-				'label'   => __( 'Default sorting', 'dicestack' ),
+				'label'   => __( 'Default sorting', 'stackpress' ),
 				'type'    => 'select',
 				'default' => 'menu_order',
 				'options' => array(
-					'menu_order' => __( 'Default (custom order)', 'dicestack' ),
-					'popularity' => __( 'Most popular', 'dicestack' ),
-					'rating'     => __( 'Average rating', 'dicestack' ),
-					'date'       => __( 'Newest first', 'dicestack' ),
-					'price'      => __( 'Price: low to high', 'dicestack' ),
-					'price-desc' => __( 'Price: high to low', 'dicestack' ),
+					'menu_order' => __( 'Default (custom order)', 'stackpress' ),
+					'popularity' => __( 'Most popular', 'stackpress' ),
+					'rating'     => __( 'Average rating', 'stackpress' ),
+					'date'       => __( 'Newest first', 'stackpress' ),
+					'price'      => __( 'Price: low to high', 'stackpress' ),
+					'price-desc' => __( 'Price: high to low', 'stackpress' ),
 				),
 			),
 		);

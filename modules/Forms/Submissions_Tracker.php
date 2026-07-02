@@ -2,12 +2,12 @@
 /**
  * Universal Form Submissions Tracker module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Forms;
+namespace StackPress\Modules\Forms;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -21,7 +21,7 @@ final class Submissions_Tracker extends Abstract_Module {
 	/**
 	 * Log post type.
 	 */
-	const CPT = 'dicestack_form_log';
+	const CPT = 'stackpress_form_log';
 
 	/**
 	 * {@inheritDoc}
@@ -34,14 +34,14 @@ final class Submissions_Tracker extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Form submissions tracker', 'dicestack' );
+		return __( 'Form submissions tracker', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Log submissions from Contact Form 7, WPForms, Gravity, Forminator, and Elementor in one place.', 'dicestack' );
+		return __( 'Log submissions from Contact Form 7, WPForms, Gravity, Forminator, and Elementor in one place.', 'stackpress' );
 	}
 
 	/**
@@ -100,8 +100,8 @@ final class Submissions_Tracker extends Abstract_Module {
 	 */
 	public function add_meta_box() {
 		add_meta_box(
-			'dicestack_form_log_detail',
-			__( 'Submission', 'dicestack' ),
+			'stackpress_form_log_detail',
+			__( 'Submission', 'stackpress' ),
 			array( $this, 'render_meta_box' ),
 			self::CPT,
 			'normal',
@@ -116,9 +116,9 @@ final class Submissions_Tracker extends Abstract_Module {
 	 * @return void
 	 */
 	public function render_meta_box( $post ) {
-		$source = get_post_meta( $post->ID, '_dicestack_source', true );
-		$fields = get_post_meta( $post->ID, '_dicestack_fields', true );
-		echo '<p><strong>' . esc_html__( 'Source', 'dicestack' ) . ':</strong> ' . esc_html( $source ) . '</p>';
+		$source = get_post_meta( $post->ID, '_stackpress_source', true );
+		$fields = get_post_meta( $post->ID, '_stackpress_fields', true );
+		echo '<p><strong>' . esc_html__( 'Source', 'stackpress' ) . ':</strong> ' . esc_html( $source ) . '</p>';
 		if ( is_array( $fields ) && $fields ) {
 			echo '<table class="widefat striped"><tbody>';
 			foreach ( $fields as $key => $value ) {
@@ -138,12 +138,12 @@ final class Submissions_Tracker extends Abstract_Module {
 			self::CPT,
 			array(
 				'labels'          => array(
-					'name'          => __( 'Form log', 'dicestack' ),
-					'singular_name' => __( 'Form submission', 'dicestack' ),
+					'name'          => __( 'Form log', 'stackpress' ),
+					'singular_name' => __( 'Form submission', 'stackpress' ),
 				),
 				'public'          => false,
 				'show_ui'         => true,
-				'show_in_menu'    => 'dicestack',
+				'show_in_menu'    => 'stackpress',
 				'supports'        => array( 'title' ),
 				'capability_type' => 'post',
 				'capabilities'    => array( 'create_posts' => 'do_not_allow' ),
@@ -174,12 +174,12 @@ final class Submissions_Tracker extends Abstract_Module {
 				'post_type'   => self::CPT,
 				'post_status' => 'publish',
 				/* translators: %s: source plugin. */
-				'post_title'  => sprintf( __( '%s submission', 'dicestack' ), $source ),
+				'post_title'  => sprintf( __( '%s submission', 'stackpress' ), $source ),
 			)
 		);
 		if ( $id && ! is_wp_error( $id ) ) {
-			update_post_meta( $id, '_dicestack_source', $source );
-			update_post_meta( $id, '_dicestack_fields', $clean );
+			update_post_meta( $id, '_stackpress_source', $source );
+			update_post_meta( $id, '_stackpress_fields', $clean );
 		}
 	}
 

@@ -2,12 +2,12 @@
 /**
  * SVG Upload module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Admin;
+namespace StackPress\Modules\Admin;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class SVG_Upload extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'SVG upload', 'dicestack' );
+		return __( 'SVG upload', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Safely allow SVG uploads with automatic sanitisation of dangerous code.', 'dicestack' );
+		return __( 'Safely allow SVG uploads with automatic sanitisation of dangerous code.', 'stackpress' );
 	}
 
 	/**
@@ -130,7 +130,7 @@ final class SVG_Upload extends Abstract_Module {
 
 		$contents = file_get_contents( $file['tmp_name'] ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- reading a just-uploaded temp file.
 		if ( false === $contents ) {
-			$file['error'] = __( 'Could not read the SVG file.', 'dicestack' );
+			$file['error'] = __( 'Could not read the SVG file.', 'stackpress' );
 			return $file;
 		}
 
@@ -138,7 +138,7 @@ final class SVG_Upload extends Abstract_Module {
 		if ( $is_svgz ) {
 			$decoded = function_exists( 'gzdecode' ) ? @gzdecode( $contents ) : false; // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
 			if ( false === $decoded ) {
-				$file['error'] = __( 'This SVGZ could not be read and was blocked.', 'dicestack' );
+				$file['error'] = __( 'This SVGZ could not be read and was blocked.', 'stackpress' );
 				return $file;
 			}
 			$contents = $decoded;
@@ -146,7 +146,7 @@ final class SVG_Upload extends Abstract_Module {
 
 		$clean = $this->sanitize_svg( $contents );
 		if ( null === $clean ) {
-			$file['error'] = __( 'This SVG could not be safely sanitised and was blocked.', 'dicestack' );
+			$file['error'] = __( 'This SVG could not be safely sanitised and was blocked.', 'stackpress' );
 			return $file;
 		}
 

@@ -2,12 +2,12 @@
 /**
  * Announcement Bar module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Content;
+namespace StackPress\Modules\Content;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -29,14 +29,14 @@ final class Announcement_Bar extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Announcement bar', 'dicestack' );
+		return __( 'Announcement bar', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'A dismissible top bar for sales, shipping notices, or announcements.', 'dicestack' );
+		return __( 'A dismissible top bar for sales, shipping notices, or announcements.', 'stackpress' );
 	}
 
 	/**
@@ -80,31 +80,31 @@ final class Announcement_Bar extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'text',
-				'label'   => __( 'Message', 'dicestack' ),
+				'label'   => __( 'Message', 'stackpress' ),
 				'type'    => 'text',
-				'default' => __( 'Free shipping on all orders this week!', 'dicestack' ),
+				'default' => __( 'Free shipping on all orders this week!', 'stackpress' ),
 			),
 			array(
 				'key'     => 'link',
-				'label'   => __( 'Link URL (optional)', 'dicestack' ),
+				'label'   => __( 'Link URL (optional)', 'stackpress' ),
 				'type'    => 'url',
 				'default' => '',
 			),
 			array(
 				'key'     => 'bg_color',
-				'label'   => __( 'Background colour', 'dicestack' ),
+				'label'   => __( 'Background colour', 'stackpress' ),
 				'type'    => 'color',
 				'default' => '#0aa2c0',
 			),
 			array(
 				'key'     => 'text_color',
-				'label'   => __( 'Text colour', 'dicestack' ),
+				'label'   => __( 'Text colour', 'stackpress' ),
 				'type'    => 'color',
 				'default' => '#ffffff',
 			),
 			array(
 				'key'     => 'dismissible',
-				'label'   => __( 'Let visitors dismiss it', 'dicestack' ),
+				'label'   => __( 'Let visitors dismiss it', 'stackpress' ),
 				'type'    => 'toggle',
 				'default' => true,
 			),
@@ -149,10 +149,10 @@ final class Announcement_Bar extends Abstract_Module {
 
 		$content = $link ? '<a href="' . $link . '" style="color:' . esc_attr( $fg ) . ';text-decoration:underline;">' . esc_html( $text ) . '</a>' : esc_html( $text );
 
-		echo '<div id="dicestack-bar" style="background:' . esc_attr( $bg ) . ';color:' . esc_attr( $fg ) . ';text-align:center;padding:10px 40px;position:relative;font-size:14px;">' . $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- parts escaped above.
+		echo '<div id="stackpress-bar" style="background:' . esc_attr( $bg ) . ';color:' . esc_attr( $fg ) . ';text-align:center;padding:10px 40px;position:relative;font-size:14px;">' . $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- parts escaped above.
 		if ( $dismiss ) {
-			echo '<button id="dicestack-bar-x" aria-label="' . esc_attr__( 'Dismiss', 'dicestack' ) . '" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:0;color:' . esc_attr( $fg ) . ';font-size:18px;cursor:pointer;line-height:1;">&times;</button>';
-			echo '<script>(function(){try{if(localStorage.getItem("dicestack_bar_closed")){document.getElementById("dicestack-bar").style.display="none";}var x=document.getElementById("dicestack-bar-x");if(x){x.addEventListener("click",function(){document.getElementById("dicestack-bar").style.display="none";try{localStorage.setItem("dicestack_bar_closed","1");}catch(e){}});}}catch(e){}})();</script>';
+			echo '<button id="stackpress-bar-x" aria-label="' . esc_attr__( 'Dismiss', 'stackpress' ) . '" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:0;color:' . esc_attr( $fg ) . ';font-size:18px;cursor:pointer;line-height:1;">&times;</button>';
+			echo '<script>(function(){try{if(localStorage.getItem("stackpress_bar_closed")){document.getElementById("stackpress-bar").style.display="none";}var x=document.getElementById("stackpress-bar-x");if(x){x.addEventListener("click",function(){document.getElementById("stackpress-bar").style.display="none";try{localStorage.setItem("stackpress_bar_closed","1");}catch(e){}});}}catch(e){}})();</script>';
 		}
 		echo '</div>';
 	}

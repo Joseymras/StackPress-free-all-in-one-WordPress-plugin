@@ -2,12 +2,12 @@
 /**
  * Post Views counter module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Content;
+namespace StackPress\Modules\Content;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -20,7 +20,7 @@ final class Post_Views extends Abstract_Module {
 	/**
 	 * Meta key for the stored view count.
 	 */
-	const META = '_dicestack_views';
+	const META = '_stackpress_views';
 
 	/**
 	 * {@inheritDoc}
@@ -33,14 +33,14 @@ final class Post_Views extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Post view counter', 'dicestack' );
+		return __( 'Post view counter', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Count and optionally display how many times each post has been viewed.', 'dicestack' );
+		return __( 'Count and optionally display how many times each post has been viewed.', 'stackpress' );
 	}
 
 	/**
@@ -84,13 +84,13 @@ final class Post_Views extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'display',
-				'label'   => __( 'Show the view count under post content', 'dicestack' ),
+				'label'   => __( 'Show the view count under post content', 'stackpress' ),
 				'type'    => 'toggle',
 				'default' => true,
 			),
 			array(
 				'key'     => 'count_admins',
-				'label'   => __( 'Count views from logged-in admins', 'dicestack' ),
+				'label'   => __( 'Count views from logged-in admins', 'stackpress' ),
 				'type'    => 'toggle',
 				'default' => false,
 			),
@@ -139,10 +139,10 @@ final class Post_Views extends Abstract_Module {
 		$views = (int) get_post_meta( get_the_ID(), self::META, true );
 		$label = sprintf(
 			/* translators: %s: number of views. */
-			_n( '%s view', '%s views', $views, 'dicestack' ),
+			_n( '%s view', '%s views', $views, 'stackpress' ),
 			number_format_i18n( $views )
 		);
-		return $content . '<p class="dicestack-views" style="color:#6b7280;font-size:13px;margin-top:16px;">' . esc_html( $label ) . '</p>';
+		return $content . '<p class="stackpress-views" style="color:#6b7280;font-size:13px;margin-top:16px;">' . esc_html( $label ) . '</p>';
 	}
 
 	/**
@@ -152,7 +152,7 @@ final class Post_Views extends Abstract_Module {
 	 * @return array
 	 */
 	public function add_column( $columns ) {
-		$columns['dicestack_views'] = __( 'Views', 'dicestack' );
+		$columns['stackpress_views'] = __( 'Views', 'stackpress' );
 		return $columns;
 	}
 
@@ -164,7 +164,7 @@ final class Post_Views extends Abstract_Module {
 	 * @return void
 	 */
 	public function render_column( $column, $post_id ) {
-		if ( 'dicestack_views' === $column ) {
+		if ( 'stackpress_views' === $column ) {
 			echo esc_html( number_format_i18n( (int) get_post_meta( $post_id, self::META, true ) ) );
 		}
 	}

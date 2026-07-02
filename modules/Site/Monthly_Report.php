@@ -2,12 +2,12 @@
 /**
  * Monthly Report module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Site;
+namespace StackPress\Modules\Site;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -20,7 +20,7 @@ final class Monthly_Report extends Abstract_Module {
 	/**
 	 * Cron hook.
 	 */
-	const CRON_HOOK = 'dicestack_monthly_report';
+	const CRON_HOOK = 'stackpress_monthly_report';
 
 	/**
 	 * {@inheritDoc}
@@ -33,14 +33,14 @@ final class Monthly_Report extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Monthly report', 'dicestack' );
+		return __( 'Monthly report', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Email a branded monthly summary of activity, updates, and backups to clients.', 'dicestack' );
+		return __( 'Email a branded monthly summary of activity, updates, and backups to clients.', 'stackpress' );
 	}
 
 	/**
@@ -77,16 +77,16 @@ final class Monthly_Report extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'recipient',
-				'label'   => __( 'Send report to', 'dicestack' ),
+				'label'   => __( 'Send report to', 'stackpress' ),
 				'type'    => 'text',
 				'default' => get_option( 'admin_email' ),
-				'help'    => __( 'Comma-separate multiple addresses.', 'dicestack' ),
+				'help'    => __( 'Comma-separate multiple addresses.', 'stackpress' ),
 			),
 			array(
 				'key'     => 'company',
-				'label'   => __( 'Report footer / company', 'dicestack' ),
+				'label'   => __( 'Report footer / company', 'stackpress' ),
 				'type'    => 'text',
-				'default' => __( 'Prepared by Dice Codes', 'dicestack' ),
+				'default' => __( 'Prepared by Dice Codes', 'stackpress' ),
 			),
 		);
 	}
@@ -97,11 +97,11 @@ final class Monthly_Report extends Abstract_Module {
 	public function init() {
 		add_action( self::CRON_HOOK, array( $this, 'send' ) );
 		add_action( 'init', array( $this, 'ensure_schedule' ) );
-		add_action( 'dicestack_module_disabled_' . $this->id(), array( $this, 'clear_schedule' ) );
+		add_action( 'stackpress_module_disabled_' . $this->id(), array( $this, 'clear_schedule' ) );
 
 		if ( is_admin() ) {
 			add_action( 'admin_menu', array( $this, 'add_page' ) );
-			add_action( 'admin_post_dicestack_send_report', array( $this, 'handle_send_now' ) );
+			add_action( 'admin_post_stackpress_send_report', array( $this, 'handle_send_now' ) );
 		}
 	}
 
@@ -165,8 +165,8 @@ final class Monthly_Report extends Abstract_Module {
 			)
 		);
 
-		$last_backup = (int) get_option( 'dicestack_last_backup', 0 );
-		$errors      = get_option( 'dicestack_error_log', array() );
+		$last_backup = (int) get_option( 'stackpress_last_backup', 0 );
+		$errors      = get_option( 'stackpress_error_log', array() );
 		$updates     = 0;
 		if ( function_exists( 'wp_get_update_data' ) ) {
 			$ud      = wp_get_update_data();
@@ -176,7 +176,7 @@ final class Monthly_Report extends Abstract_Module {
 		return array(
 			'posts'       => is_array( $posts ) ? count( $posts ) : 0,
 			'comments'    => (int) $comments,
-			'last_backup' => $last_backup ? gmdate( 'Y-m-d', $last_backup ) : __( 'never', 'dicestack' ),
+			'last_backup' => $last_backup ? gmdate( 'Y-m-d', $last_backup ) : __( 'never', 'stackpress' ),
 			'errors'      => is_array( $errors ) ? count( $errors ) : 0,
 			'updates'     => $updates,
 		);
@@ -191,17 +191,17 @@ final class Monthly_Report extends Abstract_Module {
 		$d    = $this->gather();
 		$name = get_bloginfo( 'name' );
 		$rows = array(
-			__( 'New posts published', 'dicestack' )       => $d['posts'],
-			__( 'New comments', 'dicestack' )              => $d['comments'],
-			__( 'Updates available now', 'dicestack' )     => $d['updates'],
-			__( 'Fatal errors logged', 'dicestack' )       => $d['errors'],
-			__( 'Last backup', 'dicestack' )               => $d['last_backup'],
+			__( 'New posts published', 'stackpress' )       => $d['posts'],
+			__( 'New comments', 'stackpress' )              => $d['comments'],
+			__( 'Updates available now', 'stackpress' )     => $d['updates'],
+			__( 'Fatal errors logged', 'stackpress' )       => $d['errors'],
+			__( 'Last backup', 'stackpress' )               => $d['last_backup'],
 		);
 
 		$html  = '<div style="font-family:Arial,sans-serif;max-width:600px;margin:auto;">';
 		$html .= '<div style="background:#1b2a4a;color:#fff;padding:20px;border-radius:8px 8px 0 0;">';
 		$html .= '<h1 style="margin:0;font-size:20px;">' . esc_html( $name ) . '</h1>';
-		$html .= '<p style="margin:4px 0 0;opacity:.8;">' . esc_html( sprintf( /* translators: %s: month. */ __( 'Monthly report — %s', 'dicestack' ), gmdate( 'F Y' ) ) ) . '</p></div>';
+		$html .= '<p style="margin:4px 0 0;opacity:.8;">' . esc_html( sprintf( /* translators: %s: month. */ __( 'Monthly report — %s', 'stackpress' ), gmdate( 'F Y' ) ) ) . '</p></div>';
 		$html .= '<table style="width:100%;border-collapse:collapse;">';
 		foreach ( $rows as $label => $value ) {
 			$html .= '<tr><td style="padding:12px 20px;border-bottom:1px solid #eee;color:#555;">' . esc_html( $label ) . '</td><td style="padding:12px 20px;border-bottom:1px solid #eee;text-align:right;font-weight:bold;">' . esc_html( (string) $value ) . '</td></tr>';
@@ -222,7 +222,7 @@ final class Monthly_Report extends Abstract_Module {
 		if ( empty( $to ) ) {
 			return false;
 		}
-		$subject = sprintf( /* translators: 1: site, 2: month. */ __( '%1$s — Monthly report (%2$s)', 'dicestack' ), get_bloginfo( 'name' ), gmdate( 'F Y' ) );
+		$subject = sprintf( /* translators: 1: site, 2: month. */ __( '%1$s — Monthly report (%2$s)', 'stackpress' ), get_bloginfo( 'name' ), gmdate( 'F Y' ) );
 		return wp_mail( $to, $subject, $this->build_html(), array( 'Content-Type: text/html; charset=UTF-8' ) );
 	}
 
@@ -233,11 +233,11 @@ final class Monthly_Report extends Abstract_Module {
 	 */
 	public function add_page() {
 		add_submenu_page(
-			'dicestack',
-			__( 'Monthly report', 'dicestack' ),
-			__( 'Monthly report', 'dicestack' ),
+			'stackpress',
+			__( 'Monthly report', 'stackpress' ),
+			__( 'Monthly report', 'stackpress' ),
 			'manage_options',
-			'dicestack-report',
+			'stackpress-report',
 			array( $this, 'render_page' )
 		);
 	}
@@ -248,11 +248,11 @@ final class Monthly_Report extends Abstract_Module {
 	 * @return void
 	 */
 	public function handle_send_now() {
-		if ( ! current_user_can( 'manage_options' ) || ! check_admin_referer( 'dicestack_send_report' ) ) {
-			wp_die( esc_html__( 'Permission denied.', 'dicestack' ) );
+		if ( ! current_user_can( 'manage_options' ) || ! check_admin_referer( 'stackpress_send_report' ) ) {
+			wp_die( esc_html__( 'Permission denied.', 'stackpress' ) );
 		}
 		$ok = $this->dispatch();
-		wp_safe_redirect( admin_url( 'admin.php?page=dicestack-report&sent=' . ( $ok ? '1' : '0' ) ) );
+		wp_safe_redirect( admin_url( 'admin.php?page=stackpress-report&sent=' . ( $ok ? '1' : '0' ) ) );
 		exit;
 	}
 
@@ -263,23 +263,23 @@ final class Monthly_Report extends Abstract_Module {
 	 */
 	public function render_page() {
 		$sent = isset( $_GET['sent'] ) ? sanitize_text_field( wp_unslash( $_GET['sent'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		echo '<div class="wrap"><h1>' . esc_html__( 'Monthly report', 'dicestack' ) . '</h1>';
+		echo '<div class="wrap"><h1>' . esc_html__( 'Monthly report', 'stackpress' ) . '</h1>';
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- display-only flag.
 		if ( isset( $_GET['settings-saved'] ) ) {
-			echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__( 'Settings saved.', 'dicestack' ) . '</p></div>';
+			echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__( 'Settings saved.', 'stackpress' ) . '</p></div>';
 		}
-		echo '<h2>' . esc_html__( 'Settings', 'dicestack' ) . '</h2>';
-		echo \DiceStack\Admin\Settings_Renderer::page_form( $this ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped internally.
+		echo '<h2>' . esc_html__( 'Settings', 'stackpress' ) . '</h2>';
+		echo \StackPress\Admin\Settings_Renderer::page_form( $this ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped internally.
 		if ( '1' === $sent ) {
-			echo '<div class="notice notice-success"><p>' . esc_html__( 'Report sent.', 'dicestack' ) . '</p></div>';
+			echo '<div class="notice notice-success"><p>' . esc_html__( 'Report sent.', 'stackpress' ) . '</p></div>';
 		} elseif ( '0' === $sent ) {
-			echo '<div class="notice notice-error"><p>' . esc_html__( 'Could not send. Check the recipient and your mail setup (SMTP module helps).', 'dicestack' ) . '</p></div>';
+			echo '<div class="notice notice-error"><p>' . esc_html__( 'Could not send. Check the recipient and your mail setup (SMTP module helps).', 'stackpress' ) . '</p></div>';
 		}
-		echo '<p>' . esc_html__( 'Reports are emailed automatically on the 1st of each month. Preview below:', 'dicestack' ) . '</p>';
+		echo '<p>' . esc_html__( 'Reports are emailed automatically on the 1st of each month. Preview below:', 'stackpress' ) . '</p>';
 		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" style="margin-bottom:20px;">';
-		wp_nonce_field( 'dicestack_send_report' );
-		echo '<input type="hidden" name="action" value="dicestack_send_report" />';
-		echo '<button type="submit" class="button button-primary">' . esc_html__( 'Send report now', 'dicestack' ) . '</button>';
+		wp_nonce_field( 'stackpress_send_report' );
+		echo '<input type="hidden" name="action" value="stackpress_send_report" />';
+		echo '<button type="submit" class="button button-primary">' . esc_html__( 'Send report now', 'stackpress' ) . '</button>';
 		echo '</form>';
 		echo '<div style="border:1px solid #e4e7ec;border-radius:8px;overflow:hidden;max-width:620px;">' . $this->build_html() . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built internally + escaped.
 		echo '</div>';

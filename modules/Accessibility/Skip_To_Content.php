@@ -2,12 +2,12 @@
 /**
  * Skip to Content module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Accessibility;
+namespace StackPress\Modules\Accessibility;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Skip_To_Content extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Skip to content link', 'dicestack' );
+		return __( 'Skip to content link', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Add a keyboard "skip to main content" link for screen-reader and keyboard users.', 'dicestack' );
+		return __( 'Add a keyboard "skip to main content" link for screen-reader and keyboard users.', 'stackpress' );
 	}
 
 	/**
@@ -72,10 +72,10 @@ final class Skip_To_Content extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'target',
-				'label'   => __( 'Target element ID', 'dicestack' ),
+				'label'   => __( 'Target element ID', 'stackpress' ),
 				'type'    => 'text',
 				'default' => 'main',
-				'help'    => __( 'Most themes use "main" or "content". Enter without the # symbol.', 'dicestack' ),
+				'help'    => __( 'Most themes use "main" or "content". Enter without the # symbol.', 'stackpress' ),
 			),
 		);
 	}
@@ -95,6 +95,6 @@ final class Skip_To_Content extends Abstract_Module {
 	public function render() {
 		$target = sanitize_html_class( (string) $this->get_setting( 'target', 'main' ) );
 		$target = $target ? $target : 'main';
-		echo '<a class="dicestack-skip" href="#' . esc_attr( $target ) . '" style="position:absolute;left:-9999px;top:0;background:#1b2a4a;color:#fff;padding:10px 16px;z-index:100000;border-radius:0 0 6px 0;" onfocus="this.style.left=\'0\'" onblur="this.style.left=\'-9999px\'">' . esc_html__( 'Skip to content', 'dicestack' ) . '</a>';
+		echo '<a class="stackpress-skip" href="#' . esc_attr( $target ) . '" style="position:absolute;left:-9999px;top:0;background:#1b2a4a;color:#fff;padding:10px 16px;z-index:100000;border-radius:0 0 6px 0;" onfocus="this.style.left=\'0\'" onblur="this.style.left=\'-9999px\'">' . esc_html__( 'Skip to content', 'stackpress' ) . '</a>';
 	}
 }

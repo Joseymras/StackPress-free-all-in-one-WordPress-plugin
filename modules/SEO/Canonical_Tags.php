@@ -2,12 +2,12 @@
 /**
  * Canonical Tags module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\SEO;
+namespace StackPress\Modules\SEO;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -29,14 +29,14 @@ final class Canonical_Tags extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Archive canonical tags', 'dicestack' );
+		return __( 'Archive canonical tags', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Add self-referencing canonical URLs to archives and the home page.', 'dicestack' );
+		return __( 'Add self-referencing canonical URLs to archives and the home page.', 'stackpress' );
 	}
 
 	/**

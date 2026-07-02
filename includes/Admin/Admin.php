@@ -2,29 +2,29 @@
 /**
  * Admin controller: menu, assets, AJAX, dashboard rendering.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Admin;
+namespace StackPress\Admin;
 
-use DiceStack\Core;
+use StackPress\Core;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Wires up the DiceStack admin experience.
+ * Wires up the StackPress admin experience.
  */
 final class Admin {
 
 	/**
 	 * Admin page slug.
 	 */
-	const PAGE_SLUG = 'dicestack';
+	const PAGE_SLUG = 'stackpress';
 
 	/**
 	 * Nonce action for AJAX.
 	 */
-	const NONCE = 'dicestack_admin';
+	const NONCE = 'stackpress_admin';
 
 	/**
 	 * Register admin hooks.
@@ -35,25 +35,27 @@ final class Admin {
 		add_action( 'admin_menu', array( $this, 'register_menu' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
 		add_action( 'admin_head', array( $this, 'frame_chrome_css' ) );
-		add_action( 'admin_post_dicestack_save_settings', array( $this, 'handle_save_settings_page' ) );
-		add_filter( 'plugin_action_links_' . DICESTACK_BASENAME, array( $this, 'action_links' ) );
+		add_action( 'admin_post_stackpress_save_settings', array( $this, 'handle_save_settings_page' ) );
+		add_filter( 'plugin_action_links_' . STACKPRESS_BASENAME, array( $this, 'action_links' ) );
 
-		add_action( 'wp_ajax_dicestack_toggle_module', array( $this, 'ajax_toggle_module' ) );
-		add_action( 'wp_ajax_dicestack_save_settings', array( $this, 'ajax_save_settings' ) );
-		add_action( 'wp_ajax_dicestack_get_settings_form', array( $this, 'ajax_get_settings_form' ) );
-		add_action( 'wp_ajax_dicestack_bulk_toggle', array( $this, 'ajax_bulk_toggle' ) );
-		add_action( 'admin_post_dicestack_clear_cache', array( $this, 'handle_clear_cache' ) );
+		add_action( 'wp_ajax_stackpress_toggle_module', array( $this, 'ajax_toggle_module' ) );
+		add_action( 'wp_ajax_stackpress_save_settings', array( $this, 'ajax_save_settings' ) );
+		add_action( 'wp_ajax_stackpress_get_settings_form', array( $this, 'ajax_get_settings_form' ) );
+		add_action( 'wp_ajax_stackpress_bulk_toggle', array( $this, 'ajax_bulk_toggle' ) );
+		add_action( 'wp_ajax_stackpress_create_tip_payment', array( $this, 'ajax_create_tip_payment' ) );
+		add_action( 'admin_post_stackpress_clear_cache', array( $this, 'handle_clear_cache' ) );
 		add_action( 'admin_menu', array( $this, 'register_changes_page' ), 20 );
-		add_action( 'admin_post_dicestack_clear_log', array( $this, 'handle_clear_log' ) );
+		add_action( 'admin_post_stackpress_clear_log', array( $this, 'handle_clear_log' ) );
 		add_action( 'admin_menu', array( $this, 'register_agency_page' ), 21 );
-		add_action( 'admin_post_dicestack_enable_agency', array( $this, 'handle_enable_agency' ) );
+		add_action( 'admin_post_stackpress_enable_agency', array( $this, 'handle_enable_agency' ) );
 		add_action( 'admin_menu', array( $this, 'register_setup_page' ), 19 );
 		add_action( 'admin_menu', array( $this, 'register_diagnostics_page' ), 22 );
-		add_action( 'admin_post_dicestack_setup', array( $this, 'handle_setup' ) );
+		add_action( 'admin_post_stackpress_setup', array( $this, 'handle_setup' ) );
 		add_action( 'admin_notices', array( $this, 'setup_notice' ) );
 		add_action( 'admin_init', array( $this, 'maybe_dismiss_setup' ) );
 		add_action( 'admin_notices', array( $this, 'module_failure_notice' ) );
 		add_action( 'admin_init', array( $this, 'maybe_clear_failures' ) );
+		add_action( 'admin_init', array( $this, 'maybe_save_tip_settings' ) );
 	}
 
 	/**
@@ -65,28 +67,28 @@ final class Admin {
 		$core     = Core::instance();
 		$active   = $core->get_active_modules();
 		$reg      = $core->registry();
-		$detected = \DiceStack\Environment::detected_plugins();
+		$detected = \StackPress\Environment::detected_plugins();
 
 		// Candidate list (order = priority shown).
 		$candidates = array(
-			array( 'security_hardening', __( 'Closes common WordPress security gaps.', 'dicestack' ) ),
-			array( 'login_protection', __( 'Blocks brute-force login attempts.', 'dicestack' ) ),
-			array( 'spam_shield', __( 'Stops comment & registration spam — no CAPTCHA service needed.', 'dicestack' ) ),
-			array( 'meta_tags', __( 'Adds SEO meta and social-sharing tags.', 'dicestack' ) ),
-			array( 'schema_jsonld', __( 'Adds schema so Google can show rich results.', 'dicestack' ) ),
-			array( 'page_cache', __( 'Serves cached pages for much faster loads.', 'dicestack' ) ),
-			array( 'minify_css', __( 'Shrinks stylesheets for faster loads.', 'dicestack' ) ),
-			array( 'lazy_loading', __( 'Defers off-screen images and iframes for speed.', 'dicestack' ) ),
-			array( 'limit_revisions', __( 'Keeps your database lean.', 'dicestack' ) ),
-			array( 'backup_restore', __( 'Protects your site with backups.', 'dicestack' ) ),
+			array( 'security_hardening', __( 'Closes common WordPress security gaps.', 'stackpress' ) ),
+			array( 'login_protection', __( 'Blocks brute-force login attempts.', 'stackpress' ) ),
+			array( 'spam_shield', __( 'Stops comment & registration spam — no CAPTCHA service needed.', 'stackpress' ) ),
+			array( 'meta_tags', __( 'Adds SEO meta and social-sharing tags.', 'stackpress' ) ),
+			array( 'schema_jsonld', __( 'Adds schema so Google can show rich results.', 'stackpress' ) ),
+			array( 'page_cache', __( 'Serves cached pages for much faster loads.', 'stackpress' ) ),
+			array( 'minify_css', __( 'Shrinks stylesheets for faster loads.', 'stackpress' ) ),
+			array( 'lazy_loading', __( 'Defers off-screen images and iframes for speed.', 'stackpress' ) ),
+			array( 'limit_revisions', __( 'Keeps your database lean.', 'stackpress' ) ),
+			array( 'backup_restore', __( 'Protects your site with backups.', 'stackpress' ) ),
 		);
 
 		if ( 'https' === wp_parse_url( home_url(), PHP_URL_SCHEME ) ) {
-			$candidates[] = array( 'force_https', __( 'Your site uses HTTPS — enforce it on every page.', 'dicestack' ) );
+			$candidates[] = array( 'force_https', __( 'Your site uses HTTPS — enforce it on every page.', 'stackpress' ) );
 		}
 		if ( class_exists( 'WooCommerce' ) ) {
-			$candidates[] = array( 'optimize_wc_scripts', __( 'WooCommerce detected — stop its scripts loading on non-shop pages.', 'dicestack' ) );
-			$candidates[] = array( 'wc_product_labels', __( 'WooCommerce detected — add Sale/New badges to products.', 'dicestack' ) );
+			$candidates[] = array( 'optimize_wc_scripts', __( 'WooCommerce detected — stop its scripts loading on non-shop pages.', 'stackpress' ) );
+			$candidates[] = array( 'wc_product_labels', __( 'WooCommerce detected — add Sale/New badges to products.', 'stackpress' ) );
 		}
 
 		$recommended = array();
@@ -109,7 +111,7 @@ final class Admin {
 				'label'  => $module->name(),
 				'reason' => $reason,
 			);
-			$feature = \DiceStack\Environment::module_feature( $id );
+			$feature = \StackPress\Environment::module_feature( $id );
 
 			// If another active plugin already handles this area, don't recommend it.
 			if ( '' !== $feature && isset( $detected[ $feature ] ) ) {
@@ -135,10 +137,10 @@ final class Admin {
 	public function register_setup_page() {
 		add_submenu_page(
 			self::PAGE_SLUG,
-			__( 'Recommended setup', 'dicestack' ),
-			__( 'Recommended setup', 'dicestack' ),
+			__( 'Recommended setup', 'stackpress' ),
+			__( 'Recommended setup', 'stackpress' ),
 			'manage_options',
-			'dicestack-setup',
+			'stackpress-setup',
 			array( $this, 'render_setup_page' )
 		);
 	}
@@ -153,11 +155,11 @@ final class Admin {
 			return;
 		}
 		$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
-		if ( $screen && false === strpos( (string) $screen->id, 'dicestack' ) ) {
-			return; // Only nudge on DiceStack screens.
+		if ( $screen && false === strpos( (string) $screen->id, 'stackpress' ) ) {
+			return; // Only nudge on StackPress screens.
 		}
-		$dismiss = wp_nonce_url( add_query_arg( 'dicestack_setup_dismiss', '1' ), 'dicestack_setup_dismiss' );
-		echo '<div class="notice notice-info is-dismissible"><p><strong>DiceStack</strong> — ' . esc_html__( 'Run the quick site scan to enable the tools your site really needs.', 'dicestack' ) . ' <a href="' . esc_url( admin_url( 'admin.php?page=dicestack-setup' ) ) . '" class="button button-primary" style="margin-left:6px;">' . esc_html__( 'Scan my site', 'dicestack' ) . '</a> <a href="' . esc_url( $dismiss ) . '" style="margin-left:10px;color:#646970;text-decoration:underline;">' . esc_html__( 'Dismiss', 'dicestack' ) . '</a></p></div>';
+		$dismiss = wp_nonce_url( add_query_arg( 'stackpress_setup_dismiss', '1' ), 'stackpress_setup_dismiss' );
+		echo '<div class="notice notice-info is-dismissible"><p><strong>StackPress</strong> — ' . esc_html__( 'Run the quick site scan to enable the tools your site really needs.', 'stackpress' ) . ' <a href="' . esc_url( admin_url( 'admin.php?page=stackpress-setup' ) ) . '" class="button button-primary" style="margin-left:6px;">' . esc_html__( 'Scan my site', 'stackpress' ) . '</a> <a href="' . esc_url( $dismiss ) . '" style="margin-left:10px;color:#646970;text-decoration:underline;">' . esc_html__( 'Dismiss', 'stackpress' ) . '</a></p></div>';
 	}
 
 	/**
@@ -167,8 +169,8 @@ final class Admin {
 	 */
 	public function handle_save_settings_page() {
 		$module_id = isset( $_POST['module'] ) ? sanitize_key( wp_unslash( $_POST['module'] ) ) : '';
-		if ( ! current_user_can( 'manage_options' ) || ! check_admin_referer( 'dicestack_save_settings_' . $module_id ) ) {
-			wp_die( esc_html__( 'Permission denied.', 'dicestack' ) );
+		if ( ! current_user_can( 'manage_options' ) || ! check_admin_referer( 'stackpress_save_settings_' . $module_id ) ) {
+			wp_die( esc_html__( 'Permission denied.', 'stackpress' ) );
 		}
 		$module = Core::instance()->registry()->get_instance( $module_id );
 		if ( $module ) {
@@ -189,10 +191,10 @@ final class Admin {
 	public function register_diagnostics_page() {
 		add_submenu_page(
 			self::PAGE_SLUG,
-			__( 'Diagnostics', 'dicestack' ),
-			__( 'Diagnostics', 'dicestack' ),
+			__( 'Diagnostics', 'stackpress' ),
+			__( 'Diagnostics', 'stackpress' ),
 			'manage_options',
-			'dicestack-diagnostics',
+			'stackpress-diagnostics',
 			array( $this, 'render_diagnostics_page' )
 		);
 	}
@@ -204,15 +206,15 @@ final class Admin {
 	 */
 	public function render_diagnostics_page() {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( esc_html__( 'Permission denied.', 'dicestack' ) );
+			wp_die( esc_html__( 'Permission denied.', 'stackpress' ) );
 		}
 		global $wp_version;
 		$core   = Core::instance();
 		$active = $core->get_active_modules();
-		$caps   = \DiceStack\Environment::map();
+		$caps   = \StackPress\Environment::map();
 
 		$rows = array(
-			'DiceStack version'    => DICESTACK_VERSION,
+			'StackPress version'    => STACKPRESS_VERSION,
 			'WordPress'         => $wp_version,
 			'PHP'               => PHP_VERSION,
 			'Server'            => isset( $_SERVER['SERVER_SOFTWARE'] ) ? sanitize_text_field( wp_unslash( $_SERVER['SERVER_SOFTWARE'] ) ) : '—',
@@ -228,19 +230,19 @@ final class Admin {
 		$rows['Active tool IDs'] = empty( $active ) ? '—' : implode( ', ', $active );
 
 		// Plain-text block for copy/paste into support.
-		$plain = "DiceStack diagnostics\n==================\n";
+		$plain = "StackPress diagnostics\n==================\n";
 		foreach ( $rows as $k => $v ) {
 			$plain .= $k . ': ' . $v . "\n";
 		}
 
-		echo '<div class="wrap"><h1>' . esc_html__( 'DiceStack diagnostics', 'dicestack' ) . '</h1>';
-		echo '<p>' . esc_html__( 'A snapshot of your environment. Copy this when contacting support.', 'dicestack' ) . '</p>';
+		echo '<div class="wrap"><h1>' . esc_html__( 'StackPress diagnostics', 'stackpress' ) . '</h1>';
+		echo '<p>' . esc_html__( 'A snapshot of your environment. Copy this when contacting support.', 'stackpress' ) . '</p>';
 		echo '<table class="widefat striped" style="max-width:760px;"><tbody>';
 		foreach ( $rows as $k => $v ) {
 			echo '<tr><td style="width:34%;font-weight:600;">' . esc_html( $k ) . '</td><td>' . esc_html( $v ) . '</td></tr>';
 		}
 		echo '</tbody></table>';
-		echo '<p style="margin-top:16px;"><label><strong>' . esc_html__( 'Copy for support', 'dicestack' ) . '</strong></label></p>';
+		echo '<p style="margin-top:16px;"><label><strong>' . esc_html__( 'Copy for support', 'stackpress' ) . '</strong></label></p>';
 		echo '<textarea readonly onclick="this.select()" style="width:100%;max-width:760px;height:200px;font-family:monospace;font-size:12px;">' . esc_textarea( $plain ) . '</textarea>';
 		echo '</div>';
 	}
@@ -264,14 +266,14 @@ final class Admin {
 			$module  = $reg->get_instance( $id );
 			$names[] = $module ? $module->name() : $id;
 		}
-		$clear = wp_nonce_url( add_query_arg( 'dicestack_clear_failures', '1' ), 'dicestack_clear_failures' );
-		echo '<div class="notice notice-error"><p><strong>DiceStack</strong> — ' . esc_html(
+		$clear = wp_nonce_url( add_query_arg( 'stackpress_clear_failures', '1' ), 'stackpress_clear_failures' );
+		echo '<div class="notice notice-error"><p><strong>StackPress</strong> — ' . esc_html(
 			sprintf(
 				/* translators: %s: comma-separated tool names. */
-				__( 'These tools were turned off automatically because they caused an error, so your site kept running: %s. You can re-enable them after checking your setup.', 'dicestack' ),
+				__( 'These tools were turned off automatically because they caused an error, so your site kept running: %s. You can re-enable them after checking your setup.', 'stackpress' ),
 				implode( ', ', $names )
 			)
-		) . ' <a href="' . esc_url( $clear ) . '">' . esc_html__( 'Dismiss', 'dicestack' ) . '</a></p></div>';
+		) . ' <a href="' . esc_url( $clear ) . '">' . esc_html__( 'Dismiss', 'stackpress' ) . '</a></p></div>';
 	}
 
 	/**
@@ -280,12 +282,31 @@ final class Admin {
 	 * @return void
 	 */
 	public function maybe_clear_failures() {
-		if ( ! isset( $_GET['dicestack_clear_failures'] ) || ! current_user_can( 'manage_options' ) ) {
+		if ( ! isset( $_GET['stackpress_clear_failures'] ) || ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
-		check_admin_referer( 'dicestack_clear_failures' );
+		check_admin_referer( 'stackpress_clear_failures' );
 		delete_option( Core::FAILURES_OPTION );
-		wp_safe_redirect( remove_query_arg( array( 'dicestack_clear_failures', '_wpnonce' ) ) );
+		wp_safe_redirect( remove_query_arg( array( 'stackpress_clear_failures', '_wpnonce' ) ) );
+		exit;
+	}
+
+	/**
+	 * Save Paystack tip settings from a simple admin form.
+	 *
+	 * @return void
+	 */
+	public function maybe_save_tip_settings() {
+		if ( ! isset( $_POST['stackpress_tip_settings_nonce'] ) || ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+		check_admin_referer( 'stackpress_tip_settings', 'stackpress_tip_settings_nonce' );
+		$settings = array(
+			'public_key' => isset( $_POST['stackpress_tip_public_key'] ) ? sanitize_text_field( wp_unslash( $_POST['stackpress_tip_public_key'] ) ) : '',
+			'secret_key' => isset( $_POST['stackpress_tip_secret_key'] ) ? sanitize_text_field( wp_unslash( $_POST['stackpress_tip_secret_key'] ) ) : '',
+		);
+		update_option( 'stackpress_tip_settings', $settings );
+		wp_safe_redirect( add_query_arg( 'stackpress_tip_saved', '1', admin_url( 'admin.php?page=' . self::PAGE_SLUG ) ) );
 		exit;
 	}
 
@@ -295,12 +316,12 @@ final class Admin {
 	 * @return void
 	 */
 	public function maybe_dismiss_setup() {
-		if ( ! isset( $_GET['dicestack_setup_dismiss'] ) || ! current_user_can( 'manage_options' ) ) {
+		if ( ! isset( $_GET['stackpress_setup_dismiss'] ) || ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
-		check_admin_referer( 'dicestack_setup_dismiss' );
+		check_admin_referer( 'stackpress_setup_dismiss' );
 		update_option( Core::SETUP_OPTION, true );
-		wp_safe_redirect( remove_query_arg( array( 'dicestack_setup_dismiss', '_wpnonce' ) ) );
+		wp_safe_redirect( remove_query_arg( array( 'stackpress_setup_dismiss', '_wpnonce' ) ) );
 		exit;
 	}
 
@@ -310,8 +331,8 @@ final class Admin {
 	 * @return void
 	 */
 	public function handle_setup() {
-		if ( ! current_user_can( 'manage_options' ) || ! check_admin_referer( 'dicestack_setup' ) ) {
-			wp_die( esc_html__( 'Permission denied.', 'dicestack' ) );
+		if ( ! current_user_can( 'manage_options' ) || ! check_admin_referer( 'stackpress_setup' ) ) {
+			wp_die( esc_html__( 'Permission denied.', 'stackpress' ) );
 		}
 		$core    = Core::instance();
 		$catalog = $core->registry()->catalog();
@@ -323,8 +344,8 @@ final class Admin {
 			}
 		}
 		update_option( Core::SETUP_OPTION, true );
-		$this->log_change( sprintf( /* translators: %d: count. */ __( 'Recommended setup enabled %d modules', 'dicestack' ), $count ) );
-		wp_safe_redirect( admin_url( 'admin.php?page=dicestack-setup&done=' . $count ) );
+		$this->log_change( sprintf( /* translators: %d: count. */ __( 'Recommended setup enabled %d modules', 'stackpress' ), $count ) );
+		wp_safe_redirect( admin_url( 'admin.php?page=stackpress-setup&done=' . $count ) );
 		exit;
 	}
 
@@ -344,17 +365,17 @@ final class Admin {
 
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( isset( $_GET['done'] ) ) {
-			echo '<div class="notice notice-success" style="margin:0 0 16px;"><p>' . esc_html( sprintf( /* translators: %d: count. */ _n( '%d tool enabled. Your site is ready.', '%d tools enabled. Your site is ready.', (int) $_GET['done'], 'dicestack' ), (int) $_GET['done'] ) ) . '</p></div>'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			echo '<div class="notice notice-success" style="margin:0 0 16px;"><p>' . esc_html( sprintf( /* translators: %d: count. */ _n( '%d tool enabled. Your site is ready.', '%d tools enabled. Your site is ready.', (int) $_GET['done'], 'stackpress' ), (int) $_GET['done'] ) ) . '</p></div>'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		}
 
 		echo '<div class="owp-card">';
 
 		// Header.
 		echo '<div class="owp-head">';
-		echo '<h2>' . esc_html__( 'Recommended setup', 'dicestack' ) . '</h2>';
-		echo '<p>' . esc_html__( 'DiceStack scanned your site — including the other plugins you already run — and chose only the tools that are safe and useful here. Nothing is changed until you click enable.', 'dicestack' ) . '</p>';
+		echo '<h2>' . esc_html__( 'Recommended setup', 'stackpress' ) . '</h2>';
+		echo '<p>' . esc_html__( 'StackPress scanned your site — including the other plugins you already run — and chose only the tools that are safe and useful here. Nothing is changed until you click enable.', 'stackpress' ) . '</p>';
 		if ( ! empty( $detected ) ) {
-			echo '<div class="owp-detected"><span style="color:#9fe8f5;font-size:12.5px;align-self:center;">' . esc_html__( 'Detected on your site:', 'dicestack' ) . '</span>';
+			echo '<div class="owp-detected"><span style="color:#9fe8f5;font-size:12.5px;align-self:center;">' . esc_html__( 'Detected on your site:', 'stackpress' ) . '</span>';
 			foreach ( $detected as $feature => $plugin ) {
 				echo '<span class="owp-chip">' . esc_html( $plugin ) . '</span>';
 			}
@@ -363,20 +384,20 @@ final class Admin {
 		echo '</div>';
 
 		if ( empty( $recommended ) && empty( $covered ) ) {
-			echo '<div class="owp-empty">' . esc_html__( 'Great — everything recommended for your site is already enabled. You are all set!', 'dicestack' ) . '</div></div></div></div>';
+			echo '<div class="owp-empty">' . esc_html__( 'Great — everything recommended for your site is already enabled. You are all set!', 'stackpress' ) . '</div></div></div></div>';
 			return;
 		}
 
 		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '">';
-		wp_nonce_field( 'dicestack_setup' );
-		echo '<input type="hidden" name="action" value="dicestack_setup" />';
+		wp_nonce_field( 'stackpress_setup' );
+		echo '<input type="hidden" name="action" value="stackpress_setup" />';
 
 		echo '<div class="owp-sec">';
 
 		// Recommended (pre-checked).
 		if ( ! empty( $recommended ) ) {
-			echo '<h3>' . esc_html__( 'Recommended for your site', 'dicestack' ) . '</h3>';
-			echo '<p class="owp-sub">' . esc_html__( 'These are safe to enable and not handled by any plugin you already run.', 'dicestack' ) . '</p>';
+			echo '<h3>' . esc_html__( 'Recommended for your site', 'stackpress' ) . '</h3>';
+			echo '<p class="owp-sub">' . esc_html__( 'These are safe to enable and not handled by any plugin you already run.', 'stackpress' ) . '</p>';
 			foreach ( $recommended as $r ) {
 				echo '<label class="owp-row">';
 				echo '<input type="checkbox" name="enable[]" value="' . esc_attr( $r['id'] ) . '" checked />';
@@ -387,20 +408,20 @@ final class Admin {
 
 		// Already handled by another plugin (unchecked).
 		if ( ! empty( $covered ) ) {
-			echo '<h3>' . esc_html__( 'Already handled by your other plugins', 'dicestack' ) . '</h3>';
-			echo '<p class="owp-sub">' . esc_html__( 'We left these OFF so they do not clash. Only enable one if you plan to switch away from the plugin shown.', 'dicestack' ) . '</p>';
+			echo '<h3>' . esc_html__( 'Already handled by your other plugins', 'stackpress' ) . '</h3>';
+			echo '<p class="owp-sub">' . esc_html__( 'We left these OFF so they do not clash. Only enable one if you plan to switch away from the plugin shown.', 'stackpress' ) . '</p>';
 			foreach ( $covered as $r ) {
 				echo '<label class="owp-row is-covered">';
 				echo '<input type="checkbox" name="enable[]" value="' . esc_attr( $r['id'] ) . '" />';
 				echo '<span><span class="t">' . esc_html( $r['label'] ) . '</span><span class="r">' . esc_html( $r['reason'] ) . '</span>';
-				echo '<span class="owp-by">' . esc_html( sprintf( /* translators: %s: plugin name. */ __( 'Already handled by %s', 'dicestack' ), $r['by'] ) ) . '</span>';
+				echo '<span class="owp-by">' . esc_html( sprintf( /* translators: %s: plugin name. */ __( 'Already handled by %s', 'stackpress' ), $r['by'] ) ) . '</span>';
 				echo '</span></label>';
 			}
 		}
 
 		echo '</div>'; // .owp-sec
 
-		echo '<div class="owp-actions"><button type="submit" class="owp-btn">' . esc_html__( 'Enable selected tools', 'dicestack' ) . '</button></div>';
+		echo '<div class="owp-actions"><button type="submit" class="owp-btn">' . esc_html__( 'Enable selected tools', 'stackpress' ) . '</button></div>';
 		echo '</form>';
 		echo '</div></div></div>'; // card, owp-setup, wrap
 	}
@@ -443,27 +464,27 @@ final class Admin {
 	 */
 	public function agency_bundle() {
 		return array(
-			'white_label'          => __( 'White label (rename for clients)', 'dicestack' ),
-			'admin_branding'       => __( 'Admin footer branding', 'dicestack' ),
-			'monthly_report'       => __( 'Monthly client report', 'dicestack' ),
-			'activity_log'         => __( 'Activity log', 'dicestack' ),
-			'error_monitor'        => __( 'Error monitor', 'dicestack' ),
-			'backup_restore'       => __( 'Backup & restore', 'dicestack' ),
-			'cloud_backup'         => __( 'Cloud backup', 'dicestack' ),
-			'config_export_import' => __( 'Config import / export', 'dicestack' ),
-			'admin_menu_editor'    => __( 'Admin menu editor', 'dicestack' ),
-			'hide_admin_notices'   => __( 'Hide admin notices', 'dicestack' ),
-			'welcome_widget'       => __( 'Dashboard welcome widget', 'dicestack' ),
+			'white_label'          => __( 'White label (rename for clients)', 'stackpress' ),
+			'admin_branding'       => __( 'Admin footer branding', 'stackpress' ),
+			'monthly_report'       => __( 'Monthly client report', 'stackpress' ),
+			'activity_log'         => __( 'Activity log', 'stackpress' ),
+			'error_monitor'        => __( 'Error monitor', 'stackpress' ),
+			'backup_restore'       => __( 'Backup & restore', 'stackpress' ),
+			'cloud_backup'         => __( 'Cloud backup', 'stackpress' ),
+			'config_export_import' => __( 'Config import / export', 'stackpress' ),
+			'admin_menu_editor'    => __( 'Admin menu editor', 'stackpress' ),
+			'hide_admin_notices'   => __( 'Hide admin notices', 'stackpress' ),
+			'welcome_widget'       => __( 'Dashboard welcome widget', 'stackpress' ),
 		);
 	}
 
 	/**
-	 * Option storing the DiceStack change log.
+	 * Option storing the StackPress change log.
 	 */
-	const CHANGE_LOG = 'dicestack_change_log';
+	const CHANGE_LOG = 'stackpress_change_log';
 
 	/**
-	 * Append an entry to the DiceStack change log (what the plugin changed).
+	 * Append an entry to the StackPress change log (what the plugin changed).
 	 *
 	 * @param string $message Human-readable description.
 	 * @return void
@@ -484,6 +505,77 @@ final class Admin {
 	}
 
 	/**
+	 * Initialize a Paystack tip payment from the dashboard.
+	 *
+	 * @return void
+	 */
+	public function ajax_create_tip_payment() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error( array( 'message' => __( 'Permission denied.', 'stackpress' ) ), 403 );
+		}
+		check_ajax_referer( 'stackpress_admin', 'nonce' );
+
+		$amount = isset( $_POST['amount'] ) ? absint( wp_unslash( $_POST['amount'] ) ) : 0;
+		$email  = isset( $_POST['email'] ) ? sanitize_email( wp_unslash( $_POST['email'] ) ) : '';
+		if ( $amount < 100 ) {
+			wp_send_json_error( array( 'message' => __( 'Please choose at least 100 NGN.', 'stackpress' ) ) );
+		}
+		if ( ! is_email( $email ) ) {
+			$email = get_option( 'admin_email' );
+		}
+
+		$settings = get_option( 'stackpress_tip_settings', array() );
+		$public_key = isset( $settings['public_key'] ) ? $settings['public_key'] : ( defined( 'STACKPRESS_PAYSTACK_PUBLIC_KEY' ) ? STACKPRESS_PAYSTACK_PUBLIC_KEY : '' );
+		$secret_key = isset( $settings['secret_key'] ) ? $settings['secret_key'] : ( defined( 'STACKPRESS_PAYSTACK_SECRET_KEY' ) ? STACKPRESS_PAYSTACK_SECRET_KEY : '' );
+
+		if ( '' === $public_key || '' === $secret_key ) {
+			wp_send_json_error( array( 'message' => __( 'Paystack has not been configured yet.', 'stackpress' ) ) );
+		}
+
+		$payload = array(
+			'email'        => $email,
+			'amount'       => $amount * 100,
+			'currency'     => 'NGN',
+			'callback_url' => admin_url( 'admin.php?page=' . self::PAGE_SLUG . '&stackpress_tip=success' ),
+			'metadata'     => array(
+				'source'   => 'stackpress_plugin',
+				'user_id'  => get_current_user_id(),
+				'page'     => self::PAGE_SLUG,
+			),
+		);
+
+		$response = wp_remote_post(
+			'https://api.paystack.co/transaction/initialize',
+			array(
+				'timeout' => 30,
+				'headers' => array(
+					'Authorization' => 'Bearer ' . $secret_key,
+					'Content-Type'  => 'application/json',
+				),
+				'body'    => wp_json_encode( $payload ),
+			)
+		);
+
+		if ( is_wp_error( $response ) ) {
+			wp_send_json_error( array( 'message' => $response->get_error_message() ) );
+		}
+
+		$body = json_decode( wp_remote_retrieve_body( $response ), true );
+		if ( empty( $body['status'] ) || empty( $body['data']['authorization_url'] ) ) {
+			wp_send_json_error( array( 'message' => __( 'Paystack could not start the payment flow.', 'stackpress' ) ) );
+		}
+
+		wp_send_json_success(
+			array(
+				'authorization_url' => $body['data']['authorization_url'],
+				'reference'         => $body['data']['reference'],
+				'publicKey'         => $public_key,
+				'email'             => $email,
+			)
+		);
+	}
+
+	/**
 	 * Add the top-level admin menu.
 	 *
 	 * @return void
@@ -492,8 +584,8 @@ final class Admin {
 		$icon = 'data:image/svg+xml;base64,' . base64_encode( '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#a7aaad" stroke-width="2"><path d="M12 2l9 5v10l-9 5-9-5V7z"/><path d="M12 12l9-5M12 12v10M12 12L3 7"/></svg>' );
 
 		add_menu_page(
-			__( 'DiceStack', 'dicestack' ),
-			__( 'DiceStack', 'dicestack' ),
+			__( 'StackPress', 'stackpress' ),
+			__( 'StackPress', 'stackpress' ),
 			'manage_options',
 			self::PAGE_SLUG,
 			array( $this, 'render_dashboard' ),
@@ -510,13 +602,13 @@ final class Admin {
 	 */
 	public function action_links( $links ) {
 		$url      = admin_url( 'admin.php?page=' . self::PAGE_SLUG );
-		$settings = '<a href="' . esc_url( $url ) . '">' . esc_html__( 'Dashboard', 'dicestack' ) . '</a>';
+		$settings = '<a href="' . esc_url( $url ) . '">' . esc_html__( 'Dashboard', 'stackpress' ) . '</a>';
 		array_unshift( $links, $settings );
 		return $links;
 	}
 
 	/**
-	 * Enqueue dashboard assets (DiceStack admin page only).
+	 * Enqueue dashboard assets (StackPress admin page only).
 	 *
 	 * @param string $hook Current admin page hook.
 	 * @return void
@@ -526,47 +618,64 @@ final class Admin {
 			return;
 		}
 
-		// DiceStack inlines its admin CSS/JS instead of loading separate files. This
+		// StackPress inlines its admin CSS/JS instead of loading separate files. This
 		// guarantees the dashboard always uses the current code, even on hosts/CDNs
 		// that aggressively cache (or strip query strings from) static assets.
 		$css = $this->asset_contents( 'assets/admin/tabler-icons.min.css' ) . "\n" . $this->asset_contents( 'assets/admin/admin.css' );
 
-		wp_register_style( 'dicestack-admin', false, array(), DICESTACK_VERSION ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- inline-only handle.
-		wp_enqueue_style( 'dicestack-admin' );
-		wp_add_inline_style( 'dicestack-admin', $css );
+		$tip_settings = get_option( 'stackpress_tip_settings', array() );
+		$tip_public   = isset( $tip_settings['public_key'] ) ? $tip_settings['public_key'] : ( defined( 'STACKPRESS_PAYSTACK_PUBLIC_KEY' ) ? STACKPRESS_PAYSTACK_PUBLIC_KEY : '' );
+		$tip_secret   = isset( $tip_settings['secret_key'] ) ? $tip_settings['secret_key'] : ( defined( 'STACKPRESS_PAYSTACK_SECRET_KEY' ) ? STACKPRESS_PAYSTACK_SECRET_KEY : '' );
+		$tip_enabled  = '' !== $tip_public && '' !== $tip_secret;
+
+		wp_register_style( 'stackpress-admin', false, array(), STACKPRESS_VERSION ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- inline-only handle.
+		wp_enqueue_style( 'stackpress-admin' );
+		wp_add_inline_style( 'stackpress-admin', $css );
 
 		$config = array(
 			'ajaxUrl'  => admin_url( 'admin-ajax.php' ),
 			'adminUrl' => admin_url(),
 			'nonce'    => wp_create_nonce( self::NONCE ),
+			'tip'      => array(
+				'enabled'       => $tip_enabled,
+				'currency'      => 'NGN',
+				'defaultAmount' => 1000,
+				'email'         => get_option( 'admin_email' ),
+				'heading'       => __( 'Support StackPress', 'stackpress' ),
+				'body'          => __( 'Tip the builder directly from this dashboard without leaving the page.', 'stackpress' ),
+				'button'        => __( 'Pay with Paystack', 'stackpress' ),
+				'disabledText'  => __( 'Set your Paystack keys to enable this tip flow.', 'stackpress' ),
+			),
 			'i18n'    => array(
-				'enabled'      => __( 'Enabled', 'dicestack' ),
-				'disabled'     => __( 'Disabled', 'dicestack' ),
-				'saving'       => __( 'Saving…', 'dicestack' ),
-				'saved'        => __( 'Saved', 'dicestack' ),
-				'error'        => __( 'Something went wrong. Please try again.', 'dicestack' ),
-				'noMatch'      => __( 'No tools match your search.', 'dicestack' ),
-				'noActive'     => __( 'No tools are enabled yet. Open “Recommended setup” to get started.', 'dicestack' ),
-				'allSupported' => __( 'Good news — your server supports every DiceStack tool. Nothing is blocked here.', 'dicestack' ),
-				'enabledLower' => __( 'enabled', 'dicestack' ),
-				'configure'    => __( 'Configure', 'dicestack' ),
-				'howToUse'     => __( 'How to use', 'dicestack' ),
-				'readyToOpen'  => __( 'is enabled and ready', 'dicestack' ),
-				'clickOpen'    => __( 'It was added to your dashboard. Click Open to configure it now.', 'dicestack' ),
-				'openIt'       => __( 'Open', 'dicestack' ),
-				'conflictWarn' => __( 'is already active and handles this too. Running both can conflict — enable this anyway?', 'dicestack' ),
+				'enabled'      => __( 'Enabled', 'stackpress' ),
+				'disabled'     => __( 'Disabled', 'stackpress' ),
+				'saving'       => __( 'Saving…', 'stackpress' ),
+				'saved'        => __( 'Saved', 'stackpress' ),
+				'error'        => __( 'Something went wrong. Please try again.', 'stackpress' ),
+				'noMatch'      => __( 'No tools match your search.', 'stackpress' ),
+				'noActive'     => __( 'No tools are enabled yet. Open “Recommended setup” to get started.', 'stackpress' ),
+				'allSupported' => __( 'Good news — your server supports every StackPress tool. Nothing is blocked here.', 'stackpress' ),
+				'enabledLower' => __( 'enabled', 'stackpress' ),
+				'configure'    => __( 'Configure', 'stackpress' ),
+				'howToUse'     => __( 'How to use', 'stackpress' ),
+				'readyToOpen'  => __( 'is enabled and ready', 'stackpress' ),
+				'clickOpen'    => __( 'It was added to your dashboard. Click Open to configure it now.', 'stackpress' ),
+				'openIt'       => __( 'Open', 'stackpress' ),
+				'conflictWarn' => __( 'is already active and handles this too. Running both can conflict — enable this anyway?', 'stackpress' ),
 			),
 		);
 
-		wp_register_script( 'dicestack-admin', false, array(), DICESTACK_VERSION, true ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- inline-only handle.
-		wp_enqueue_script( 'dicestack-admin' );
-		wp_add_inline_script( 'dicestack-admin', 'window.DiceStackAdmin = ' . wp_json_encode( $config ) . ';', 'before' );
-		wp_add_inline_script( 'dicestack-admin', $this->asset_contents( 'assets/admin/admin.js' ) );
+		wp_register_script( 'stackpress-paystack', 'https://js.paystack.co/v1/inline.js', array(), null, true );
+		wp_enqueue_script( 'stackpress-paystack' );
+		wp_register_script( 'stackpress-admin', false, array(), STACKPRESS_VERSION, true ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- inline-only handle.
+		wp_enqueue_script( 'stackpress-admin' );
+		wp_add_inline_script( 'stackpress-admin', 'window.StackPressAdmin = ' . wp_json_encode( $config ) . ';', 'before' );
+		wp_add_inline_script( 'stackpress-admin', $this->asset_contents( 'assets/admin/admin.js' ) );
 	}
 
 	/**
-	 * When a DiceStack tool page is loaded inside the dashboard modal
-	 * (?dicestack_modal=1), strip the surrounding wp-admin chrome so only the
+	 * When a StackPress tool page is loaded inside the dashboard modal
+	 * (?stackpress_modal=1), strip the surrounding wp-admin chrome so only the
 	 * tool's own UI shows.
 	 *
 	 * @return void
@@ -574,23 +683,23 @@ final class Admin {
 	public function frame_chrome_css() {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only page check, no state change.
 		$page = isset( $_GET['page'] ) ? sanitize_key( wp_unslash( $_GET['page'] ) ) : '';
-		if ( 0 !== strpos( $page, 'dicestack' ) || ! current_user_can( 'manage_options' ) ) {
+		if ( 0 !== strpos( $page, 'stackpress' ) || ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
 		// Detect iframe context on every load (survives form redirects), then hide
 		// the surrounding wp-admin chrome so only the tool's UI shows in the modal.
 		if ( function_exists( 'wp_print_inline_script_tag' ) ) {
-			wp_print_inline_script_tag( 'if(window.top!==window.self){document.documentElement.className+=" dicestack-framed";}' );
+			wp_print_inline_script_tag( 'if(window.top!==window.self){document.documentElement.className+=" stackpress-framed";}' );
 		}
 		echo '<style>'
-			. 'html.dicestack-framed{padding-top:0!important}'
-			. 'html.dicestack-framed #adminmenumain,html.dicestack-framed #wpadminbar,html.dicestack-framed #wpfooter,html.dicestack-framed #screen-meta,html.dicestack-framed #screen-meta-links,html.dicestack-framed .update-nag,html.dicestack-framed .notice{display:none!important}'
-			. 'html.dicestack-framed,html.dicestack-framed body,html.dicestack-framed #wpwrap,html.dicestack-framed #wpcontent,html.dicestack-framed #wpbody,html.dicestack-framed #wpbody-content{overflow-x:hidden!important;min-width:0!important;box-sizing:border-box!important}'
-			. 'html.dicestack-framed #wpcontent,html.dicestack-framed #wpbody-content{margin-left:0!important}'
-			. 'html.dicestack-framed #wpcontent{padding:0 16px 16px!important}'
-			. 'html.dicestack-framed .wrap{margin:12px 0 0!important;max-width:100%!important}'
-			. 'html.dicestack-framed .wrap>h1:first-child{display:none!important}'
-			. 'html.dicestack-framed,html.dicestack-framed body{background:#fff!important}'
+			. 'html.stackpress-framed{padding-top:0!important}'
+			. 'html.stackpress-framed #adminmenumain,html.stackpress-framed #wpadminbar,html.stackpress-framed #wpfooter,html.stackpress-framed #screen-meta,html.stackpress-framed #screen-meta-links,html.stackpress-framed .update-nag,html.stackpress-framed .notice{display:none!important}'
+			. 'html.stackpress-framed,html.stackpress-framed body,html.stackpress-framed #wpwrap,html.stackpress-framed #wpcontent,html.stackpress-framed #wpbody,html.stackpress-framed #wpbody-content{overflow-x:hidden!important;min-width:0!important;box-sizing:border-box!important}'
+			. 'html.stackpress-framed #wpcontent,html.stackpress-framed #wpbody-content{margin-left:0!important}'
+			. 'html.stackpress-framed #wpcontent{padding:0 16px 16px!important}'
+			. 'html.stackpress-framed .wrap{margin:12px 0 0!important;max-width:100%!important}'
+			. 'html.stackpress-framed .wrap>h1:first-child{display:none!important}'
+			. 'html.stackpress-framed,html.stackpress-framed body{background:#fff!important}'
 			. '</style>';
 	}
 
@@ -601,7 +710,7 @@ final class Admin {
 	 * @return string
 	 */
 	private function asset_contents( $rel_path ) {
-		$file = DICESTACK_PATH . $rel_path;
+		$file = STACKPRESS_PATH . $rel_path;
 		if ( ! file_exists( $file ) ) {
 			return '';
 		}
@@ -621,7 +730,7 @@ final class Admin {
 		$categories = $registry->categories();
 		$active     = $core->get_active_modules();
 
-		require DICESTACK_PATH . 'includes/Admin/views/dashboard.php';
+		require STACKPRESS_PATH . 'includes/Admin/views/dashboard.php';
 	}
 
 	/*
@@ -637,10 +746,10 @@ final class Admin {
 	 */
 	private function verify_request() {
 		if ( ! check_ajax_referer( self::NONCE, 'nonce', false ) ) {
-			wp_send_json_error( array( 'message' => __( 'Security check failed.', 'dicestack' ) ), 403 );
+			wp_send_json_error( array( 'message' => __( 'Security check failed.', 'stackpress' ) ), 403 );
 		}
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_send_json_error( array( 'message' => __( 'Insufficient permissions.', 'dicestack' ) ), 403 );
+			wp_send_json_error( array( 'message' => __( 'Insufficient permissions.', 'stackpress' ) ), 403 );
 		}
 	}
 
@@ -661,7 +770,7 @@ final class Admin {
 		$catalog = $core->registry()->catalog();
 
 		if ( ! isset( $catalog[ $module_id ] ) ) {
-			wp_send_json_error( array( 'message' => __( 'Unknown module.', 'dicestack' ) ), 404 );
+			wp_send_json_error( array( 'message' => __( 'Unknown module.', 'stackpress' ) ), 404 );
 		}
 
 		if ( $enable ) {
@@ -672,10 +781,10 @@ final class Admin {
 
 		if ( $enable ) {
 			/* translators: %s: module ID. */
-			$logmsg = sprintf( __( 'Enabled module: %s', 'dicestack' ), $module_id );
+			$logmsg = sprintf( __( 'Enabled module: %s', 'stackpress' ), $module_id );
 		} else {
 			/* translators: %s: module ID. */
-			$logmsg = sprintf( __( 'Disabled module: %s', 'dicestack' ), $module_id );
+			$logmsg = sprintf( __( 'Disabled module: %s', 'stackpress' ), $module_id );
 		}
 		$this->log_change( $logmsg );
 
@@ -719,10 +828,10 @@ final class Admin {
 
 		if ( $enable ) {
 			/* translators: %d: number of modules. */
-			$logmsg = sprintf( __( 'Bulk enabled %d modules', 'dicestack' ), $changed );
+			$logmsg = sprintf( __( 'Bulk enabled %d modules', 'stackpress' ), $changed );
 		} else {
 			/* translators: %d: number of modules. */
-			$logmsg = sprintf( __( 'Bulk disabled %d modules', 'dicestack' ), $changed );
+			$logmsg = sprintf( __( 'Bulk disabled %d modules', 'stackpress' ), $changed );
 		}
 		$this->log_change( $logmsg );
 		wp_send_json_success( array( 'changed' => $changed ) );
@@ -734,11 +843,11 @@ final class Admin {
 	 * @return void
 	 */
 	public function handle_clear_cache() {
-		if ( ! current_user_can( 'manage_options' ) || ! check_admin_referer( 'dicestack_clear_cache' ) ) {
-			wp_die( esc_html__( 'Permission denied.', 'dicestack' ) );
+		if ( ! current_user_can( 'manage_options' ) || ! check_admin_referer( 'stackpress_clear_cache' ) ) {
+			wp_die( esc_html__( 'Permission denied.', 'stackpress' ) );
 		}
 		$uploads = wp_get_upload_dir();
-		$dir     = trailingslashit( $uploads['basedir'] ) . 'dicestack-cache/';
+		$dir     = trailingslashit( $uploads['basedir'] ) . 'stackpress-cache/';
 		if ( is_dir( $dir ) ) {
 			foreach ( (array) glob( $dir . '*.html' ) as $file ) {
 				if ( 'index.html' !== basename( $file ) ) {
@@ -747,7 +856,7 @@ final class Admin {
 				}
 			}
 		}
-		$this->log_change( __( 'Cleared the page cache', 'dicestack' ) );
+		$this->log_change( __( 'Cleared the page cache', 'stackpress' ) );
 		wp_safe_redirect( admin_url( 'admin.php?page=' . self::PAGE_SLUG ) );
 		exit;
 	}
@@ -760,44 +869,44 @@ final class Admin {
 	public function register_changes_page() {
 		add_submenu_page(
 			self::PAGE_SLUG,
-			__( 'Changes', 'dicestack' ),
-			__( 'Changes', 'dicestack' ),
+			__( 'Changes', 'stackpress' ),
+			__( 'Changes', 'stackpress' ),
 			'manage_options',
-			'dicestack-changes',
+			'stackpress-changes',
 			array( $this, 'render_changes_page' )
 		);
 	}
 
 	/**
-	 * Render the change log: everything DiceStack has changed.
+	 * Render the change log: everything StackPress has changed.
 	 *
 	 * @return void
 	 */
 	public function render_changes_page() {
 		$log = get_option( self::CHANGE_LOG, array() );
 		$log = is_array( $log ) ? $log : array();
-		echo '<div class="wrap"><h1>' . esc_html__( 'DiceStack changes', 'dicestack' ) . '</h1>';
-		echo '<p>' . esc_html__( 'Everything DiceStack has changed on your site — module toggles, settings updates, cache clears, and bulk actions.', 'dicestack' ) . '</p>';
+		echo '<div class="wrap"><h1>' . esc_html__( 'StackPress changes', 'stackpress' ) . '</h1>';
+		echo '<p>' . esc_html__( 'Everything StackPress has changed on your site — module toggles, settings updates, cache clears, and bulk actions.', 'stackpress' ) . '</p>';
 
 		if ( isset( $_GET['cleared'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__( 'Change log cleared.', 'dicestack' ) . '</p></div>';
+			echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__( 'Change log cleared.', 'stackpress' ) . '</p></div>';
 		}
 
 		if ( empty( $log ) ) {
-			echo '<p>' . esc_html__( 'No changes recorded yet.', 'dicestack' ) . '</p></div>';
+			echo '<p>' . esc_html__( 'No changes recorded yet.', 'stackpress' ) . '</p></div>';
 			return;
 		}
 
 		// Clear-log button.
-		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" style="margin:12px 0;" onsubmit="return confirm(\'' . esc_js( __( 'Delete the entire change log? This cannot be undone.', 'dicestack' ) ) . '\');">';
-		wp_nonce_field( 'dicestack_clear_log' );
-		echo '<input type="hidden" name="action" value="dicestack_clear_log" />';
-		echo '<button type="submit" class="button button-secondary">' . esc_html__( 'Clear log', 'dicestack' ) . '</button>';
+		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" style="margin:12px 0;" onsubmit="return confirm(\'' . esc_js( __( 'Delete the entire change log? This cannot be undone.', 'stackpress' ) ) . '\');">';
+		wp_nonce_field( 'stackpress_clear_log' );
+		echo '<input type="hidden" name="action" value="stackpress_clear_log" />';
+		echo '<button type="submit" class="button button-secondary">' . esc_html__( 'Clear log', 'stackpress' ) . '</button>';
 		echo '</form>';
 
-		echo '<table class="widefat striped"><thead><tr><th>' . esc_html__( 'When', 'dicestack' ) . '</th><th>' . esc_html__( 'User', 'dicestack' ) . '</th><th>' . esc_html__( 'Change', 'dicestack' ) . '</th></tr></thead><tbody>';
+		echo '<table class="widefat striped"><thead><tr><th>' . esc_html__( 'When', 'stackpress' ) . '</th><th>' . esc_html__( 'User', 'stackpress' ) . '</th><th>' . esc_html__( 'Change', 'stackpress' ) . '</th></tr></thead><tbody>';
 		foreach ( $log as $row ) {
-			$when = isset( $row['time'] ) ? sprintf( /* translators: %s: time diff. */ __( '%s ago', 'dicestack' ), human_time_diff( (int) $row['time'], time() ) ) : '';
+			$when = isset( $row['time'] ) ? sprintf( /* translators: %s: time diff. */ __( '%s ago', 'stackpress' ), human_time_diff( (int) $row['time'], time() ) ) : '';
 			echo '<tr><td>' . esc_html( $when ) . '</td><td>' . esc_html( isset( $row['user'] ) ? $row['user'] : '' ) . '</td><td>' . esc_html( isset( $row['msg'] ) ? $row['msg'] : '' ) . '</td></tr>';
 		}
 		echo '</tbody></table></div>';
@@ -809,11 +918,11 @@ final class Admin {
 	 * @return void
 	 */
 	public function handle_clear_log() {
-		if ( ! current_user_can( 'manage_options' ) || ! check_admin_referer( 'dicestack_clear_log' ) ) {
-			wp_die( esc_html__( 'Permission denied.', 'dicestack' ) );
+		if ( ! current_user_can( 'manage_options' ) || ! check_admin_referer( 'stackpress_clear_log' ) ) {
+			wp_die( esc_html__( 'Permission denied.', 'stackpress' ) );
 		}
 		delete_option( self::CHANGE_LOG );
-		wp_safe_redirect( admin_url( 'admin.php?page=dicestack-changes&cleared=1' ) );
+		wp_safe_redirect( admin_url( 'admin.php?page=stackpress-changes&cleared=1' ) );
 		exit;
 	}
 
@@ -830,7 +939,7 @@ final class Admin {
 		$module    = Core::instance()->registry()->get_instance( $module_id );
 
 		if ( ! $module ) {
-			wp_send_json_error( array( 'message' => __( 'Unknown module.', 'dicestack' ) ), 404 );
+			wp_send_json_error( array( 'message' => __( 'Unknown module.', 'stackpress' ) ), 404 );
 		}
 
 		$html = Settings_Renderer::render( $module );
@@ -850,7 +959,7 @@ final class Admin {
 		$module    = Core::instance()->registry()->get_instance( $module_id );
 
 		if ( ! $module ) {
-			wp_send_json_error( array( 'message' => __( 'Unknown module.', 'dicestack' ) ), 404 );
+			wp_send_json_error( array( 'message' => __( 'Unknown module.', 'stackpress' ) ), 404 );
 		}
 
 		// Raw values are sanitised per-field by Abstract_Module::save_settings().
@@ -858,7 +967,7 @@ final class Admin {
 		$raw   = isset( $_POST['settings'] ) && is_array( $_POST['settings'] ) ? wp_unslash( $_POST['settings'] ) : array();
 		$saved = $module->save_settings( $raw );
 
-		$this->log_change( sprintf( /* translators: %s: module id. */ __( 'Updated settings: %s', 'dicestack' ), $module_id ) );
+		$this->log_change( sprintf( /* translators: %s: module id. */ __( 'Updated settings: %s', 'stackpress' ), $module_id ) );
 
 		wp_send_json_success( array( 'settings' => $saved ) );
 	}
@@ -871,10 +980,10 @@ final class Admin {
 	public function register_agency_page() {
 		add_submenu_page(
 			self::PAGE_SLUG,
-			__( 'Agency Mode', 'dicestack' ),
-			__( 'Agency Mode', 'dicestack' ),
+			__( 'Agency Mode', 'stackpress' ),
+			__( 'Agency Mode', 'stackpress' ),
 			'manage_options',
-			'dicestack-agency',
+			'stackpress-agency',
 			array( $this, 'render_agency_page' )
 		);
 	}
@@ -885,8 +994,8 @@ final class Admin {
 	 * @return void
 	 */
 	public function handle_enable_agency() {
-		if ( ! current_user_can( 'manage_options' ) || ! check_admin_referer( 'dicestack_enable_agency' ) ) {
-			wp_die( esc_html__( 'Permission denied.', 'dicestack' ) );
+		if ( ! current_user_can( 'manage_options' ) || ! check_admin_referer( 'stackpress_enable_agency' ) ) {
+			wp_die( esc_html__( 'Permission denied.', 'stackpress' ) );
 		}
 		$core   = Core::instance();
 		$bundle = array_keys( $this->agency_bundle() );
@@ -898,13 +1007,13 @@ final class Admin {
 				foreach ( $bundle as $id ) {
 					$core->enable_module( $id );
 				}
-				$this->log_change( __( 'Enabled all Agency Mode tools', 'dicestack' ) );
+				$this->log_change( __( 'Enabled all Agency Mode tools', 'stackpress' ) );
 				break;
 			case 'all_off':
 				foreach ( $bundle as $id ) {
 					$core->disable_module( $id );
 				}
-				$this->log_change( __( 'Disabled all Agency Mode tools', 'dicestack' ) );
+				$this->log_change( __( 'Disabled all Agency Mode tools', 'stackpress' ) );
 				break;
 			case 'one_on':
 				if ( in_array( $module, $bundle, true ) ) {
@@ -917,7 +1026,7 @@ final class Admin {
 				}
 				break;
 		}
-		wp_safe_redirect( admin_url( 'admin.php?page=dicestack-agency&updated=1' ) );
+		wp_safe_redirect( admin_url( 'admin.php?page=stackpress-agency&updated=1' ) );
 		exit;
 	}
 
@@ -932,8 +1041,8 @@ final class Admin {
 	 */
 	private function agency_button( $mode, $label, $module = '', $class = 'button' ) {
 		$html  = '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" style="display:inline-block;margin:0;">';
-		$html .= wp_nonce_field( 'dicestack_enable_agency', '_wpnonce', true, false );
-		$html .= '<input type="hidden" name="action" value="dicestack_enable_agency" />';
+		$html .= wp_nonce_field( 'stackpress_enable_agency', '_wpnonce', true, false );
+		$html .= '<input type="hidden" name="action" value="stackpress_enable_agency" />';
 		$html .= '<input type="hidden" name="agency" value="' . esc_attr( $mode ) . '" />';
 		if ( '' !== $module ) {
 			$html .= '<input type="hidden" name="module" value="' . esc_attr( $module ) . '" />';
@@ -962,17 +1071,17 @@ final class Admin {
 		}
 		$total = count( $bundle );
 
-		echo '<div class="wrap"><h1>' . esc_html__( 'Agency Mode', 'dicestack' ) . '</h1>';
-		echo '<p>' . esc_html__( 'Everything you need to run DiceStack for clients — white-labelling, backups, monthly reports, audit logging, and update control in one place.', 'dicestack' ) . '</p>';
+		echo '<div class="wrap"><h1>' . esc_html__( 'Agency Mode', 'stackpress' ) . '</h1>';
+		echo '<p>' . esc_html__( 'Everything you need to run StackPress for clients — white-labelling, backups, monthly reports, audit logging, and update control in one place.', 'stackpress' ) . '</p>';
 
 		if ( isset( $_GET['updated'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__( 'Agency Mode updated.', 'dicestack' ) . '</p></div>';
+			echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__( 'Agency Mode updated.', 'stackpress' ) . '</p></div>';
 		}
 
-		echo '<p style="font-size:13px;color:#50575e;">' . esc_html( sprintf( /* translators: 1: on, 2: total. */ __( '%1$d of %2$d agency tools enabled.', 'dicestack' ), $on_count, $total ) ) . '</p>';
+		echo '<p style="font-size:13px;color:#50575e;">' . esc_html( sprintf( /* translators: 1: on, 2: total. */ __( '%1$d of %2$d agency tools enabled.', 'stackpress' ), $on_count, $total ) ) . '</p>';
 		echo '<div style="margin:12px 0 24px;display:flex;gap:8px;">';
-		echo $this->agency_button( 'all_on', __( 'Enable all', 'dicestack' ), '', 'button button-primary button-hero' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built with escaping.
-		echo $this->agency_button( 'all_off', __( 'Disable all', 'dicestack' ), '', 'button button-hero' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo $this->agency_button( 'all_on', __( 'Enable all', 'stackpress' ), '', 'button button-primary button-hero' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built with escaping.
+		echo $this->agency_button( 'all_off', __( 'Disable all', 'stackpress' ), '', 'button button-hero' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo '</div>';
 
 		echo '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;">';
@@ -981,16 +1090,16 @@ final class Admin {
 			echo '<div style="background:#fff;border:1px solid #e4e7ec;border-radius:10px;padding:16px;">';
 			echo '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">';
 			echo '<strong>' . esc_html( $label ) . '</strong>';
-			echo '<span style="font-size:11px;padding:2px 9px;border-radius:10px;' . ( $on ? 'background:#eaf3de;color:#3b6d11;' : 'background:#f1efe8;color:#888;' ) . '">' . ( $on ? esc_html__( 'On', 'dicestack' ) : esc_html__( 'Off', 'dicestack' ) ) . '</span>';
+			echo '<span style="font-size:11px;padding:2px 9px;border-radius:10px;' . ( $on ? 'background:#eaf3de;color:#3b6d11;' : 'background:#f1efe8;color:#888;' ) . '">' . ( $on ? esc_html__( 'On', 'stackpress' ) : esc_html__( 'Off', 'stackpress' ) ) . '</span>';
 			echo '</div>';
 			echo '<div style="display:flex;gap:8px;align-items:center;">';
 			if ( $on ) {
-				echo $this->agency_button( 'one_off', __( 'Disable', 'dicestack' ), $id ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo $this->agency_button( 'one_off', __( 'Disable', 'stackpress' ), $id ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				if ( isset( $pages[ $id ] ) ) {
-					echo '<a class="button button-primary" href="' . esc_url( admin_url( 'admin.php?page=' . $pages[ $id ] ) ) . '">' . esc_html__( 'Open', 'dicestack' ) . '</a>';
+					echo '<a class="button button-primary" href="' . esc_url( admin_url( 'admin.php?page=' . $pages[ $id ] ) ) . '">' . esc_html__( 'Open', 'stackpress' ) . '</a>';
 				}
 			} else {
-				echo $this->agency_button( 'one_on', __( 'Enable', 'dicestack' ), $id, 'button button-primary' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo $this->agency_button( 'one_on', __( 'Enable', 'stackpress' ), $id, 'button button-primary' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 			echo '</div>';
 			echo '</div>';

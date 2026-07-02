@@ -2,12 +2,12 @@
 /**
  * Hide Update Nag module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Admin;
+namespace StackPress\Modules\Admin;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Hide_Update_Nag extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Hide update nag', 'dicestack' );
+		return __( 'Hide update nag', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Hide the core update notice from users who cannot run updates.', 'dicestack' );
+		return __( 'Hide the core update notice from users who cannot run updates.', 'stackpress' );
 	}
 
 	/**

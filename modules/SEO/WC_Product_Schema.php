@@ -2,12 +2,12 @@
 /**
  * WooCommerce Product Schema module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\SEO;
+namespace StackPress\Modules\SEO;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class WC_Product_Schema extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Product schema', 'dicestack' );
+		return __( 'Product schema', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Add Product structured data (price, stock, rating) for shopping rich results.', 'dicestack' );
+		return __( 'Add Product structured data (price, stock, rating) for shopping rich results.', 'stackpress' );
 	}
 
 	/**

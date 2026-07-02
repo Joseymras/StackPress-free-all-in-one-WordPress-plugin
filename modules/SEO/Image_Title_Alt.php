@@ -2,12 +2,12 @@
 /**
  * Image Title & Alt module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\SEO;
+namespace StackPress\Modules\SEO;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Image_Title_Alt extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Image title from alt', 'dicestack' );
+		return __( 'Image title from alt', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Fill in missing image title attributes from their alt text in content.', 'dicestack' );
+		return __( 'Fill in missing image title attributes from their alt text in content.', 'stackpress' );
 	}
 
 	/**

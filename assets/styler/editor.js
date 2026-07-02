@@ -1,12 +1,12 @@
 /**
- * DiceStack Theme Styler — front-end visual editor.
+ * StackPress Theme Styler — front-end visual editor.
  * Click any element, change it with the panel, see it live, and save.
  * Loaded only for administrators in editor mode.
  */
 ( function () {
 	'use strict';
 
-	var cfg   = window.DiceStackStyler || {};
+	var cfg   = window.StackPressStyler || {};
 	var i18n  = cfg.i18n || {};
 	var rules = {}; // selector -> { property: value }
 	var live, bar, panel, selInput, current = null, hoverEl = null;
@@ -24,7 +24,7 @@
 		return e;
 	}
 	function qsa( s, c ) { return Array.prototype.slice.call( ( c || document ).querySelectorAll( s ) ); }
-	function isUI( node ) { return node && node.closest && ( node.closest( '#dicestack-ve-bar' ) || node.closest( '#dicestack-ve-panel' ) ); }
+	function isUI( node ) { return node && node.closest && ( node.closest( '#stackpress-ve-bar' ) || node.closest( '#stackpress-ve-panel' ) ); }
 
 	function rgbToHex( rgb ) {
 		var m = rgb && rgb.match( /\d+/g );
@@ -38,11 +38,11 @@
 	function getSelector( node ) {
 		if ( node.id ) { return '#' + node.id; }
 		var tag = node.tagName.toLowerCase();
-		var cls = Array.prototype.slice.call( node.classList ).filter( function ( c ) { return c.indexOf( 'dicestack-ve-' ) !== 0; } );
+		var cls = Array.prototype.slice.call( node.classList ).filter( function ( c ) { return c.indexOf( 'stackpress-ve-' ) !== 0; } );
 		if ( cls.length ) { return tag + '.' + cls.slice( 0, 2 ).join( '.' ); }
 		var parent = node.parentElement;
 		if ( parent && parent !== document.body ) {
-			var pcls = Array.prototype.slice.call( parent.classList ).filter( function ( c ) { return c.indexOf( 'dicestack-ve-' ) !== 0; } );
+			var pcls = Array.prototype.slice.call( parent.classList ).filter( function ( c ) { return c.indexOf( 'stackpress-ve-' ) !== 0; } );
 			var psel = parent.id ? '#' + parent.id : ( pcls.length ? parent.tagName.toLowerCase() + '.' + pcls[ 0 ] : parent.tagName.toLowerCase() );
 			var idx  = Array.prototype.indexOf.call( parent.children, node ) + 1;
 			return psel + ' > ' + tag + ':nth-child(' + idx + ')';
@@ -69,36 +69,36 @@
 		rebuildLive();
 	}
 
-	function clearSelected() { qsa( '.dicestack-ve-selected' ).forEach( function ( e ) { e.classList.remove( 'dicestack-ve-selected' ); } ); }
+	function clearSelected() { qsa( '.stackpress-ve-selected' ).forEach( function ( e ) { e.classList.remove( 'stackpress-ve-selected' ); } ); }
 
 	function buildToolbar() {
-		bar = el( 'div', { id: 'dicestack-ve-bar' } );
+		bar = el( 'div', { id: 'stackpress-ve-bar' } );
 		bar.innerHTML =
-			'<span class="dicestack-ve-brand"><span class="dicestack-ve-mark">DC</span>' + ( i18n.title || 'DiceStack Visual Editor' ) + '</span>' +
-			'<span class="dicestack-ve-hint">' + ( i18n.hint || 'Click any element to style it.' ) + '</span>' +
-			'<span id="dicestack-ve-status"></span>' +
-			'<button id="dicestack-ve-save">' + ( i18n.save || 'Save' ) + '</button>' +
-			'<button id="dicestack-ve-exit">' + ( i18n.exit || 'Exit' ) + '</button>';
+			'<span class="stackpress-ve-brand"><span class="stackpress-ve-mark">DC</span>' + ( i18n.title || 'StackPress Visual Editor' ) + '</span>' +
+			'<span class="stackpress-ve-hint">' + ( i18n.hint || 'Click any element to style it.' ) + '</span>' +
+			'<span id="stackpress-ve-status"></span>' +
+			'<button id="stackpress-ve-save">' + ( i18n.save || 'Save' ) + '</button>' +
+			'<button id="stackpress-ve-exit">' + ( i18n.exit || 'Exit' ) + '</button>';
 		document.body.appendChild( bar );
-		document.getElementById( 'dicestack-ve-save' ).addEventListener( 'click', save );
-		document.getElementById( 'dicestack-ve-exit' ).addEventListener( 'click', function () { window.location = cfg.exitUrl || '/'; } );
+		document.getElementById( 'stackpress-ve-save' ).addEventListener( 'click', save );
+		document.getElementById( 'stackpress-ve-exit' ).addEventListener( 'click', function () { window.location = cfg.exitUrl || '/'; } );
 	}
 
 	function buildPanel() {
-		panel = el( 'div', { id: 'dicestack-ve-panel' } );
+		panel = el( 'div', { id: 'stackpress-ve-panel' } );
 		panel.innerHTML =
-			'<button class="dicestack-ve-close" aria-label="Close">&times;</button>' +
+			'<button class="stackpress-ve-close" aria-label="Close">&times;</button>' +
 			'<h3>' + ( i18n.selector || 'Selector' ) + '</h3>' +
-			'<input type="text" id="dicestack-ve-selector" class="dicestack-ve-sel" />' +
-			'<label>' + ( i18n.text || 'Text colour' ) + '</label><div class="dicestack-ve-color"><input type="color" data-c="color" /><input type="text" data-prop="color" placeholder="#222" /></div>' +
-			'<label>' + ( i18n.bg || 'Background' ) + '</label><div class="dicestack-ve-color"><input type="color" data-c="background-color" /><input type="text" data-prop="background-color" placeholder="#fff" /></div>' +
+			'<input type="text" id="stackpress-ve-selector" class="stackpress-ve-sel" />' +
+			'<label>' + ( i18n.text || 'Text colour' ) + '</label><div class="stackpress-ve-color"><input type="color" data-c="color" /><input type="text" data-prop="color" placeholder="#222" /></div>' +
+			'<label>' + ( i18n.bg || 'Background' ) + '</label><div class="stackpress-ve-color"><input type="color" data-c="background-color" /><input type="text" data-prop="background-color" placeholder="#fff" /></div>' +
 			'<label>' + ( i18n.size || 'Font size (px)' ) + '</label><input type="number" data-prop="font-size" data-unit="px" />' +
 			'<label>' + ( i18n.pad || 'Padding' ) + '</label><input type="text" data-prop="padding" placeholder="10px 16px" />' +
 			'<label>' + ( i18n.radius || 'Corner radius (px)' ) + '</label><input type="number" data-prop="border-radius" data-unit="px" />';
 		document.body.appendChild( panel );
 
-		panel.querySelector( '.dicestack-ve-close' ).addEventListener( 'click', function () { panel.classList.remove( 'is-open' ); clearSelected(); } );
-		selInput = document.getElementById( 'dicestack-ve-selector' );
+		panel.querySelector( '.stackpress-ve-close' ).addEventListener( 'click', function () { panel.classList.remove( 'is-open' ); clearSelected(); } );
+		selInput = document.getElementById( 'stackpress-ve-selector' );
 		selInput.addEventListener( 'input', function () { current = selInput.value; } );
 
 		panel.querySelectorAll( '[data-prop]' ).forEach( function ( inp ) {
@@ -132,7 +132,7 @@
 
 	function selectEl( node ) {
 		clearSelected();
-		node.classList.add( 'dicestack-ve-selected' );
+		node.classList.add( 'stackpress-ve-selected' );
 		current = getSelector( node );
 		selInput.value = current;
 		var cs = getComputedStyle( node );
@@ -147,16 +147,16 @@
 
 	function onOver( e ) {
 		if ( isUI( e.target ) ) { return; }
-		if ( hoverEl ) { hoverEl.classList.remove( 'dicestack-ve-hover' ); }
+		if ( hoverEl ) { hoverEl.classList.remove( 'stackpress-ve-hover' ); }
 		hoverEl = e.target;
-		if ( hoverEl && hoverEl.classList ) { hoverEl.classList.add( 'dicestack-ve-hover' ); }
+		if ( hoverEl && hoverEl.classList ) { hoverEl.classList.add( 'stackpress-ve-hover' ); }
 	}
-	function onOut( e ) { if ( e.target && e.target.classList ) { e.target.classList.remove( 'dicestack-ve-hover' ); } }
+	function onOut( e ) { if ( e.target && e.target.classList ) { e.target.classList.remove( 'stackpress-ve-hover' ); } }
 	function onClick( e ) {
 		if ( isUI( e.target ) ) { return; }
 		e.preventDefault();
 		e.stopPropagation();
-		if ( hoverEl ) { hoverEl.classList.remove( 'dicestack-ve-hover' ); }
+		if ( hoverEl ) { hoverEl.classList.remove( 'stackpress-ve-hover' ); }
 		selectEl( e.target );
 	}
 
@@ -166,10 +166,10 @@
 			Object.keys( rules[ sel ] ).forEach( function ( p ) { arr.push( { selector: sel, property: p, value: rules[ sel ][ p ] } ); } );
 		} );
 		var body = new URLSearchParams();
-		body.append( 'action', 'dicestack_styler_visual_save' );
+		body.append( 'action', 'stackpress_styler_visual_save' );
 		body.append( 'nonce', cfg.nonce );
 		body.append( 'rules', JSON.stringify( arr ) );
-		var st = document.getElementById( 'dicestack-ve-status' );
+		var st = document.getElementById( 'stackpress-ve-status' );
 		if ( st ) { st.textContent = '…'; }
 		fetch( cfg.ajaxUrl, { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body.toString() } )
 			.then( function ( r ) { return r.json(); } )
@@ -179,9 +179,9 @@
 	}
 
 	function start() {
-		document.documentElement.classList.add( 'dicestack-ve-active' );
-		document.body.classList.add( 'dicestack-ve-active' );
-		live = el( 'style', { id: 'dicestack-ve-live' } );
+		document.documentElement.classList.add( 'stackpress-ve-active' );
+		document.body.classList.add( 'stackpress-ve-active' );
+		live = el( 'style', { id: 'stackpress-ve-live' } );
 		document.head.appendChild( live );
 		buildToolbar();
 		buildPanel();

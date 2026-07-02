@@ -2,12 +2,12 @@
 /**
  * Widget Shortcodes module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Content;
+namespace StackPress\Modules\Content;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -27,14 +27,14 @@ final class Widget_Shortcodes extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Shortcodes in widgets', 'dicestack' );
+		return __( 'Shortcodes in widgets', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Allow shortcodes to run inside classic text widgets.', 'dicestack' );
+		return __( 'Allow shortcodes to run inside classic text widgets.', 'stackpress' );
 	}
 
 	/**

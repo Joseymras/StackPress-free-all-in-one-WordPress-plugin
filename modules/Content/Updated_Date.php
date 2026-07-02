@@ -2,12 +2,12 @@
 /**
  * Updated Date module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Content;
+namespace StackPress\Modules\Content;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Updated_Date extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Last updated date', 'dicestack' );
+		return __( 'Last updated date', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Show a "last updated" date on posts that were revised after publishing.', 'dicestack' );
+		return __( 'Show a "last updated" date on posts that were revised after publishing.', 'stackpress' );
 	}
 
 	/**
@@ -72,7 +72,7 @@ final class Updated_Date extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'min_days',
-				'label'   => __( 'Only show if updated at least N days after publishing', 'dicestack' ),
+				'label'   => __( 'Only show if updated at least N days after publishing', 'stackpress' ),
 				'type'    => 'number',
 				'default' => 7,
 				'min'     => 0,
@@ -110,9 +110,9 @@ final class Updated_Date extends Abstract_Module {
 
 		$label = sprintf(
 			/* translators: %s: formatted date. */
-			__( 'Last updated on %s', 'dicestack' ),
+			__( 'Last updated on %s', 'stackpress' ),
 			get_the_modified_date()
 		);
-		return '<p class="dicestack-updated" style="color:#6b7280;font-size:13px;margin:0 0 16px;">' . esc_html( $label ) . '</p>' . $content;
+		return '<p class="stackpress-updated" style="color:#6b7280;font-size:13px;margin:0 0 16px;">' . esc_html( $label ) . '</p>' . $content;
 	}
 }

@@ -6,49 +6,49 @@
  * hook (see Elementor_Widgets::register_widgets), so \Elementor\Widget_Base is
  * guaranteed to exist at that point.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
 defined( 'ABSPATH' ) || exit;
 
-if ( class_exists( '\Elementor\Widget_Base' ) && ! class_exists( 'DiceStack_Elementor_Shortcode_Widget' ) ) {
+if ( class_exists( '\Elementor\Widget_Base' ) && ! class_exists( 'StackPress_Elementor_Shortcode_Widget' ) ) {
 
 	/**
-	 * Renders an DiceStack shortcode as an Elementor widget.
+	 * Renders an StackPress shortcode as an Elementor widget.
 	 */
-	class DiceStack_Elementor_Shortcode_Widget extends \Elementor\Widget_Base { // phpcs:ignore
+	class StackPress_Elementor_Shortcode_Widget extends \Elementor\Widget_Base { // phpcs:ignore
 
 		/**
-		 * DiceStack widget name.
+		 * StackPress widget name.
 		 *
 		 * @var string
 		 */
-		private $dicestack_name;
+		private $stackpress_name;
 
 		/**
-		 * DiceStack widget title.
+		 * StackPress widget title.
 		 *
 		 * @var string
 		 */
-		private $dicestack_title;
+		private $stackpress_title;
 
 		/**
 		 * Shortcode to render.
 		 *
 		 * @var string
 		 */
-		private $dicestack_shortcode;
+		private $stackpress_shortcode;
 
 		/**
 		 * Constructor.
 		 *
 		 * @param array $data Widget data.
-		 * @param mixed $args Widget args (carries our dicestack_* keys).
+		 * @param mixed $args Widget args (carries our stackpress_* keys).
 		 */
 		public function __construct( $data = array(), $args = null ) {
-			$this->dicestack_name      = isset( $args['dicestack_name'] ) ? $args['dicestack_name'] : 'dicestack_widget';
-			$this->dicestack_title     = isset( $args['dicestack_title'] ) ? $args['dicestack_title'] : 'DiceStack';
-			$this->dicestack_shortcode = isset( $args['dicestack_shortcode'] ) ? $args['dicestack_shortcode'] : '';
+			$this->stackpress_name      = isset( $args['stackpress_name'] ) ? $args['stackpress_name'] : 'stackpress_widget';
+			$this->stackpress_title     = isset( $args['stackpress_title'] ) ? $args['stackpress_title'] : 'StackPress';
+			$this->stackpress_shortcode = isset( $args['stackpress_shortcode'] ) ? $args['stackpress_shortcode'] : '';
 			parent::__construct( $data, $args );
 		}
 
@@ -58,7 +58,7 @@ if ( class_exists( '\Elementor\Widget_Base' ) && ! class_exists( 'DiceStack_Elem
 		 * @return string
 		 */
 		public function get_name() {
-			return $this->dicestack_name;
+			return $this->stackpress_name;
 		}
 
 		/**
@@ -67,7 +67,7 @@ if ( class_exists( '\Elementor\Widget_Base' ) && ! class_exists( 'DiceStack_Elem
 		 * @return string
 		 */
 		public function get_title() {
-			return $this->dicestack_title;
+			return $this->stackpress_title;
 		}
 
 		/**
@@ -94,8 +94,8 @@ if ( class_exists( '\Elementor\Widget_Base' ) && ! class_exists( 'DiceStack_Elem
 		 * @return void
 		 */
 		protected function render() {
-			if ( '' !== $this->dicestack_shortcode ) {
-				echo do_shortcode( '[' . $this->dicestack_shortcode . ']' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- shortcode output is escaped within each module.
+			if ( '' !== $this->stackpress_shortcode ) {
+				echo do_shortcode( '[' . $this->stackpress_shortcode . ']' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- shortcode output is escaped within each module.
 			}
 		}
 	}

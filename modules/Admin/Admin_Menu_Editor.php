@@ -2,12 +2,12 @@
 /**
  * Admin Menu Editor module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Admin;
+namespace StackPress\Modules\Admin;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -29,14 +29,14 @@ final class Admin_Menu_Editor extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Admin menu editor', 'dicestack' );
+		return __( 'Admin menu editor', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Hide sidebar menu items to give clients a clean, simplified dashboard.', 'dicestack' );
+		return __( 'Hide sidebar menu items to give clients a clean, simplified dashboard.', 'stackpress' );
 	}
 
 	/**
@@ -80,17 +80,17 @@ final class Admin_Menu_Editor extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'hide',
-				'label'   => __( 'Menu slugs to hide', 'dicestack' ),
+				'label'   => __( 'Menu slugs to hide', 'stackpress' ),
 				'type'    => 'textarea',
 				'default' => '',
-				'help'    => __( 'One slug per line, e.g. edit-comments.php or tools.php. See "Admin menu" page under DiceStack for the full list.', 'dicestack' ),
+				'help'    => __( 'One slug per line, e.g. edit-comments.php or tools.php. See "Admin menu" page under StackPress for the full list.', 'stackpress' ),
 			),
 			array(
 				'key'     => 'apply_admins',
-				'label'   => __( 'Also hide for administrators', 'dicestack' ),
+				'label'   => __( 'Also hide for administrators', 'stackpress' ),
 				'type'    => 'toggle',
 				'default' => false,
-				'help'    => __( 'Off = hidden only for non-administrators (recommended).', 'dicestack' ),
+				'help'    => __( 'Off = hidden only for non-administrators (recommended).', 'stackpress' ),
 			),
 		);
 	}
@@ -114,7 +114,7 @@ final class Admin_Menu_Editor extends Abstract_Module {
 		}
 		foreach ( preg_split( '/\r\n|\r|\n/', (string) $this->get_setting( 'hide', '' ) ) as $slug ) {
 			$slug = trim( $slug );
-			if ( '' !== $slug && 'dicestack' !== $slug ) {
+			if ( '' !== $slug && 'stackpress' !== $slug ) {
 				remove_menu_page( $slug );
 			}
 		}
@@ -127,11 +127,11 @@ final class Admin_Menu_Editor extends Abstract_Module {
 	 */
 	public function add_reference_page() {
 		add_submenu_page(
-			'dicestack',
-			__( 'Admin menu', 'dicestack' ),
-			__( 'Admin menu', 'dicestack' ),
+			'stackpress',
+			__( 'Admin menu', 'stackpress' ),
+			__( 'Admin menu', 'stackpress' ),
 			'manage_options',
-			'dicestack-admin-menu',
+			'stackpress-admin-menu',
 			array( $this, 'render_reference' )
 		);
 	}
@@ -143,16 +143,16 @@ final class Admin_Menu_Editor extends Abstract_Module {
 	 */
 	public function render_reference() {
 		global $menu;
-		echo '<div class="wrap"><h1>' . esc_html__( 'Admin menu editor', 'dicestack' ) . '</h1>';
+		echo '<div class="wrap"><h1>' . esc_html__( 'Admin menu editor', 'stackpress' ) . '</h1>';
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- display-only flag.
 		if ( isset( $_GET['settings-saved'] ) ) {
-			echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__( 'Settings saved.', 'dicestack' ) . '</p></div>';
+			echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__( 'Settings saved.', 'stackpress' ) . '</p></div>';
 		}
-		echo '<h2>' . esc_html__( 'Settings', 'dicestack' ) . '</h2>';
-		echo \DiceStack\Admin\Settings_Renderer::page_form( $this ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped internally.
-		echo '<h2>' . esc_html__( 'Menu slugs reference', 'dicestack' ) . '</h2>';
-		echo '<p>' . esc_html__( 'Copy a slug below into the Hide menu items field above.', 'dicestack' ) . '</p>';
-		echo '<table class="widefat striped"><thead><tr><th>' . esc_html__( 'Menu', 'dicestack' ) . '</th><th>' . esc_html__( 'Slug', 'dicestack' ) . '</th></tr></thead><tbody>';
+		echo '<h2>' . esc_html__( 'Settings', 'stackpress' ) . '</h2>';
+		echo \StackPress\Admin\Settings_Renderer::page_form( $this ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped internally.
+		echo '<h2>' . esc_html__( 'Menu slugs reference', 'stackpress' ) . '</h2>';
+		echo '<p>' . esc_html__( 'Copy a slug below into the Hide menu items field above.', 'stackpress' ) . '</p>';
+		echo '<table class="widefat striped"><thead><tr><th>' . esc_html__( 'Menu', 'stackpress' ) . '</th><th>' . esc_html__( 'Slug', 'stackpress' ) . '</th></tr></thead><tbody>';
 		foreach ( (array) $menu as $item ) {
 			if ( empty( $item[0] ) ) {
 				continue;

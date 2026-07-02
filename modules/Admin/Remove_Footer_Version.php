@@ -2,12 +2,12 @@
 /**
  * Remove Admin Footer Version module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Admin;
+namespace StackPress\Modules\Admin;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -27,14 +27,14 @@ final class Remove_Footer_Version extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Hide admin version', 'dicestack' );
+		return __( 'Hide admin version', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Remove the WordPress version number from the admin footer.', 'dicestack' );
+		return __( 'Remove the WordPress version number from the admin footer.', 'stackpress' );
 	}
 
 	/**

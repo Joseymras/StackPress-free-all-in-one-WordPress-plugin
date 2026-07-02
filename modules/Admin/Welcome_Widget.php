@@ -2,12 +2,12 @@
 /**
  * Dashboard Welcome Widget module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Admin;
+namespace StackPress\Modules\Admin;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Welcome_Widget extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Dashboard welcome widget', 'dicestack' );
+		return __( 'Dashboard welcome widget', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Show a custom welcome / support note at the top of the dashboard.', 'dicestack' );
+		return __( 'Show a custom welcome / support note at the top of the dashboard.', 'stackpress' );
 	}
 
 	/**
@@ -72,15 +72,15 @@ final class Welcome_Widget extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'title',
-				'label'   => __( 'Widget title', 'dicestack' ),
+				'label'   => __( 'Widget title', 'stackpress' ),
 				'type'    => 'text',
-				'default' => __( 'Welcome', 'dicestack' ),
+				'default' => __( 'Welcome', 'stackpress' ),
 			),
 			array(
 				'key'     => 'body',
-				'label'   => __( 'Widget content', 'dicestack' ),
+				'label'   => __( 'Widget content', 'stackpress' ),
 				'type'    => 'textarea',
-				'default' => __( 'Need help with this site? Contact Dice Codes at Contact@dicecodes.com.', 'dicestack' ),
+				'default' => __( 'Need help with this site? Contact Dice Codes at Contact@dicecodes.com.', 'stackpress' ),
 			),
 		);
 	}
@@ -99,8 +99,8 @@ final class Welcome_Widget extends Abstract_Module {
 	 */
 	public function register() {
 		wp_add_dashboard_widget(
-			'dicestack_welcome',
-			esc_html( (string) $this->get_setting( 'title', __( 'Welcome', 'dicestack' ) ) ),
+			'stackpress_welcome',
+			esc_html( (string) $this->get_setting( 'title', __( 'Welcome', 'stackpress' ) ) ),
 			array( $this, 'render' )
 		);
 	}

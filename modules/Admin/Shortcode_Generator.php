@@ -2,12 +2,12 @@
 /**
  * Shortcode Generator module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Admin;
+namespace StackPress\Modules\Admin;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -21,7 +21,7 @@ final class Shortcode_Generator extends Abstract_Module {
 	/**
 	 * Option storing snippets (tag => content).
 	 */
-	const OPTION = 'dicestack_shortcodes';
+	const OPTION = 'stackpress_shortcodes';
 
 	/**
 	 * {@inheritDoc}
@@ -34,14 +34,14 @@ final class Shortcode_Generator extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Shortcode generator', 'dicestack' );
+		return __( 'Shortcode generator', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Turn any reusable text or HTML into your own [shortcode].', 'dicestack' );
+		return __( 'Turn any reusable text or HTML into your own [shortcode].', 'stackpress' );
 	}
 
 	/**
@@ -96,8 +96,8 @@ final class Shortcode_Generator extends Abstract_Module {
 
 		if ( is_admin() ) {
 			add_action( 'admin_menu', array( $this, 'add_page' ) );
-			add_action( 'admin_post_dicestack_save_shortcode', array( $this, 'handle_save' ) );
-			add_action( 'admin_post_dicestack_delete_shortcode', array( $this, 'handle_delete' ) );
+			add_action( 'admin_post_stackpress_save_shortcode', array( $this, 'handle_save' ) );
+			add_action( 'admin_post_stackpress_delete_shortcode', array( $this, 'handle_delete' ) );
 		}
 	}
 
@@ -108,11 +108,11 @@ final class Shortcode_Generator extends Abstract_Module {
 	 */
 	public function add_page() {
 		add_submenu_page(
-			'dicestack',
-			__( 'Shortcodes', 'dicestack' ),
-			__( 'Shortcodes', 'dicestack' ),
+			'stackpress',
+			__( 'Shortcodes', 'stackpress' ),
+			__( 'Shortcodes', 'stackpress' ),
 			'manage_options',
-			'dicestack-shortcodes',
+			'stackpress-shortcodes',
 			array( $this, 'render_page' )
 		);
 	}
@@ -123,8 +123,8 @@ final class Shortcode_Generator extends Abstract_Module {
 	 * @return void
 	 */
 	public function handle_save() {
-		if ( ! current_user_can( 'manage_options' ) || ! check_admin_referer( 'dicestack_shortcode' ) ) {
-			wp_die( esc_html__( 'Permission denied.', 'dicestack' ) );
+		if ( ! current_user_can( 'manage_options' ) || ! check_admin_referer( 'stackpress_shortcode' ) ) {
+			wp_die( esc_html__( 'Permission denied.', 'stackpress' ) );
 		}
 		$tag     = isset( $_POST['tag'] ) ? sanitize_key( wp_unslash( $_POST['tag'] ) ) : '';
 		$content = isset( $_POST['content'] ) ? wp_kses_post( wp_unslash( $_POST['content'] ) ) : '';
@@ -133,7 +133,7 @@ final class Shortcode_Generator extends Abstract_Module {
 			$snips[ $tag ] = $content;
 			update_option( self::OPTION, $snips );
 		}
-		wp_safe_redirect( admin_url( 'admin.php?page=dicestack-shortcodes' ) );
+		wp_safe_redirect( admin_url( 'admin.php?page=stackpress-shortcodes' ) );
 		exit;
 	}
 
@@ -143,14 +143,14 @@ final class Shortcode_Generator extends Abstract_Module {
 	 * @return void
 	 */
 	public function handle_delete() {
-		if ( ! current_user_can( 'manage_options' ) || ! check_admin_referer( 'dicestack_shortcode' ) ) {
-			wp_die( esc_html__( 'Permission denied.', 'dicestack' ) );
+		if ( ! current_user_can( 'manage_options' ) || ! check_admin_referer( 'stackpress_shortcode' ) ) {
+			wp_die( esc_html__( 'Permission denied.', 'stackpress' ) );
 		}
 		$tag   = isset( $_GET['tag'] ) ? sanitize_key( wp_unslash( $_GET['tag'] ) ) : '';
 		$snips = $this->snippets();
 		unset( $snips[ $tag ] );
 		update_option( self::OPTION, $snips );
-		wp_safe_redirect( admin_url( 'admin.php?page=dicestack-shortcodes' ) );
+		wp_safe_redirect( admin_url( 'admin.php?page=stackpress-shortcodes' ) );
 		exit;
 	}
 
@@ -161,24 +161,24 @@ final class Shortcode_Generator extends Abstract_Module {
 	 */
 	public function render_page() {
 		$snips = $this->snippets();
-		echo '<div class="wrap"><h1>' . esc_html__( 'Custom shortcodes', 'dicestack' ) . '</h1>';
+		echo '<div class="wrap"><h1>' . esc_html__( 'Custom shortcodes', 'stackpress' ) . '</h1>';
 
 		if ( $snips ) {
-			echo '<table class="widefat striped" style="margin-bottom:20px;"><thead><tr><th>' . esc_html__( 'Shortcode', 'dicestack' ) . '</th><th>' . esc_html__( 'Preview', 'dicestack' ) . '</th><th></th></tr></thead><tbody>';
+			echo '<table class="widefat striped" style="margin-bottom:20px;"><thead><tr><th>' . esc_html__( 'Shortcode', 'stackpress' ) . '</th><th>' . esc_html__( 'Preview', 'stackpress' ) . '</th><th></th></tr></thead><tbody>';
 			foreach ( $snips as $tag => $content ) {
-				$del = wp_nonce_url( admin_url( 'admin-post.php?action=dicestack_delete_shortcode&tag=' . rawurlencode( $tag ) ), 'dicestack_shortcode' );
-				echo '<tr><td><code>[' . esc_html( $tag ) . ']</code></td><td>' . esc_html( wp_trim_words( wp_strip_all_tags( $content ), 12 ) ) . '</td><td><a href="' . esc_url( $del ) . '" class="button-link-delete">' . esc_html__( 'Delete', 'dicestack' ) . '</a></td></tr>';
+				$del = wp_nonce_url( admin_url( 'admin-post.php?action=stackpress_delete_shortcode&tag=' . rawurlencode( $tag ) ), 'stackpress_shortcode' );
+				echo '<tr><td><code>[' . esc_html( $tag ) . ']</code></td><td>' . esc_html( wp_trim_words( wp_strip_all_tags( $content ), 12 ) ) . '</td><td><a href="' . esc_url( $del ) . '" class="button-link-delete">' . esc_html__( 'Delete', 'stackpress' ) . '</a></td></tr>';
 			}
 			echo '</tbody></table>';
 		}
 
-		echo '<h2>' . esc_html__( 'Add / update a shortcode', 'dicestack' ) . '</h2>';
+		echo '<h2>' . esc_html__( 'Add / update a shortcode', 'stackpress' ) . '</h2>';
 		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '">';
-		wp_nonce_field( 'dicestack_shortcode' );
-		echo '<input type="hidden" name="action" value="dicestack_save_shortcode" />';
-		echo '<p><label>' . esc_html__( 'Shortcode tag (letters, numbers, underscores)', 'dicestack' ) . '<br/><input type="text" name="tag" class="regular-text" required placeholder="my_snippet" /></label></p>';
-		echo '<p><label>' . esc_html__( 'Content (text, HTML, or other shortcodes)', 'dicestack' ) . '<br/><textarea name="content" rows="6" class="large-text"></textarea></label></p>';
-		echo '<p><button type="submit" class="button button-primary">' . esc_html__( 'Save shortcode', 'dicestack' ) . '</button></p>';
+		wp_nonce_field( 'stackpress_shortcode' );
+		echo '<input type="hidden" name="action" value="stackpress_save_shortcode" />';
+		echo '<p><label>' . esc_html__( 'Shortcode tag (letters, numbers, underscores)', 'stackpress' ) . '<br/><input type="text" name="tag" class="regular-text" required placeholder="my_snippet" /></label></p>';
+		echo '<p><label>' . esc_html__( 'Content (text, HTML, or other shortcodes)', 'stackpress' ) . '<br/><textarea name="content" rows="6" class="large-text"></textarea></label></p>';
+		echo '<p><button type="submit" class="button button-primary">' . esc_html__( 'Save shortcode', 'stackpress' ) . '</button></p>';
 		echo '</form></div>';
 	}
 }

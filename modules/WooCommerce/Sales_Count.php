@@ -2,12 +2,12 @@
 /**
  * WooCommerce Sales Count module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\WooCommerce;
+namespace StackPress\Modules\WooCommerce;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Sales_Count extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Units-sold counter', 'dicestack' );
+		return __( 'Units-sold counter', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Show "X sold" on product pages to build buyer confidence.', 'dicestack' );
+		return __( 'Show "X sold" on product pages to build buyer confidence.', 'stackpress' );
 	}
 
 	/**
@@ -79,7 +79,7 @@ final class Sales_Count extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'min_sales',
-				'label'   => __( 'Only show once a product has sold at least', 'dicestack' ),
+				'label'   => __( 'Only show once a product has sold at least', 'stackpress' ),
 				'type'    => 'number',
 				'default' => 5,
 				'min'     => 1,
@@ -112,9 +112,9 @@ final class Sales_Count extends Abstract_Module {
 		}
 		$label = sprintf(
 			/* translators: %s: number of units sold. */
-			_n( '%s sold', '%s sold', $sold, 'dicestack' ),
+			_n( '%s sold', '%s sold', $sold, 'stackpress' ),
 			number_format_i18n( $sold )
 		);
-		echo '<p class="dicestack-sold" style="color:#3b6d11;font-weight:500;">' . esc_html( $label ) . '</p>';
+		echo '<p class="stackpress-sold" style="color:#3b6d11;font-weight:500;">' . esc_html( $label ) . '</p>';
 	}
 }

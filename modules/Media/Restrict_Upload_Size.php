@@ -2,12 +2,12 @@
 /**
  * Restrict Upload Size module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Media;
+namespace StackPress\Modules\Media;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Restrict_Upload_Size extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Limit upload size', 'dicestack' );
+		return __( 'Limit upload size', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Cap how large a file non-admins can upload to keep the media library tidy.', 'dicestack' );
+		return __( 'Cap how large a file non-admins can upload to keep the media library tidy.', 'stackpress' );
 	}
 
 	/**
@@ -72,7 +72,7 @@ final class Restrict_Upload_Size extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'max_mb',
-				'label'   => __( 'Maximum upload size (MB)', 'dicestack' ),
+				'label'   => __( 'Maximum upload size (MB)', 'stackpress' ),
 				'type'    => 'number',
 				'default' => 5,
 				'min'     => 1,
@@ -103,7 +103,7 @@ final class Restrict_Upload_Size extends Abstract_Module {
 		if ( isset( $file['size'] ) && $file['size'] > $max_bytes ) {
 			$file['error'] = sprintf(
 				/* translators: %d: max size in MB. */
-				__( 'File is too large. Maximum allowed size is %d MB.', 'dicestack' ),
+				__( 'File is too large. Maximum allowed size is %d MB.', 'stackpress' ),
 				(int) $this->get_setting( 'max_mb', 5 )
 			);
 		}

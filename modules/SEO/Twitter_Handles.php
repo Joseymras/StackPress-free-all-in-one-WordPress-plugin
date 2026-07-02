@@ -2,12 +2,12 @@
 /**
  * Twitter Handles module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\SEO;
+namespace StackPress\Modules\SEO;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Twitter_Handles extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Twitter/X handles', 'dicestack' );
+		return __( 'Twitter/X handles', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Attribute shared link cards to your X account with twitter:site meta.', 'dicestack' );
+		return __( 'Attribute shared link cards to your X account with twitter:site meta.', 'stackpress' );
 	}
 
 	/**
@@ -72,10 +72,10 @@ final class Twitter_Handles extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'site',
-				'label'   => __( 'Site @handle', 'dicestack' ),
+				'label'   => __( 'Site @handle', 'stackpress' ),
 				'type'    => 'text',
 				'default' => '',
-				'help'    => __( 'Without the @, e.g. dicecodes', 'dicestack' ),
+				'help'    => __( 'Without the @, e.g. dicecodes', 'stackpress' ),
 			),
 		);
 	}

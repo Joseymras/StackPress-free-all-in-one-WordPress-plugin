@@ -2,12 +2,12 @@
 /**
  * Underline Content Links module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Accessibility;
+namespace StackPress\Modules\Accessibility;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Underline_Links extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Underline content links', 'dicestack' );
+		return __( 'Underline content links', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Underline links within content so they\'re distinguishable without relying on colour.', 'dicestack' );
+		return __( 'Underline links within content so they\'re distinguishable without relying on colour.', 'stackpress' );
 	}
 
 	/**
@@ -78,6 +78,6 @@ final class Underline_Links extends Abstract_Module {
 	 * @return void
 	 */
 	public function output() {
-		echo '<style id="dicestack-underline">.entry-content a,.post-content a,article .content a,main p a{text-decoration:underline;}</style>';
+		echo '<style id="stackpress-underline">.entry-content a,.post-content a,article .content a,main p a{text-decoration:underline;}</style>';
 	}
 }

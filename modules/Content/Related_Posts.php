@@ -2,12 +2,12 @@
 /**
  * Related Posts module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Content;
+namespace StackPress\Modules\Content;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Related_Posts extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Related posts', 'dicestack' );
+		return __( 'Related posts', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Keep readers on your site with related posts shown below each article.', 'dicestack' );
+		return __( 'Keep readers on your site with related posts shown below each article.', 'stackpress' );
 	}
 
 	/**
@@ -79,13 +79,13 @@ final class Related_Posts extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'title',
-				'label'   => __( 'Heading', 'dicestack' ),
+				'label'   => __( 'Heading', 'stackpress' ),
 				'type'    => 'text',
-				'default' => __( 'Related posts', 'dicestack' ),
+				'default' => __( 'Related posts', 'stackpress' ),
 			),
 			array(
 				'key'     => 'count',
-				'label'   => __( 'Number to show', 'dicestack' ),
+				'label'   => __( 'Number to show', 'stackpress' ),
 				'type'    => 'number',
 				'default' => 3,
 				'min'     => 1,
@@ -94,13 +94,13 @@ final class Related_Posts extends Abstract_Module {
 			),
 			array(
 				'key'     => 'position',
-				'label'   => __( 'Where to show', 'dicestack' ),
+				'label'   => __( 'Where to show', 'stackpress' ),
 				'type'    => 'select',
 				'default' => 'after',
 				'options' => array(
-					'after'  => __( 'After the post content', 'dicestack' ),
-					'before' => __( 'Before the post content', 'dicestack' ),
-					'manual' => __( 'Only where I place [dicestack_related]', 'dicestack' ),
+					'after'  => __( 'After the post content', 'stackpress' ),
+					'before' => __( 'Before the post content', 'stackpress' ),
+					'manual' => __( 'Only where I place [stackpress_related]', 'stackpress' ),
 				),
 			),
 		);
@@ -111,7 +111,7 @@ final class Related_Posts extends Abstract_Module {
 	 */
 	public function init() {
 		add_filter( 'the_content', array( $this, 'append' ), 40 );
-		add_shortcode( 'dicestack_related', array( $this, 'shortcode' ) );
+		add_shortcode( 'stackpress_related', array( $this, 'shortcode' ) );
 	}
 
 	/**
@@ -173,8 +173,8 @@ final class Related_Posts extends Abstract_Module {
 			return '';
 		}
 
-		$html  = '<section class="dicestack-related" style="margin-top:32px;border-top:1px solid #e4e7ec;padding-top:20px;">';
-		$html .= '<h3 style="margin:0 0 14px;">' . esc_html( $this->get_setting( 'title', __( 'Related posts', 'dicestack' ) ) ) . '</h3>';
+		$html  = '<section class="stackpress-related" style="margin-top:32px;border-top:1px solid #e4e7ec;padding-top:20px;">';
+		$html .= '<h3 style="margin:0 0 14px;">' . esc_html( $this->get_setting( 'title', __( 'Related posts', 'stackpress' ) ) ) . '</h3>';
 		$html .= '<ul style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;">';
 
 		while ( $query->have_posts() ) {

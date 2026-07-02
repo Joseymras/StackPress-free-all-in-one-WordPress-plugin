@@ -2,12 +2,12 @@
 /**
  * Admin Bar Control module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Admin;
+namespace StackPress\Modules\Admin;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Admin_Bar_Control extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Front-end toolbar control', 'dicestack' );
+		return __( 'Front-end toolbar control', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Hide the front-end admin toolbar for everyone except administrators.', 'dicestack' );
+		return __( 'Hide the front-end admin toolbar for everyone except administrators.', 'stackpress' );
 	}
 
 	/**
@@ -72,12 +72,12 @@ final class Admin_Bar_Control extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'who',
-				'label'   => __( 'Hide the toolbar for', 'dicestack' ),
+				'label'   => __( 'Hide the toolbar for', 'stackpress' ),
 				'type'    => 'select',
 				'default' => 'non_admins',
 				'options' => array(
-					'non_admins' => __( 'Everyone except admins', 'dicestack' ),
-					'everyone'   => __( 'Everyone', 'dicestack' ),
+					'non_admins' => __( 'Everyone except admins', 'stackpress' ),
+					'everyone'   => __( 'Everyone', 'stackpress' ),
 				),
 			),
 		);

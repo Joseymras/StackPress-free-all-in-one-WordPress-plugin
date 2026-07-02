@@ -2,12 +2,12 @@
 /**
  * Admin Custom CSS module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Admin;
+namespace StackPress\Modules\Admin;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Admin_Custom_CSS extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Admin custom CSS', 'dicestack' );
+		return __( 'Admin custom CSS', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Add your own CSS to the admin dashboard for layout and branding tweaks.', 'dicestack' );
+		return __( 'Add your own CSS to the admin dashboard for layout and branding tweaks.', 'stackpress' );
 	}
 
 	/**
@@ -72,10 +72,10 @@ final class Admin_Custom_CSS extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'css',
-				'label'   => __( 'Admin CSS', 'dicestack' ),
+				'label'   => __( 'Admin CSS', 'stackpress' ),
 				'type'    => 'textarea',
 				'default' => '',
-				'help'    => __( 'Applied across wp-admin. Only administrators can edit this.', 'dicestack' ),
+				'help'    => __( 'Applied across wp-admin. Only administrators can edit this.', 'stackpress' ),
 			),
 		);
 	}
@@ -110,7 +110,7 @@ final class Admin_Custom_CSS extends Abstract_Module {
 	public function output() {
 		$css = (string) $this->get_setting( 'css', '' );
 		if ( '' !== trim( $css ) ) {
-			echo '<style id="dicestack-admin-css">' . wp_strip_all_tags( $css ) . '</style>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- CSS, tags stripped.
+			echo '<style id="stackpress-admin-css">' . wp_strip_all_tags( $css ) . '</style>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- CSS, tags stripped.
 		}
 	}
 }

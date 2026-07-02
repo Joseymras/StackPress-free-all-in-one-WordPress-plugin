@@ -2,12 +2,12 @@
 /**
  * Attachment Page Redirect module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\SEO;
+namespace StackPress\Modules\SEO;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Attachment_Redirect extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Attachment page redirect', 'dicestack' );
+		return __( 'Attachment page redirect', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Redirect thin media attachment pages to their parent post for cleaner SEO.', 'dicestack' );
+		return __( 'Redirect thin media attachment pages to their parent post for cleaner SEO.', 'stackpress' );
 	}
 
 	/**

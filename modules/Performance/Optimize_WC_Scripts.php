@@ -2,12 +2,12 @@
 /**
  * Optimize WooCommerce Scripts module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Performance;
+namespace StackPress\Modules\Performance;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -29,14 +29,14 @@ final class Optimize_WC_Scripts extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Optimize WooCommerce scripts', 'dicestack' );
+		return __( 'Optimize WooCommerce scripts', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Only load WooCommerce assets on store pages, not on every page of the site.', 'dicestack' );
+		return __( 'Only load WooCommerce assets on store pages, not on every page of the site.', 'stackpress' );
 	}
 
 	/**

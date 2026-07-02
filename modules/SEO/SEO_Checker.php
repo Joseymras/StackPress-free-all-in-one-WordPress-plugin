@@ -2,12 +2,12 @@
 /**
  * SEO & AI Visibility Checker module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\SEO;
+namespace StackPress\Modules\SEO;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class SEO_Checker extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'SEO & AI visibility checker', 'dicestack' );
+		return __( 'SEO & AI visibility checker', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Audit your site for SEO issues and AI-crawler visibility, with fixes.', 'dicestack' );
+		return __( 'Audit your site for SEO issues and AI-crawler visibility, with fixes.', 'stackpress' );
 	}
 
 	/**
@@ -81,11 +81,11 @@ final class SEO_Checker extends Abstract_Module {
 	 */
 	public function add_page() {
 		add_submenu_page(
-			'dicestack',
-			__( 'SEO checker', 'dicestack' ),
-			__( 'SEO checker', 'dicestack' ),
+			'stackpress',
+			__( 'SEO checker', 'stackpress' ),
+			__( 'SEO checker', 'stackpress' ),
 			'manage_options',
-			'dicestack-seo-checker',
+			'stackpress-seo-checker',
 			array( $this, 'render_page' )
 		);
 	}
@@ -96,75 +96,75 @@ final class SEO_Checker extends Abstract_Module {
 	 * @return array[] Each: label, status (pass|warn|fail), fix.
 	 */
 	private function run_checks() {
-		$core    = \DiceStack\Core::instance();
+		$core    = \StackPress\Core::instance();
 		$active  = $core->get_active_modules();
 		$checks  = array();
 
 		// HTTPS.
 		$https = ( 'https' === wp_parse_url( home_url(), PHP_URL_SCHEME ) );
 		$checks[] = array(
-			'label'  => __( 'Site uses HTTPS', 'dicestack' ),
+			'label'  => __( 'Site uses HTTPS', 'stackpress' ),
 			'status' => $https ? 'pass' : 'fail',
-			'fix'    => __( 'Install an SSL certificate and enable the Force HTTPS module.', 'dicestack' ),
+			'fix'    => __( 'Install an SSL certificate and enable the Force HTTPS module.', 'stackpress' ),
 		);
 
 		// Search engine visibility.
 		$public = (bool) get_option( 'blog_public' );
 		$checks[] = array(
-			'label'  => __( 'Search engines are allowed to index the site', 'dicestack' ),
+			'label'  => __( 'Search engines are allowed to index the site', 'stackpress' ),
 			'status' => $public ? 'pass' : 'fail',
-			'fix'    => __( 'Settings → Reading → uncheck "Discourage search engines".', 'dicestack' ),
+			'fix'    => __( 'Settings → Reading → uncheck "Discourage search engines".', 'stackpress' ),
 		);
 
 		// Meta tags module.
 		$checks[] = array(
-			'label'  => __( 'Meta description / Open Graph output', 'dicestack' ),
+			'label'  => __( 'Meta description / Open Graph output', 'stackpress' ),
 			'status' => in_array( 'meta_tags', $active, true ) ? 'pass' : 'warn',
-			'fix'    => __( 'Enable the SEO meta tags module.', 'dicestack' ),
+			'fix'    => __( 'Enable the SEO meta tags module.', 'stackpress' ),
 		);
 
 		// Schema.
 		$checks[] = array(
-			'label'  => __( 'Structured data (schema) output', 'dicestack' ),
+			'label'  => __( 'Structured data (schema) output', 'stackpress' ),
 			'status' => in_array( 'schema_jsonld', $active, true ) ? 'pass' : 'warn',
-			'fix'    => __( 'Enable the Schema / structured data module.', 'dicestack' ),
+			'fix'    => __( 'Enable the Schema / structured data module.', 'stackpress' ),
 		);
 
 		// Sitemap (core or our module).
 		$has_sitemap = in_array( 'robots_txt', $active, true ) || function_exists( 'wp_sitemaps_get_server' );
 		$checks[] = array(
-			'label'  => __( 'XML sitemap available', 'dicestack' ),
+			'label'  => __( 'XML sitemap available', 'stackpress' ),
 			'status' => $has_sitemap ? 'pass' : 'warn',
-			'fix'    => __( 'WordPress core provides /wp-sitemap.xml; ensure it is not disabled.', 'dicestack' ),
+			'fix'    => __( 'WordPress core provides /wp-sitemap.xml; ensure it is not disabled.', 'stackpress' ),
 		);
 
 		// AI visibility: llms.txt.
 		$checks[] = array(
-			'label'  => __( 'llms.txt present for AI assistants', 'dicestack' ),
+			'label'  => __( 'llms.txt present for AI assistants', 'stackpress' ),
 			'status' => in_array( 'llms_txt', $active, true ) ? 'pass' : 'warn',
-			'fix'    => __( 'Enable the llms.txt for AI module.', 'dicestack' ),
+			'fix'    => __( 'Enable the llms.txt for AI module.', 'stackpress' ),
 		);
 
 		// Site title / tagline.
 		$checks[] = array(
-			'label'  => __( 'Site title and tagline set', 'dicestack' ),
+			'label'  => __( 'Site title and tagline set', 'stackpress' ),
 			'status' => ( get_bloginfo( 'name' ) && get_bloginfo( 'description' ) ) ? 'pass' : 'warn',
-			'fix'    => __( 'Settings → General → set a clear title and tagline.', 'dicestack' ),
+			'fix'    => __( 'Settings → General → set a clear title and tagline.', 'stackpress' ),
 		);
 
 		// Permalinks.
 		$checks[] = array(
-			'label'  => __( 'SEO-friendly (pretty) permalinks', 'dicestack' ),
+			'label'  => __( 'SEO-friendly (pretty) permalinks', 'stackpress' ),
 			'status' => ( '' !== get_option( 'permalink_structure' ) ) ? 'pass' : 'fail',
-			'fix'    => __( 'Settings → Permalinks → choose Post name.', 'dicestack' ),
+			'fix'    => __( 'Settings → Permalinks → choose Post name.', 'stackpress' ),
 		);
 
 		// Images missing alt (sample).
 		$missing = $this->count_images_without_alt();
 		$checks[] = array(
-			'label'  => sprintf( /* translators: %d: count. */ __( 'Images with alt text (%d missing in recent media)', 'dicestack' ), $missing ),
+			'label'  => sprintf( /* translators: %d: count. */ __( 'Images with alt text (%d missing in recent media)', 'stackpress' ), $missing ),
 			'status' => ( 0 === $missing ) ? 'pass' : 'warn',
-			'fix'    => __( 'Enable Auto image alt text, or add alt text in the Media Library.', 'dicestack' ),
+			'fix'    => __( 'Enable Auto image alt text, or add alt text in the Media Library.', 'stackpress' ),
 		);
 
 		return $checks;
@@ -207,13 +207,13 @@ final class SEO_Checker extends Abstract_Module {
 			'fail' => '#a32d2d',
 		);
 		$labels = array(
-			'pass' => __( 'Pass', 'dicestack' ),
-			'warn' => __( 'Improve', 'dicestack' ),
-			'fail' => __( 'Fix', 'dicestack' ),
+			'pass' => __( 'Pass', 'stackpress' ),
+			'warn' => __( 'Improve', 'stackpress' ),
+			'fail' => __( 'Fix', 'stackpress' ),
 		);
 
-		echo '<div class="wrap"><h1>' . esc_html__( 'SEO & AI visibility checker', 'dicestack' ) . '</h1>';
-		echo '<table class="widefat striped"><thead><tr><th>' . esc_html__( 'Check', 'dicestack' ) . '</th><th>' . esc_html__( 'Status', 'dicestack' ) . '</th><th>' . esc_html__( 'How to fix', 'dicestack' ) . '</th></tr></thead><tbody>';
+		echo '<div class="wrap"><h1>' . esc_html__( 'SEO & AI visibility checker', 'stackpress' ) . '</h1>';
+		echo '<table class="widefat striped"><thead><tr><th>' . esc_html__( 'Check', 'stackpress' ) . '</th><th>' . esc_html__( 'Status', 'stackpress' ) . '</th><th>' . esc_html__( 'How to fix', 'stackpress' ) . '</th></tr></thead><tbody>';
 		foreach ( $checks as $c ) {
 			$color = isset( $colors[ $c['status'] ] ) ? $colors[ $c['status'] ] : '#555';
 			echo '<tr>';

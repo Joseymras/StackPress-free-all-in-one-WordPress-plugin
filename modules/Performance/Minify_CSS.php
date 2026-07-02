@@ -2,18 +2,18 @@
 /**
  * Minify CSS module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Performance;
+namespace StackPress\Modules\Performance;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
  * Minifies inline <style> blocks and local enqueued stylesheets. Linked local
- * CSS files are minified once and cached in uploads/dicestack-min/, with relative
+ * CSS files are minified once and cached in uploads/stackpress-min/, with relative
  * url() references rewritten to absolute so nothing breaks when the file moves.
  * External, admin, and already-minified (.min.css) files are left alone.
  */
@@ -30,14 +30,14 @@ final class Minify_CSS extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Minify CSS', 'dicestack' );
+		return __( 'Minify CSS', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Shrink inline and local stylesheet CSS by stripping comments and whitespace. Cached for speed.', 'dicestack' );
+		return __( 'Shrink inline and local stylesheet CSS by stripping comments and whitespace. Cached for speed.', 'stackpress' );
 	}
 
 	/**
@@ -81,10 +81,10 @@ final class Minify_CSS extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'files',
-				'label'   => __( 'Also minify linked stylesheet files', 'dicestack' ),
+				'label'   => __( 'Also minify linked stylesheet files', 'stackpress' ),
 				'type'    => 'checkbox',
 				'default' => true,
-				'help'    => __( 'Minifies local .css files (cached). Turn off if a stylesheet misbehaves.', 'dicestack' ),
+				'help'    => __( 'Minifies local .css files (cached). Turn off if a stylesheet misbehaves.', 'stackpress' ),
 			),
 		);
 	}
@@ -94,7 +94,7 @@ final class Minify_CSS extends Abstract_Module {
 	 */
 	public function init() {
 		add_action( 'template_redirect', array( $this, 'start' ), 6 );
-		add_action( 'dicestack_module_disabled_' . $this->id(), array( $this, 'clear_cache' ) );
+		add_action( 'stackpress_module_disabled_' . $this->id(), array( $this, 'clear_cache' ) );
 		add_action( 'switch_theme', array( $this, 'clear_cache' ) );
 	}
 
@@ -251,8 +251,8 @@ final class Minify_CSS extends Abstract_Module {
 	 */
 	private function cache_file( $path, $href ) {
 		$uploads = wp_get_upload_dir();
-		$dir     = trailingslashit( $uploads['basedir'] ) . 'dicestack-min/';
-		$url_dir = trailingslashit( $uploads['baseurl'] ) . 'dicestack-min/';
+		$dir     = trailingslashit( $uploads['basedir'] ) . 'stackpress-min/';
+		$url_dir = trailingslashit( $uploads['baseurl'] ) . 'stackpress-min/';
 
 		$key  = md5( $path . '|' . filemtime( $path ) ) . '.css';
 		$file = $dir . $key;
@@ -286,7 +286,7 @@ final class Minify_CSS extends Abstract_Module {
 	 */
 	public function clear_cache() {
 		$uploads = wp_get_upload_dir();
-		$dir     = trailingslashit( $uploads['basedir'] ) . 'dicestack-min/';
+		$dir     = trailingslashit( $uploads['basedir'] ) . 'stackpress-min/';
 		if ( ! is_dir( $dir ) ) {
 			return;
 		}

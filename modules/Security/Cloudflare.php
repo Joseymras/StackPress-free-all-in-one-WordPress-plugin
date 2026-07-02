@@ -2,12 +2,12 @@
 /**
  * Cloudflare integration module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Security;
+namespace StackPress\Modules\Security;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -29,14 +29,14 @@ final class Cloudflare extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Cloudflare control', 'dicestack' );
+		return __( 'Cloudflare control', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Toggle Under Attack mode, purge cache, and dev mode on Cloudflare from wp-admin.', 'dicestack' );
+		return __( 'Toggle Under Attack mode, purge cache, and dev mode on Cloudflare from wp-admin.', 'stackpress' );
 	}
 
 	/**
@@ -73,7 +73,7 @@ final class Cloudflare extends Abstract_Module {
 		return array(
 			'service' => 'Cloudflare API',
 			'url'     => 'https://www.cloudflare.com/privacypolicy/',
-			'data'    => __( 'Your API token and zone ID are sent to Cloudflare to manage your site settings.', 'dicestack' ),
+			'data'    => __( 'Your API token and zone ID are sent to Cloudflare to manage your site settings.', 'stackpress' ),
 		);
 	}
 
@@ -84,24 +84,24 @@ final class Cloudflare extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'api_token',
-				'label'   => __( 'Cloudflare API token', 'dicestack' ),
+				'label'   => __( 'Cloudflare API token', 'stackpress' ),
 				'type'    => 'password',
 				'default' => '',
-				'help'    => __( 'Create a token with the "Zone.Cache Purge" and "Zone Settings: Edit" permissions.', 'dicestack' ),
+				'help'    => __( 'Create a token with the "Zone.Cache Purge" and "Zone Settings: Edit" permissions.', 'stackpress' ),
 				'guide'   => array(
 					'url'   => 'https://dash.cloudflare.com/profile/api-tokens',
-					'label' => __( 'Create an API token', 'dicestack' ),
+					'label' => __( 'Create an API token', 'stackpress' ),
 				),
 			),
 			array(
 				'key'     => 'zone_id',
-				'label'   => __( 'Zone ID', 'dicestack' ),
+				'label'   => __( 'Zone ID', 'stackpress' ),
 				'type'    => 'text',
 				'default' => '',
-				'help'    => __( 'Found on your domain\'s Overview page in Cloudflare (right column).', 'dicestack' ),
+				'help'    => __( 'Found on your domain\'s Overview page in Cloudflare (right column).', 'stackpress' ),
 				'guide'   => array(
 					'url'   => 'https://developers.cloudflare.com/fundamentals/setup/find-account-and-zone-ids/',
-					'label' => __( 'Where to find your Zone ID', 'dicestack' ),
+					'label' => __( 'Where to find your Zone ID', 'stackpress' ),
 				),
 			),
 		);
@@ -115,8 +115,8 @@ final class Cloudflare extends Abstract_Module {
 			return;
 		}
 		add_action( 'admin_menu', array( $this, 'add_page' ) );
-		add_action( 'admin_post_dicestack_cf_action', array( $this, 'handle_action' ) );
-		add_action( 'admin_post_dicestack_cf_save', array( $this, 'handle_save' ) );
+		add_action( 'admin_post_stackpress_cf_action', array( $this, 'handle_action' ) );
+		add_action( 'admin_post_stackpress_cf_save', array( $this, 'handle_save' ) );
 	}
 
 	/**
@@ -125,8 +125,8 @@ final class Cloudflare extends Abstract_Module {
 	 * @return void
 	 */
 	public function handle_save() {
-		if ( ! current_user_can( 'manage_options' ) || ! check_admin_referer( 'dicestack_cf_save' ) ) {
-			wp_die( esc_html__( 'Permission denied.', 'dicestack' ) );
+		if ( ! current_user_can( 'manage_options' ) || ! check_admin_referer( 'stackpress_cf_save' ) ) {
+			wp_die( esc_html__( 'Permission denied.', 'stackpress' ) );
 		}
 		$this->save_settings(
 			array(
@@ -134,7 +134,7 @@ final class Cloudflare extends Abstract_Module {
 				'zone_id'   => isset( $_POST['zone_id'] ) ? sanitize_text_field( wp_unslash( $_POST['zone_id'] ) ) : '',
 			)
 		);
-		wp_safe_redirect( admin_url( 'admin.php?page=dicestack-cloudflare&saved=1' ) );
+		wp_safe_redirect( admin_url( 'admin.php?page=stackpress-cloudflare&saved=1' ) );
 		exit;
 	}
 
@@ -150,7 +150,7 @@ final class Cloudflare extends Abstract_Module {
 		$token = trim( (string) $this->get_setting( 'api_token', '' ) );
 		$zone  = trim( (string) $this->get_setting( 'zone_id', '' ) );
 		if ( '' === $token || '' === $zone ) {
-			return new \WP_Error( 'cf_config', __( 'Add your Cloudflare API token and Zone ID first.', 'dicestack' ) );
+			return new \WP_Error( 'cf_config', __( 'Add your Cloudflare API token and Zone ID first.', 'stackpress' ) );
 		}
 		$args = array(
 			'method'  => $method,
@@ -177,11 +177,11 @@ final class Cloudflare extends Abstract_Module {
 	 */
 	public function add_page() {
 		add_submenu_page(
-			'dicestack',
-			__( 'Cloudflare', 'dicestack' ),
-			__( 'Cloudflare', 'dicestack' ),
+			'stackpress',
+			__( 'Cloudflare', 'stackpress' ),
+			__( 'Cloudflare', 'stackpress' ),
 			'manage_options',
-			'dicestack-cloudflare',
+			'stackpress-cloudflare',
 			array( $this, 'render_page' )
 		);
 	}
@@ -192,8 +192,8 @@ final class Cloudflare extends Abstract_Module {
 	 * @return void
 	 */
 	public function handle_action() {
-		if ( ! current_user_can( 'manage_options' ) || ! check_admin_referer( 'dicestack_cf' ) ) {
-			wp_die( esc_html__( 'Permission denied.', 'dicestack' ) );
+		if ( ! current_user_can( 'manage_options' ) || ! check_admin_referer( 'stackpress_cf' ) ) {
+			wp_die( esc_html__( 'Permission denied.', 'stackpress' ) );
 		}
 		$do = isset( $_POST['cf'] ) ? sanitize_key( wp_unslash( $_POST['cf'] ) ) : '';
 
@@ -214,7 +214,7 @@ final class Cloudflare extends Abstract_Module {
 				$this->api( 'PATCH', 'settings/development_mode', array( 'value' => 'off' ) );
 				break;
 		}
-		wp_safe_redirect( admin_url( 'admin.php?page=dicestack-cloudflare&done=1' ) );
+		wp_safe_redirect( admin_url( 'admin.php?page=stackpress-cloudflare&done=1' ) );
 		exit;
 	}
 
@@ -228,8 +228,8 @@ final class Cloudflare extends Abstract_Module {
 	 */
 	private function button( $action, $label, $primary = false ) {
 		$html  = '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" style="display:inline-block;margin:0 6px 8px 0;">';
-		$html .= wp_nonce_field( 'dicestack_cf', '_wpnonce', true, false );
-		$html .= '<input type="hidden" name="action" value="dicestack_cf_action" />';
+		$html .= wp_nonce_field( 'stackpress_cf', '_wpnonce', true, false );
+		$html .= '<input type="hidden" name="action" value="stackpress_cf_action" />';
 		$html .= '<input type="hidden" name="cf" value="' . esc_attr( $action ) . '" />';
 		$html .= '<button type="submit" class="button ' . ( $primary ? 'button-primary' : '' ) . '">' . esc_html( $label ) . '</button>';
 		$html .= '</form>';
@@ -244,49 +244,49 @@ final class Cloudflare extends Abstract_Module {
 	public function render_page() {
 		$configured = ( '' !== trim( (string) $this->get_setting( 'api_token', '' ) ) && '' !== trim( (string) $this->get_setting( 'zone_id', '' ) ) );
 
-		echo '<div class="wrap"><h1>' . esc_html__( 'Cloudflare control', 'dicestack' ) . '</h1>';
+		echo '<div class="wrap"><h1>' . esc_html__( 'Cloudflare control', 'stackpress' ) . '</h1>';
 		// phpcs:disable WordPress.Security.NonceVerification.Recommended -- display-only flags.
 		if ( isset( $_GET['done'] ) ) {
-			echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__( 'Cloudflare updated.', 'dicestack' ) . '</p></div>';
+			echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__( 'Cloudflare updated.', 'stackpress' ) . '</p></div>';
 		}
 		if ( isset( $_GET['saved'] ) ) {
-			echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__( 'Cloudflare connection saved.', 'dicestack' ) . '</p></div>';
+			echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__( 'Cloudflare connection saved.', 'stackpress' ) . '</p></div>';
 		}
 		// phpcs:enable WordPress.Security.NonceVerification.Recommended
 
 		// Connection settings — entered right here so the tool is self-contained.
 		$token = (string) $this->get_setting( 'api_token', '' );
 		$zone  = (string) $this->get_setting( 'zone_id', '' );
-		echo '<h2>' . esc_html__( 'Connection', 'dicestack' ) . '</h2>';
+		echo '<h2>' . esc_html__( 'Connection', 'stackpress' ) . '</h2>';
 		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" style="max-width:560px;">';
-		wp_nonce_field( 'dicestack_cf_save' );
-		echo '<input type="hidden" name="action" value="dicestack_cf_save" />';
-		echo '<p><label><strong>' . esc_html__( 'Cloudflare API token', 'dicestack' ) . '</strong><br/>';
-		echo '<input type="password" name="api_token" value="' . esc_attr( $token ) . '" autocomplete="off" style="width:100%;" placeholder="' . esc_attr__( 'Paste your API token', 'dicestack' ) . '" /></label><br/>';
-		echo '<span class="description">' . esc_html__( 'Create a token with the "Zone.Cache Purge" and "Zone Settings: Edit" permissions.', 'dicestack' ) . ' <a href="https://dash.cloudflare.com/profile/api-tokens" target="_blank" rel="noopener">' . esc_html__( 'Create an API token', 'dicestack' ) . '</a></span></p>';
-		echo '<p><label><strong>' . esc_html__( 'Zone ID', 'dicestack' ) . '</strong><br/>';
-		echo '<input type="text" name="zone_id" value="' . esc_attr( $zone ) . '" style="width:100%;" placeholder="' . esc_attr__( 'e.g. 0a1b2c3d4e5f...', 'dicestack' ) . '" /></label><br/>';
-		echo '<span class="description">' . esc_html__( "Found on your domain's Overview page in Cloudflare (right column).", 'dicestack' ) . ' <a href="https://developers.cloudflare.com/fundamentals/setup/find-account-and-zone-ids/" target="_blank" rel="noopener">' . esc_html__( 'Where to find it', 'dicestack' ) . '</a></span></p>';
-		echo '<p><button type="submit" class="button button-primary">' . esc_html__( 'Save connection', 'dicestack' ) . '</button></p>';
+		wp_nonce_field( 'stackpress_cf_save' );
+		echo '<input type="hidden" name="action" value="stackpress_cf_save" />';
+		echo '<p><label><strong>' . esc_html__( 'Cloudflare API token', 'stackpress' ) . '</strong><br/>';
+		echo '<input type="password" name="api_token" value="' . esc_attr( $token ) . '" autocomplete="off" style="width:100%;" placeholder="' . esc_attr__( 'Paste your API token', 'stackpress' ) . '" /></label><br/>';
+		echo '<span class="description">' . esc_html__( 'Create a token with the "Zone.Cache Purge" and "Zone Settings: Edit" permissions.', 'stackpress' ) . ' <a href="https://dash.cloudflare.com/profile/api-tokens" target="_blank" rel="noopener">' . esc_html__( 'Create an API token', 'stackpress' ) . '</a></span></p>';
+		echo '<p><label><strong>' . esc_html__( 'Zone ID', 'stackpress' ) . '</strong><br/>';
+		echo '<input type="text" name="zone_id" value="' . esc_attr( $zone ) . '" style="width:100%;" placeholder="' . esc_attr__( 'e.g. 0a1b2c3d4e5f...', 'stackpress' ) . '" /></label><br/>';
+		echo '<span class="description">' . esc_html__( "Found on your domain's Overview page in Cloudflare (right column).", 'stackpress' ) . ' <a href="https://developers.cloudflare.com/fundamentals/setup/find-account-and-zone-ids/" target="_blank" rel="noopener">' . esc_html__( 'Where to find it', 'stackpress' ) . '</a></span></p>';
+		echo '<p><button type="submit" class="button button-primary">' . esc_html__( 'Save connection', 'stackpress' ) . '</button></p>';
 		echo '</form>';
 
 		if ( ! $configured ) {
-			echo '<p style="color:#6b7280;"><em>' . esc_html__( 'Enter your API token and Zone ID above to unlock the controls below.', 'dicestack' ) . '</em></p></div>';
+			echo '<p style="color:#6b7280;"><em>' . esc_html__( 'Enter your API token and Zone ID above to unlock the controls below.', 'stackpress' ) . '</em></p></div>';
 			return;
 		}
 
-		echo '<hr/><h2>' . esc_html__( 'Under Attack mode', 'dicestack' ) . '</h2>';
-		echo '<p>' . esc_html__( 'Shows a 5-second challenge to every visitor — use during a DDoS or attack.', 'dicestack' ) . '</p>';
-		echo $this->button( 'attack_on', __( 'Enable Under Attack mode', 'dicestack' ), true ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built with escaping.
-		echo $this->button( 'attack_off', __( 'Back to normal', 'dicestack' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo '<hr/><h2>' . esc_html__( 'Under Attack mode', 'stackpress' ) . '</h2>';
+		echo '<p>' . esc_html__( 'Shows a 5-second challenge to every visitor — use during a DDoS or attack.', 'stackpress' ) . '</p>';
+		echo $this->button( 'attack_on', __( 'Enable Under Attack mode', 'stackpress' ), true ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built with escaping.
+		echo $this->button( 'attack_off', __( 'Back to normal', 'stackpress' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
-		echo '<h2>' . esc_html__( 'Cache', 'dicestack' ) . '</h2>';
-		echo $this->button( 'purge', __( 'Purge everything', 'dicestack' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo '<h2>' . esc_html__( 'Cache', 'stackpress' ) . '</h2>';
+		echo $this->button( 'purge', __( 'Purge everything', 'stackpress' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
-		echo '<h2>' . esc_html__( 'Development mode', 'dicestack' ) . '</h2>';
-		echo '<p>' . esc_html__( 'Temporarily bypasses the cache for 3 hours while you make changes.', 'dicestack' ) . '</p>';
-		echo $this->button( 'dev_on', __( 'Turn on dev mode', 'dicestack' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		echo $this->button( 'dev_off', __( 'Turn off dev mode', 'dicestack' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo '<h2>' . esc_html__( 'Development mode', 'stackpress' ) . '</h2>';
+		echo '<p>' . esc_html__( 'Temporarily bypasses the cache for 3 hours while you make changes.', 'stackpress' ) . '</p>';
+		echo $this->button( 'dev_on', __( 'Turn on dev mode', 'stackpress' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo $this->button( 'dev_off', __( 'Turn off dev mode', 'stackpress' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo '</div>';
 	}
 }

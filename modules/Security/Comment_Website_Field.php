@@ -2,12 +2,12 @@
 /**
  * Remove Comment Website Field module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Security;
+namespace StackPress\Modules\Security;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Comment_Website_Field extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Remove comment website field', 'dicestack' );
+		return __( 'Remove comment website field', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Remove the URL field from comments to cut down on link spam.', 'dicestack' );
+		return __( 'Remove the URL field from comments to cut down on link spam.', 'stackpress' );
 	}
 
 	/**

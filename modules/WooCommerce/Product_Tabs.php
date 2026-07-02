@@ -2,12 +2,12 @@
 /**
  * WooCommerce Custom Product Tabs module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\WooCommerce;
+namespace StackPress\Modules\WooCommerce;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Product_Tabs extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Custom product tab', 'dicestack' );
+		return __( 'Custom product tab', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Add a shared tab (such as Shipping & Returns) to every product page.', 'dicestack' );
+		return __( 'Add a shared tab (such as Shipping & Returns) to every product page.', 'stackpress' );
 	}
 
 	/**
@@ -86,15 +86,15 @@ final class Product_Tabs extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'title',
-				'label'   => __( 'Tab title', 'dicestack' ),
+				'label'   => __( 'Tab title', 'stackpress' ),
 				'type'    => 'text',
-				'default' => __( 'Shipping & Returns', 'dicestack' ),
+				'default' => __( 'Shipping & Returns', 'stackpress' ),
 			),
 			array(
 				'key'     => 'content',
-				'label'   => __( 'Tab content', 'dicestack' ),
+				'label'   => __( 'Tab content', 'stackpress' ),
 				'type'    => 'textarea',
-				'default' => __( 'We ship worldwide within 2–4 business days. Returns accepted within 30 days.', 'dicestack' ),
+				'default' => __( 'We ship worldwide within 2–4 business days. Returns accepted within 30 days.', 'stackpress' ),
 			),
 		);
 	}
@@ -117,7 +117,7 @@ final class Product_Tabs extends Abstract_Module {
 		if ( '' === trim( $title ) ) {
 			return $tabs;
 		}
-		$tabs['dicestack_tab'] = array(
+		$tabs['stackpress_tab'] = array(
 			'title'    => $title,
 			'priority' => 50,
 			'callback' => array( $this, 'render' ),

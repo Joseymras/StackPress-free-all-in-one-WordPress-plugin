@@ -2,12 +2,12 @@
 /**
  * Site Verification module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\SEO;
+namespace StackPress\Modules\SEO;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Site_Verification extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Site verification', 'dicestack' );
+		return __( 'Site verification', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Add Google, Bing, Pinterest, and Yandex verification meta tags.', 'dicestack' );
+		return __( 'Add Google, Bing, Pinterest, and Yandex verification meta tags.', 'stackpress' );
 	}
 
 	/**
@@ -72,30 +72,30 @@ final class Site_Verification extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'google',
-				'label'   => __( 'Google verification code', 'dicestack' ),
+				'label'   => __( 'Google verification code', 'stackpress' ),
 				'type'    => 'text',
 				'default' => '',
-				'help'    => __( 'The content value from the google-site-verification meta tag.', 'dicestack' ),
+				'help'    => __( 'The content value from the google-site-verification meta tag.', 'stackpress' ),
 				'guide'   => array(
 					'url'   => 'https://search.google.com/search-console',
-					'label' => __( 'Get this from Google Search Console', 'dicestack' ),
+					'label' => __( 'Get this from Google Search Console', 'stackpress' ),
 				),
 			),
 			array(
 				'key'     => 'bing',
-				'label'   => __( 'Bing verification code', 'dicestack' ),
+				'label'   => __( 'Bing verification code', 'stackpress' ),
 				'type'    => 'text',
 				'default' => '',
 			),
 			array(
 				'key'     => 'pinterest',
-				'label'   => __( 'Pinterest verification code', 'dicestack' ),
+				'label'   => __( 'Pinterest verification code', 'stackpress' ),
 				'type'    => 'text',
 				'default' => '',
 			),
 			array(
 				'key'     => 'yandex',
-				'label'   => __( 'Yandex verification code', 'dicestack' ),
+				'label'   => __( 'Yandex verification code', 'stackpress' ),
 				'type'    => 'text',
 				'default' => '',
 			),

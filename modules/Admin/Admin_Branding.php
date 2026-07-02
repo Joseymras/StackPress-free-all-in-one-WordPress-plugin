@@ -2,12 +2,12 @@
 /**
  * Admin Branding (white-label) module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Admin;
+namespace StackPress\Modules\Admin;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Admin_Branding extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Admin branding', 'dicestack' );
+		return __( 'Admin branding', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Set a custom admin footer credit for a polished, branded dashboard.', 'dicestack' );
+		return __( 'Set a custom admin footer credit for a polished, branded dashboard.', 'stackpress' );
 	}
 
 	/**
@@ -79,13 +79,13 @@ final class Admin_Branding extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'footer_text',
-				'label'   => __( 'Admin footer text', 'dicestack' ),
+				'label'   => __( 'Admin footer text', 'stackpress' ),
 				'type'    => 'text',
-				'default' => __( 'Built with DiceStack by Dice Codes', 'dicestack' ),
+				'default' => __( 'Built with StackPress by Dice Codes', 'stackpress' ),
 			),
 			array(
 				'key'     => 'footer_link',
-				'label'   => __( 'Footer link URL', 'dicestack' ),
+				'label'   => __( 'Footer link URL', 'stackpress' ),
 				'type'    => 'url',
 				'default' => 'https://dicecodes.com',
 			),

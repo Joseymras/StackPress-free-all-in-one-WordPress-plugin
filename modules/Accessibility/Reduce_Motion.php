@@ -2,12 +2,12 @@
 /**
  * Reduce Motion module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Accessibility;
+namespace StackPress\Modules\Accessibility;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Reduce_Motion extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Respect reduced motion', 'dicestack' );
+		return __( 'Respect reduced motion', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Disable animations for visitors who prefer reduced motion in their OS settings.', 'dicestack' );
+		return __( 'Disable animations for visitors who prefer reduced motion in their OS settings.', 'stackpress' );
 	}
 
 	/**
@@ -78,6 +78,6 @@ final class Reduce_Motion extends Abstract_Module {
 	 * @return void
 	 */
 	public function output() {
-		echo '<style id="dicestack-reduce-motion">@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important;}}</style>';
+		echo '<style id="stackpress-reduce-motion">@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important;}}</style>';
 	}
 }

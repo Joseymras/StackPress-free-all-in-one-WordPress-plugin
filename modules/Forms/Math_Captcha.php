@@ -2,12 +2,12 @@
 /**
  * Math Captcha module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Forms;
+namespace StackPress\Modules\Forms;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -29,14 +29,14 @@ final class Math_Captcha extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Math captcha', 'dicestack' );
+		return __( 'Math captcha', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Add a simple sum to the comment form to block bots — no external CAPTCHA service.', 'dicestack' );
+		return __( 'Add a simple sum to the comment form to block bots — no external CAPTCHA service.', 'stackpress' );
 	}
 
 	/**
@@ -81,7 +81,7 @@ final class Math_Captcha extends Abstract_Module {
 	 * @return string
 	 */
 	private function hash( $answer ) {
-		return wp_hash( 'dicestack_math_' . $answer );
+		return wp_hash( 'stackpress_math_' . $answer );
 	}
 
 	/**
@@ -98,13 +98,13 @@ final class Math_Captcha extends Abstract_Module {
 		$b   = wp_rand( 1, 9 );
 		$sum = $a + $b;
 
-		$field  = '<p class="comment-form-dicestack-math">';
-		$field .= '<label for="dicestack_math">' . sprintf( /* translators: 1: first number, 2: second number. */ esc_html__( 'What is %1$d + %2$d?', 'dicestack' ), $a, $b ) . ' <span class="required">*</span></label>';
-		$field .= '<input type="text" id="dicestack_math" name="dicestack_math" size="5" required />';
-		$field .= '<input type="hidden" name="dicestack_math_h" value="' . esc_attr( $this->hash( $sum ) ) . '" />';
+		$field  = '<p class="comment-form-stackpress-math">';
+		$field .= '<label for="stackpress_math">' . sprintf( /* translators: 1: first number, 2: second number. */ esc_html__( 'What is %1$d + %2$d?', 'stackpress' ), $a, $b ) . ' <span class="required">*</span></label>';
+		$field .= '<input type="text" id="stackpress_math" name="stackpress_math" size="5" required />';
+		$field .= '<input type="hidden" name="stackpress_math_h" value="' . esc_attr( $this->hash( $sum ) ) . '" />';
 		$field .= '</p>';
 
-		$fields['dicestack_math'] = $field;
+		$fields['stackpress_math'] = $field;
 		return $fields;
 	}
 
@@ -120,19 +120,19 @@ final class Math_Captcha extends Abstract_Module {
 		}
 		// phpcs:disable WordPress.Security.NonceVerification.Missing -- WP comment flow nonce covers the submission; we only read our captcha fields.
 		// Fail open if our field wasn't rendered, so comment forms never break.
-		if ( empty( $_POST['dicestack_math_h'] ) ) {
+		if ( empty( $_POST['stackpress_math_h'] ) ) {
 			// phpcs:enable WordPress.Security.NonceVerification.Missing
 			return $commentdata;
 		}
 		// phpcs:disable WordPress.Security.NonceVerification.Missing
-		$answer = isset( $_POST['dicestack_math'] ) ? absint( wp_unslash( $_POST['dicestack_math'] ) ) : -1;
-		$hash   = sanitize_text_field( wp_unslash( $_POST['dicestack_math_h'] ) );
+		$answer = isset( $_POST['stackpress_math'] ) ? absint( wp_unslash( $_POST['stackpress_math'] ) ) : -1;
+		$hash   = sanitize_text_field( wp_unslash( $_POST['stackpress_math_h'] ) );
 		// phpcs:enable WordPress.Security.NonceVerification.Missing
 
 		if ( ! hash_equals( $hash, $this->hash( $answer ) ) ) {
 			wp_die(
-				esc_html__( 'Incorrect answer to the math question. Please go back and try again.', 'dicestack' ),
-				esc_html__( 'Comment blocked', 'dicestack' ),
+				esc_html__( 'Incorrect answer to the math question. Please go back and try again.', 'stackpress' ),
+				esc_html__( 'Comment blocked', 'stackpress' ),
 				array(
 					'response'  => 403,
 					'back_link' => true,

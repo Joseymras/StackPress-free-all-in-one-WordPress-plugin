@@ -2,12 +2,12 @@
 /**
  * YouTube Privacy Embed module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Content;
+namespace StackPress\Modules\Content;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class YouTube_NoCookie extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'YouTube privacy mode', 'dicestack' );
+		return __( 'YouTube privacy mode', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Load YouTube embeds from the no-cookie domain to reduce tracking.', 'dicestack' );
+		return __( 'Load YouTube embeds from the no-cookie domain to reduce tracking.', 'stackpress' );
 	}
 
 	/**

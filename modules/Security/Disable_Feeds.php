@@ -2,12 +2,12 @@
 /**
  * Disable Feeds module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Security;
+namespace StackPress\Modules\Security;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Disable_Feeds extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Disable RSS feeds', 'dicestack' );
+		return __( 'Disable RSS feeds', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Turn off RSS/Atom feeds on sites that don\'t need them.', 'dicestack' );
+		return __( 'Turn off RSS/Atom feeds on sites that don\'t need them.', 'stackpress' );
 	}
 
 	/**

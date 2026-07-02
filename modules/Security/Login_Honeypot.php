@@ -2,12 +2,12 @@
 /**
  * Login Honeypot module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Security;
+namespace StackPress\Modules\Security;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -20,7 +20,7 @@ final class Login_Honeypot extends Abstract_Module {
 	/**
 	 * Honeypot field name.
 	 */
-	const FIELD = 'dicestack_lh';
+	const FIELD = 'stackpress_lh';
 
 	/**
 	 * {@inheritDoc}
@@ -33,14 +33,14 @@ final class Login_Honeypot extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Login honeypot', 'dicestack' );
+		return __( 'Login honeypot', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Trap bots that auto-submit the login form with a hidden honeypot field.', 'dicestack' );
+		return __( 'Trap bots that auto-submit the login form with a hidden honeypot field.', 'stackpress' );
 	}
 
 	/**
@@ -84,7 +84,7 @@ final class Login_Honeypot extends Abstract_Module {
 	 * @return void
 	 */
 	public function field() {
-		echo '<p style="position:absolute;left:-9999px;" aria-hidden="true"><label>' . esc_html__( 'Leave blank', 'dicestack' ) . '<input type="text" name="' . esc_attr( self::FIELD ) . '" tabindex="-1" autocomplete="off" /></label></p>';
+		echo '<p style="position:absolute;left:-9999px;" aria-hidden="true"><label>' . esc_html__( 'Leave blank', 'stackpress' ) . '<input type="text" name="' . esc_attr( self::FIELD ) . '" tabindex="-1" autocomplete="off" /></label></p>';
 	}
 
 	/**
@@ -99,7 +99,7 @@ final class Login_Honeypot extends Abstract_Module {
 		}
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- login flow; only checking whether our honeypot field is non-empty.
 		if ( isset( $_POST[ self::FIELD ] ) && '' !== trim( (string) wp_unslash( $_POST[ self::FIELD ] ) ) ) {
-			return new \WP_Error( 'dicestack_honeypot', __( 'Login blocked.', 'dicestack' ) );
+			return new \WP_Error( 'stackpress_honeypot', __( 'Login blocked.', 'stackpress' ) );
 		}
 		return $user;
 	}

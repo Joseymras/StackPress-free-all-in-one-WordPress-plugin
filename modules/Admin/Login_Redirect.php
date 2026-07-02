@@ -2,12 +2,12 @@
 /**
  * Login Redirect module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Admin;
+namespace StackPress\Modules\Admin;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Login_Redirect extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Login redirect', 'dicestack' );
+		return __( 'Login redirect', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Redirect non-admin users to a chosen page after they log in.', 'dicestack' );
+		return __( 'Redirect non-admin users to a chosen page after they log in.', 'stackpress' );
 	}
 
 	/**
@@ -79,10 +79,10 @@ final class Login_Redirect extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'url',
-				'label'   => __( 'Redirect non-admins to', 'dicestack' ),
+				'label'   => __( 'Redirect non-admins to', 'stackpress' ),
 				'type'    => 'url',
 				'default' => home_url( '/' ),
-				'help'    => __( 'Administrators always go to the dashboard.', 'dicestack' ),
+				'help'    => __( 'Administrators always go to the dashboard.', 'stackpress' ),
 			),
 		);
 	}

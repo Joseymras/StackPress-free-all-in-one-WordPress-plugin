@@ -2,18 +2,18 @@
 /**
  * Activity Log module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Security;
+namespace StackPress\Modules\Security;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
  * Records key admin events (logins, content changes, plugin/theme changes, user
- * changes) into a capped log viewable under DiceStack. Replaces WP Activity Log
+ * changes) into a capped log viewable under StackPress. Replaces WP Activity Log
  * basics. Stored as a single capped option to avoid table migrations.
  */
 final class Activity_Log extends Abstract_Module {
@@ -21,7 +21,7 @@ final class Activity_Log extends Abstract_Module {
 	/**
 	 * Option storing the log entries.
 	 */
-	const OPTION = 'dicestack_activity_log';
+	const OPTION = 'stackpress_activity_log';
 
 	/**
 	 * Maximum entries kept.
@@ -39,14 +39,14 @@ final class Activity_Log extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Activity log', 'dicestack' );
+		return __( 'Activity log', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Track logins, content changes, and plugin/user activity in an audit trail.', 'dicestack' );
+		return __( 'Track logins, content changes, and plugin/user activity in an audit trail.', 'stackpress' );
 	}
 
 	/**
@@ -152,7 +152,7 @@ final class Activity_Log extends Abstract_Module {
 	 * @return void
 	 */
 	public function on_login( $login, $user = null ) {
-		$this->log( 'login', sprintf( /* translators: %s: username. */ __( 'User %s logged in', 'dicestack' ), $login ) );
+		$this->log( 'login', sprintf( /* translators: %s: username. */ __( 'User %s logged in', 'stackpress' ), $login ) );
 	}
 
 	/**
@@ -162,7 +162,7 @@ final class Activity_Log extends Abstract_Module {
 	 * @return void
 	 */
 	public function on_login_failed( $login ) {
-		$this->log( 'login_failed', sprintf( /* translators: %s: username. */ __( 'Failed login for %s', 'dicestack' ), $login ) );
+		$this->log( 'login_failed', sprintf( /* translators: %s: username. */ __( 'Failed login for %s', 'stackpress' ), $login ) );
 	}
 
 	/**
@@ -177,13 +177,13 @@ final class Activity_Log extends Abstract_Module {
 		if ( wp_is_post_revision( $post ) || 'auto-draft' === $new ) {
 			return;
 		}
-		if ( in_array( $post->post_type, array( 'dicestack_entry' ), true ) ) {
+		if ( in_array( $post->post_type, array( 'stackpress_entry' ), true ) ) {
 			return;
 		}
 		if ( 'publish' === $new && 'publish' !== $old ) {
-			$this->log( 'post_published', sprintf( /* translators: 1: type, 2: title. */ __( 'Published %1$s: %2$s', 'dicestack' ), $post->post_type, get_the_title( $post ) ) );
+			$this->log( 'post_published', sprintf( /* translators: 1: type, 2: title. */ __( 'Published %1$s: %2$s', 'stackpress' ), $post->post_type, get_the_title( $post ) ) );
 		} elseif ( 'publish' === $new && 'publish' === $old ) {
-			$this->log( 'post_updated', sprintf( /* translators: 1: type, 2: title. */ __( 'Updated %1$s: %2$s', 'dicestack' ), $post->post_type, get_the_title( $post ) ) );
+			$this->log( 'post_updated', sprintf( /* translators: 1: type, 2: title. */ __( 'Updated %1$s: %2$s', 'stackpress' ), $post->post_type, get_the_title( $post ) ) );
 		}
 	}
 
@@ -198,7 +198,7 @@ final class Activity_Log extends Abstract_Module {
 		if ( ! $post || wp_is_post_revision( $post_id ) || 'auto-draft' === $post->post_status ) {
 			return;
 		}
-		$this->log( 'post_deleted', sprintf( /* translators: %s: title. */ __( 'Deleted: %s', 'dicestack' ), get_the_title( $post ) ) );
+		$this->log( 'post_deleted', sprintf( /* translators: %s: title. */ __( 'Deleted: %s', 'stackpress' ), get_the_title( $post ) ) );
 	}
 
 	/**
@@ -208,7 +208,7 @@ final class Activity_Log extends Abstract_Module {
 	 * @return void
 	 */
 	public function on_plugin_activated( $plugin ) {
-		$this->log( 'plugin_activated', sprintf( /* translators: %s: plugin. */ __( 'Activated plugin: %s', 'dicestack' ), $plugin ) );
+		$this->log( 'plugin_activated', sprintf( /* translators: %s: plugin. */ __( 'Activated plugin: %s', 'stackpress' ), $plugin ) );
 	}
 
 	/**
@@ -218,7 +218,7 @@ final class Activity_Log extends Abstract_Module {
 	 * @return void
 	 */
 	public function on_plugin_deactivated( $plugin ) {
-		$this->log( 'plugin_deactivated', sprintf( /* translators: %s: plugin. */ __( 'Deactivated plugin: %s', 'dicestack' ), $plugin ) );
+		$this->log( 'plugin_deactivated', sprintf( /* translators: %s: plugin. */ __( 'Deactivated plugin: %s', 'stackpress' ), $plugin ) );
 	}
 
 	/**
@@ -229,7 +229,7 @@ final class Activity_Log extends Abstract_Module {
 	 */
 	public function on_user_register( $user_id ) {
 		$u = get_userdata( $user_id );
-		$this->log( 'user_registered', sprintf( /* translators: %s: username. */ __( 'New user: %s', 'dicestack' ), $u ? $u->user_login : $user_id ) );
+		$this->log( 'user_registered', sprintf( /* translators: %s: username. */ __( 'New user: %s', 'stackpress' ), $u ? $u->user_login : $user_id ) );
 	}
 
 	/**
@@ -239,7 +239,7 @@ final class Activity_Log extends Abstract_Module {
 	 * @return void
 	 */
 	public function on_switch_theme( $name ) {
-		$this->log( 'theme_switched', sprintf( /* translators: %s: theme. */ __( 'Switched theme to %s', 'dicestack' ), $name ) );
+		$this->log( 'theme_switched', sprintf( /* translators: %s: theme. */ __( 'Switched theme to %s', 'stackpress' ), $name ) );
 	}
 
 	/* ----- Admin viewer --------------------------------------------------- */
@@ -251,11 +251,11 @@ final class Activity_Log extends Abstract_Module {
 	 */
 	public function add_page() {
 		add_submenu_page(
-			'dicestack',
-			__( 'Activity log', 'dicestack' ),
-			__( 'Activity log', 'dicestack' ),
+			'stackpress',
+			__( 'Activity log', 'stackpress' ),
+			__( 'Activity log', 'stackpress' ),
 			'manage_options',
-			'dicestack-activity-log',
+			'stackpress-activity-log',
 			array( $this, 'render_page' )
 		);
 	}
@@ -268,22 +268,22 @@ final class Activity_Log extends Abstract_Module {
 	public function render_page() {
 		$log = get_option( self::OPTION, array() );
 		$log = is_array( $log ) ? $log : array();
-		echo '<div class="wrap"><h1>' . esc_html__( 'DiceStack activity log', 'dicestack' ) . '</h1>';
+		echo '<div class="wrap"><h1>' . esc_html__( 'StackPress activity log', 'stackpress' ) . '</h1>';
 
 		if ( empty( $log ) ) {
-			echo '<p>' . esc_html__( 'No activity recorded yet.', 'dicestack' ) . '</p></div>';
+			echo '<p>' . esc_html__( 'No activity recorded yet.', 'stackpress' ) . '</p></div>';
 			return;
 		}
 
 		echo '<table class="widefat striped"><thead><tr>';
-		echo '<th>' . esc_html__( 'When', 'dicestack' ) . '</th>';
-		echo '<th>' . esc_html__( 'User', 'dicestack' ) . '</th>';
-		echo '<th>' . esc_html__( 'Event', 'dicestack' ) . '</th>';
-		echo '<th>' . esc_html__( 'IP', 'dicestack' ) . '</th>';
+		echo '<th>' . esc_html__( 'When', 'stackpress' ) . '</th>';
+		echo '<th>' . esc_html__( 'User', 'stackpress' ) . '</th>';
+		echo '<th>' . esc_html__( 'Event', 'stackpress' ) . '</th>';
+		echo '<th>' . esc_html__( 'IP', 'stackpress' ) . '</th>';
 		echo '</tr></thead><tbody>';
 
 		foreach ( $log as $row ) {
-			$when = isset( $row['time'] ) ? sprintf( /* translators: %s: time diff. */ __( '%s ago', 'dicestack' ), human_time_diff( (int) $row['time'], time() ) ) : '';
+			$when = isset( $row['time'] ) ? sprintf( /* translators: %s: time diff. */ __( '%s ago', 'stackpress' ), human_time_diff( (int) $row['time'], time() ) ) : '';
 			echo '<tr>';
 			echo '<td>' . esc_html( $when ) . '</td>';
 			echo '<td>' . esc_html( isset( $row['user'] ) ? $row['user'] : '' ) . '</td>';

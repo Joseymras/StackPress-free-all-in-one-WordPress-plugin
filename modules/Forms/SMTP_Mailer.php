@@ -2,12 +2,12 @@
 /**
  * SMTP Mailer module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Forms;
+namespace StackPress\Modules\Forms;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -29,14 +29,14 @@ final class SMTP_Mailer extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'SMTP email', 'dicestack' );
+		return __( 'SMTP email', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Send WordPress email through your own SMTP server so it lands in the inbox.', 'dicestack' );
+		return __( 'Send WordPress email through your own SMTP server so it lands in the inbox.', 'stackpress' );
 	}
 
 	/**
@@ -80,14 +80,14 @@ final class SMTP_Mailer extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'host',
-				'label'   => __( 'SMTP host', 'dicestack' ),
+				'label'   => __( 'SMTP host', 'stackpress' ),
 				'type'    => 'text',
 				'default' => '',
-				'help'    => __( 'e.g. smtp.gmail.com, smtp.mailgun.org', 'dicestack' ),
+				'help'    => __( 'e.g. smtp.gmail.com, smtp.mailgun.org', 'stackpress' ),
 			),
 			array(
 				'key'     => 'port',
-				'label'   => __( 'Port', 'dicestack' ),
+				'label'   => __( 'Port', 'stackpress' ),
 				'type'    => 'number',
 				'default' => 587,
 				'min'     => 1,
@@ -96,37 +96,37 @@ final class SMTP_Mailer extends Abstract_Module {
 			),
 			array(
 				'key'     => 'encryption',
-				'label'   => __( 'Encryption', 'dicestack' ),
+				'label'   => __( 'Encryption', 'stackpress' ),
 				'type'    => 'select',
 				'default' => 'tls',
 				'options' => array(
-					'tls'  => __( 'TLS', 'dicestack' ),
-					'ssl'  => __( 'SSL', 'dicestack' ),
-					'none' => __( 'None', 'dicestack' ),
+					'tls'  => __( 'TLS', 'stackpress' ),
+					'ssl'  => __( 'SSL', 'stackpress' ),
+					'none' => __( 'None', 'stackpress' ),
 				),
 			),
 			array(
 				'key'     => 'username',
-				'label'   => __( 'SMTP username', 'dicestack' ),
+				'label'   => __( 'SMTP username', 'stackpress' ),
 				'type'    => 'text',
 				'default' => '',
 			),
 			array(
 				'key'     => 'password',
-				'label'   => __( 'SMTP password', 'dicestack' ),
+				'label'   => __( 'SMTP password', 'stackpress' ),
 				'type'    => 'password',
 				'default' => '',
-				'help'    => __( 'Stored in your database. Use an app password where possible.', 'dicestack' ),
+				'help'    => __( 'Stored in your database. Use an app password where possible.', 'stackpress' ),
 			),
 			array(
 				'key'     => 'from_email',
-				'label'   => __( 'From email', 'dicestack' ),
+				'label'   => __( 'From email', 'stackpress' ),
 				'type'    => 'text',
 				'default' => get_option( 'admin_email' ),
 			),
 			array(
 				'key'     => 'from_name',
-				'label'   => __( 'From name', 'dicestack' ),
+				'label'   => __( 'From name', 'stackpress' ),
 				'type'    => 'text',
 				'default' => get_option( 'blogname' ),
 			),

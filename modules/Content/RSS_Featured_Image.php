@@ -2,12 +2,12 @@
 /**
  * RSS Featured Image module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Content;
+namespace StackPress\Modules\Content;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class RSS_Featured_Image extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Featured image in RSS', 'dicestack' );
+		return __( 'Featured image in RSS', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Include the featured image at the top of each RSS feed item.', 'dicestack' );
+		return __( 'Include the featured image at the top of each RSS feed item.', 'stackpress' );
 	}
 
 	/**
@@ -72,13 +72,13 @@ final class RSS_Featured_Image extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'size',
-				'label'   => __( 'Image size', 'dicestack' ),
+				'label'   => __( 'Image size', 'stackpress' ),
 				'type'    => 'select',
 				'default' => 'medium',
 				'options' => array(
-					'thumbnail' => __( 'Thumbnail', 'dicestack' ),
-					'medium'    => __( 'Medium', 'dicestack' ),
-					'large'     => __( 'Large', 'dicestack' ),
+					'thumbnail' => __( 'Thumbnail', 'stackpress' ),
+					'medium'    => __( 'Medium', 'stackpress' ),
+					'large'     => __( 'Large', 'stackpress' ),
 				),
 			),
 		);

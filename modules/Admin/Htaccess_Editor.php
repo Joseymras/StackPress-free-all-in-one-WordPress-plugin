@@ -2,12 +2,12 @@
 /**
  * .htaccess editor module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Admin;
+namespace StackPress\Modules\Admin;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -19,7 +19,7 @@ defined( 'ABSPATH' ) || exit;
  */
 final class Htaccess_Editor extends Abstract_Module {
 
-	const BACKUP_OPTION = 'dicestack_htaccess_backup';
+	const BACKUP_OPTION = 'stackpress_htaccess_backup';
 
 	/**
 	 * {@inheritDoc}
@@ -32,14 +32,14 @@ final class Htaccess_Editor extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( '.htaccess editor', 'dicestack' );
+		return __( '.htaccess editor', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Edit your root .htaccess from the dashboard with an automatic backup on every save.', 'dicestack' );
+		return __( 'Edit your root .htaccess from the dashboard with an automatic backup on every save.', 'stackpress' );
 	}
 
 	/**
@@ -100,10 +100,10 @@ final class Htaccess_Editor extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'content',
-				'label'   => __( 'Root .htaccess', 'dicestack' ),
+				'label'   => __( 'Root .htaccess', 'stackpress' ),
 				'type'    => 'textarea',
 				'default' => $current,
-				'help'    => __( 'Warning: a broken .htaccess can take your site offline. A backup of the previous version is saved automatically on each save. If you ever lock yourself out, restore it via FTP / your host file manager.', 'dicestack' ),
+				'help'    => __( 'Warning: a broken .htaccess can take your site offline. A backup of the previous version is saved automatically on each save. If you ever lock yourself out, restore it via FTP / your host file manager.', 'stackpress' ),
 			),
 		);
 	}

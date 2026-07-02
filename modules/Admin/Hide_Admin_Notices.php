@@ -2,18 +2,18 @@
 /**
  * Hide Admin Notices module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Admin;
+namespace StackPress\Modules\Admin;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
  * Suppresses the flood of plugin/theme admin notices for a clean dashboard.
- * Keeps DiceStack's own page and the Plugins screen unaffected so you don't miss
+ * Keeps StackPress's own page and the Plugins screen unaffected so you don't miss
  * anything critical there.
  */
 final class Hide_Admin_Notices extends Abstract_Module {
@@ -29,14 +29,14 @@ final class Hide_Admin_Notices extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Hide admin notices', 'dicestack' );
+		return __( 'Hide admin notices', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Silence plugin notification noise for a clean dashboard (Plugins screen kept intact).', 'dicestack' );
+		return __( 'Silence plugin notification noise for a clean dashboard (Plugins screen kept intact).', 'stackpress' );
 	}
 
 	/**
@@ -73,7 +73,7 @@ final class Hide_Admin_Notices extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'non_admins_only',
-				'label'   => __( 'Only hide for non-administrators', 'dicestack' ),
+				'label'   => __( 'Only hide for non-administrators', 'stackpress' ),
 				'type'    => 'toggle',
 				'default' => false,
 			),
@@ -98,8 +98,8 @@ final class Hide_Admin_Notices extends Abstract_Module {
 		}
 
 		$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
-		// Keep notices on the Plugins screen and DiceStack's own page.
-		if ( $screen && ( 'plugins' === $screen->id || false !== strpos( (string) $screen->id, 'dicestack' ) ) ) {
+		// Keep notices on the Plugins screen and StackPress's own page.
+		if ( $screen && ( 'plugins' === $screen->id || false !== strpos( (string) $screen->id, 'stackpress' ) ) ) {
 			return;
 		}
 

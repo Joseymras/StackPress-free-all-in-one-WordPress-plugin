@@ -2,12 +2,12 @@
 /**
  * External Links module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Content;
+namespace StackPress\Modules\Content;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class External_Links extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'External link handler', 'dicestack' );
+		return __( 'External link handler', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Open external links in a new tab and add safe rel attributes automatically.', 'dicestack' );
+		return __( 'Open external links in a new tab and add safe rel attributes automatically.', 'stackpress' );
 	}
 
 	/**
@@ -72,13 +72,13 @@ final class External_Links extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'new_tab',
-				'label'   => __( 'Open in a new tab', 'dicestack' ),
+				'label'   => __( 'Open in a new tab', 'stackpress' ),
 				'type'    => 'toggle',
 				'default' => true,
 			),
 			array(
 				'key'     => 'nofollow',
-				'label'   => __( 'Add rel="nofollow"', 'dicestack' ),
+				'label'   => __( 'Add rel="nofollow"', 'stackpress' ),
 				'type'    => 'toggle',
 				'default' => false,
 			),

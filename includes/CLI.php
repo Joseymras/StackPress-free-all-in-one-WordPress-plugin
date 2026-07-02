@@ -1,22 +1,22 @@
 <?php
 /**
- * WP-CLI commands for DiceStack.
+ * WP-CLI commands for StackPress.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack;
+namespace StackPress;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Manage DiceStack modules from the command line:
+ * Manage StackPress modules from the command line:
  *
- *   wp dicestack list [--enabled] [--disabled]
- *   wp dicestack status
- *   wp dicestack enable <module-id>...
- *   wp dicestack disable <module-id>...
- *   wp dicestack clear-cache
+ *   wp stackpress list [--enabled] [--disabled]
+ *   wp stackpress status
+ *   wp stackpress enable <module-id>...
+ *   wp stackpress disable <module-id>...
+ *   wp stackpress clear-cache
  */
 final class CLI {
 
@@ -65,14 +65,14 @@ final class CLI {
 	}
 
 	/**
-	 * Show a summary of DiceStack status.
+	 * Show a summary of StackPress status.
 	 *
 	 * @return void
 	 */
 	public function status() {
 		$core   = Core::instance();
 		$active = $core->get_active_modules();
-		\WP_CLI::line( 'DiceStack ' . DICESTACK_VERSION );
+		\WP_CLI::line( 'StackPress ' . STACKPRESS_VERSION );
 		\WP_CLI::line( 'Total tools:   ' . $core->registry()->count() );
 		\WP_CLI::line( 'Enabled tools: ' . count( $active ) );
 		if ( ! empty( $active ) ) {
@@ -125,14 +125,14 @@ final class CLI {
 	}
 
 	/**
-	 * Clear DiceStack's page cache and minified asset cache.
+	 * Clear StackPress's page cache and minified asset cache.
 	 *
 	 * @return void
 	 */
 	public function clear_cache() {
 		$uploads = wp_get_upload_dir();
 		$removed = 0;
-		foreach ( array( 'dicestack-cache', 'dicestack-min' ) as $dir ) {
+		foreach ( array( 'stackpress-cache', 'stackpress-min' ) as $dir ) {
 			$path = trailingslashit( $uploads['basedir'] ) . $dir;
 			$files = is_dir( $path ) ? glob( $path . '/*' ) : array();
 			if ( is_array( $files ) ) {

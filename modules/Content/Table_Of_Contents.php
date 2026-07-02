@@ -2,12 +2,12 @@
 /**
  * Table of Contents module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Content;
+namespace StackPress\Modules\Content;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Table_Of_Contents extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Table of contents', 'dicestack' );
+		return __( 'Table of contents', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Auto-generate an anchored table of contents from your post headings.', 'dicestack' );
+		return __( 'Auto-generate an anchored table of contents from your post headings.', 'stackpress' );
 	}
 
 	/**
@@ -79,13 +79,13 @@ final class Table_Of_Contents extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'title',
-				'label'   => __( 'Heading', 'dicestack' ),
+				'label'   => __( 'Heading', 'stackpress' ),
 				'type'    => 'text',
-				'default' => __( 'Table of contents', 'dicestack' ),
+				'default' => __( 'Table of contents', 'stackpress' ),
 			),
 			array(
 				'key'     => 'min_headings',
-				'label'   => __( 'Minimum headings to show the TOC', 'dicestack' ),
+				'label'   => __( 'Minimum headings to show the TOC', 'stackpress' ),
 				'type'    => 'number',
 				'default' => 3,
 				'min'     => 2,
@@ -165,8 +165,8 @@ final class Table_Of_Contents extends Abstract_Module {
 			$content
 		);
 
-		$toc  = '<nav class="dicestack-toc" style="background:#f6f7f9;border:1px solid #e4e7ec;border-radius:8px;padding:16px 20px;margin:0 0 24px;">';
-		$toc .= '<strong style="display:block;margin-bottom:8px;">' . esc_html( $this->get_setting( 'title', __( 'Table of contents', 'dicestack' ) ) ) . '</strong>';
+		$toc  = '<nav class="stackpress-toc" style="background:#f6f7f9;border:1px solid #e4e7ec;border-radius:8px;padding:16px 20px;margin:0 0 24px;">';
+		$toc .= '<strong style="display:block;margin-bottom:8px;">' . esc_html( $this->get_setting( 'title', __( 'Table of contents', 'stackpress' ) ) ) . '</strong>';
 		$toc .= '<ul style="margin:0;padding-left:18px;">';
 		foreach ( $items as $item ) {
 			$indent = ( 3 === $item['level'] ) ? ' style="margin-left:14px;"' : '';

@@ -2,12 +2,12 @@
 /**
  * WooCommerce Trust Badges module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\WooCommerce;
+namespace StackPress\Modules\WooCommerce;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Trust_Badges extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Trust badges', 'dicestack' );
+		return __( 'Trust badges', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Add a guarantee line and accepted-payment labels under the Add to Cart button.', 'dicestack' );
+		return __( 'Add a guarantee line and accepted-payment labels under the Add to Cart button.', 'stackpress' );
 	}
 
 	/**
@@ -79,16 +79,16 @@ final class Trust_Badges extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'message',
-				'label'   => __( 'Reassurance line', 'dicestack' ),
+				'label'   => __( 'Reassurance line', 'stackpress' ),
 				'type'    => 'text',
-				'default' => __( 'Secure checkout — 30-day money-back guarantee', 'dicestack' ),
+				'default' => __( 'Secure checkout — 30-day money-back guarantee', 'stackpress' ),
 			),
 			array(
 				'key'     => 'methods',
-				'label'   => __( 'Accepted payment labels', 'dicestack' ),
+				'label'   => __( 'Accepted payment labels', 'stackpress' ),
 				'type'    => 'text',
 				'default' => 'Visa · Mastercard · PayPal · Amex',
-				'help'    => __( 'Shown as plain text under the reassurance line.', 'dicestack' ),
+				'help'    => __( 'Shown as plain text under the reassurance line.', 'stackpress' ),
 			),
 		);
 	}
@@ -109,12 +109,12 @@ final class Trust_Badges extends Abstract_Module {
 		$message = (string) $this->get_setting( 'message', '' );
 		$methods = (string) $this->get_setting( 'methods', '' );
 
-		echo '<div class="dicestack-trust" style="margin-top:14px;font-size:13px;color:#6b7280;">';
+		echo '<div class="stackpress-trust" style="margin-top:14px;font-size:13px;color:#6b7280;">';
 		if ( '' !== trim( $message ) ) {
-			echo '<div class="dicestack-trust-msg">&#128274; ' . esc_html( $message ) . '</div>';
+			echo '<div class="stackpress-trust-msg">&#128274; ' . esc_html( $message ) . '</div>';
 		}
 		if ( '' !== trim( $methods ) ) {
-			echo '<div class="dicestack-trust-methods" style="margin-top:4px;font-weight:500;">' . esc_html( $methods ) . '</div>';
+			echo '<div class="stackpress-trust-methods" style="margin-top:4px;font-weight:500;">' . esc_html( $methods ) . '</div>';
 		}
 		echo '</div>';
 	}

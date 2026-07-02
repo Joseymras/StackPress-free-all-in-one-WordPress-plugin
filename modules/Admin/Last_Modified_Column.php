@@ -2,12 +2,12 @@
 /**
  * Last Modified Column module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Admin;
+namespace StackPress\Modules\Admin;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -27,14 +27,14 @@ final class Last_Modified_Column extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Last modified column', 'dicestack' );
+		return __( 'Last modified column', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Show when each post and page was last edited, right in the list table.', 'dicestack' );
+		return __( 'Show when each post and page was last edited, right in the list table.', 'stackpress' );
 	}
 
 	/**
@@ -84,7 +84,7 @@ final class Last_Modified_Column extends Abstract_Module {
 	 * @return array
 	 */
 	public function add_column( $columns ) {
-		$columns['dicestack_modified'] = __( 'Last modified', 'dicestack' );
+		$columns['stackpress_modified'] = __( 'Last modified', 'stackpress' );
 		return $columns;
 	}
 
@@ -96,11 +96,11 @@ final class Last_Modified_Column extends Abstract_Module {
 	 * @return void
 	 */
 	public function render_column( $column, $post_id ) {
-		if ( 'dicestack_modified' === $column ) {
+		if ( 'stackpress_modified' === $column ) {
 			echo esc_html(
 				sprintf(
 					/* translators: %s: time diff. */
-					__( '%s ago', 'dicestack' ),
+					__( '%s ago', 'stackpress' ),
 					human_time_diff( (int) get_post_modified_time( 'U', true, $post_id ), time() )
 				)
 			);

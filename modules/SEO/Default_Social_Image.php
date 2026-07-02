@@ -2,12 +2,12 @@
 /**
  * Default Social Image module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\SEO;
+namespace StackPress\Modules\SEO;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Default_Social_Image extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Default social image', 'dicestack' );
+		return __( 'Default social image', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Show a fallback preview image when a page has no featured image for sharing.', 'dicestack' );
+		return __( 'Show a fallback preview image when a page has no featured image for sharing.', 'stackpress' );
 	}
 
 	/**
@@ -72,10 +72,10 @@ final class Default_Social_Image extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'image',
-				'label'   => __( 'Fallback image URL', 'dicestack' ),
+				'label'   => __( 'Fallback image URL', 'stackpress' ),
 				'type'    => 'url',
 				'default' => '',
-				'help'    => __( 'Recommended size: 1200×630 pixels.', 'dicestack' ),
+				'help'    => __( 'Recommended size: 1200×630 pixels.', 'stackpress' ),
 			),
 		);
 	}

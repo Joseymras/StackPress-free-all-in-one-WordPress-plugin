@@ -2,12 +2,12 @@
 /**
  * Reading Progress Bar module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Content;
+namespace StackPress\Modules\Content;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Reading_Progress extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Reading progress bar', 'dicestack' );
+		return __( 'Reading progress bar', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Show a scroll-progress bar at the top of posts to encourage reading.', 'dicestack' );
+		return __( 'Show a scroll-progress bar at the top of posts to encourage reading.', 'stackpress' );
 	}
 
 	/**
@@ -72,7 +72,7 @@ final class Reading_Progress extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'color',
-				'label'   => __( 'Bar colour', 'dicestack' ),
+				'label'   => __( 'Bar colour', 'stackpress' ),
 				'type'    => 'color',
 				'default' => '#0aa2c0',
 			),
@@ -97,9 +97,9 @@ final class Reading_Progress extends Abstract_Module {
 		}
 		$color = sanitize_hex_color( (string) $this->get_setting( 'color', '#0aa2c0' ) ) ?: '#0aa2c0';
 		?>
-		<div id="dicestack-progress" style="position:fixed;top:0;left:0;height:4px;width:0;background:<?php echo esc_attr( $color ); ?>;z-index:99999;transition:width .1s;"></div>
+		<div id="stackpress-progress" style="position:fixed;top:0;left:0;height:4px;width:0;background:<?php echo esc_attr( $color ); ?>;z-index:99999;transition:width .1s;"></div>
 		<script>
-		(function(){var b=document.getElementById('dicestack-progress');if(!b)return;
+		(function(){var b=document.getElementById('stackpress-progress');if(!b)return;
 		window.addEventListener('scroll',function(){var h=document.documentElement;var max=h.scrollHeight-h.clientHeight;var p=max>0?(h.scrollTop/max)*100:0;b.style.width=p+'%';},{passive:true});})();
 		</script>
 		<?php

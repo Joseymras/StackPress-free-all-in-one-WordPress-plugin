@@ -2,12 +2,12 @@
 /**
  * Reading Time module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Content;
+namespace StackPress\Modules\Content;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -27,14 +27,14 @@ final class Reading_Time extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Reading time', 'dicestack' );
+		return __( 'Reading time', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Display an estimated reading time at the top of posts.', 'dicestack' );
+		return __( 'Display an estimated reading time at the top of posts.', 'stackpress' );
 	}
 
 	/**
@@ -71,7 +71,7 @@ final class Reading_Time extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'wpm',
-				'label'   => __( 'Average reading speed (words per minute)', 'dicestack' ),
+				'label'   => __( 'Average reading speed (words per minute)', 'stackpress' ),
 				'type'    => 'number',
 				'default' => 200,
 				'min'     => 100,
@@ -105,11 +105,11 @@ final class Reading_Time extends Abstract_Module {
 
 		$label = sprintf(
 			/* translators: %d: minutes. */
-			_n( '%d minute read', '%d minute read', $minutes, 'dicestack' ),
+			_n( '%d minute read', '%d minute read', $minutes, 'stackpress' ),
 			$minutes
 		);
 
-		$badge = '<p class="dicestack-reading-time" style="color:#6b7280;font-size:13px;margin:0 0 16px;">' . esc_html( $label ) . '</p>';
+		$badge = '<p class="stackpress-reading-time" style="color:#6b7280;font-size:13px;margin:0 0 16px;">' . esc_html( $label ) . '</p>';
 		return $badge . $content;
 	}
 }

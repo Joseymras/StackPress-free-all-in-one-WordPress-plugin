@@ -2,12 +2,12 @@
 /**
  * Autosave Interval module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Admin;
+namespace StackPress\Modules\Admin;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Autosave_Interval extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Autosave interval', 'dicestack' );
+		return __( 'Autosave interval', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Change how often the editor autosaves to reduce background requests.', 'dicestack' );
+		return __( 'Change how often the editor autosaves to reduce background requests.', 'stackpress' );
 	}
 
 	/**
@@ -72,13 +72,13 @@ final class Autosave_Interval extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'seconds',
-				'label'   => __( 'Autosave interval (seconds)', 'dicestack' ),
+				'label'   => __( 'Autosave interval (seconds)', 'stackpress' ),
 				'type'    => 'number',
 				'default' => 120,
 				'min'     => 30,
 				'max'     => 600,
 				'step'    => 10,
-				'help'    => __( 'WordPress default is 60 seconds.', 'dicestack' ),
+				'help'    => __( 'WordPress default is 60 seconds.', 'stackpress' ),
 			),
 		);
 	}

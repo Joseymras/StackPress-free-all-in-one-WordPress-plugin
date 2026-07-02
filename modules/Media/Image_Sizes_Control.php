@@ -2,12 +2,12 @@
 /**
  * Image Sizes Control module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Media;
+namespace StackPress\Modules\Media;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Image_Sizes_Control extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Image sizes control', 'dicestack' );
+		return __( 'Image sizes control', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Stop generating unused thumbnail sizes to save disk space on every upload.', 'dicestack' );
+		return __( 'Stop generating unused thumbnail sizes to save disk space on every upload.', 'stackpress' );
 	}
 
 	/**
@@ -72,13 +72,13 @@ final class Image_Sizes_Control extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'medium_large',
-				'label'   => __( 'Disable the "medium_large" (768px) size', 'dicestack' ),
+				'label'   => __( 'Disable the "medium_large" (768px) size', 'stackpress' ),
 				'type'    => 'toggle',
 				'default' => false,
 			),
 			array(
 				'key'     => 'disable_scaled',
-				'label'   => __( 'Disable the extra 2560px "scaled" image', 'dicestack' ),
+				'label'   => __( 'Disable the extra 2560px "scaled" image', 'stackpress' ),
 				'type'    => 'toggle',
 				'default' => true,
 			),

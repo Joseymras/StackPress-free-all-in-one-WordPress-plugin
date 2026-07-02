@@ -2,12 +2,12 @@
 /**
  * Master Search module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Admin;
+namespace StackPress\Modules\Admin;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -20,7 +20,7 @@ final class Master_Search extends Abstract_Module {
 	/**
 	 * AJAX nonce action.
 	 */
-	const NONCE = 'dicestack_master_search';
+	const NONCE = 'stackpress_master_search';
 
 	/**
 	 * {@inheritDoc}
@@ -33,14 +33,14 @@ final class Master_Search extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Master search', 'dicestack' );
+		return __( 'Master search', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Search posts, pages, products, and users from one box in the dashboard.', 'dicestack' );
+		return __( 'Search posts, pages, products, and users from one box in the dashboard.', 'stackpress' );
 	}
 
 	/**
@@ -78,7 +78,7 @@ final class Master_Search extends Abstract_Module {
 			return;
 		}
 		add_action( 'admin_menu', array( $this, 'add_page' ) );
-		add_action( 'wp_ajax_dicestack_master_search', array( $this, 'ajax_search' ) );
+		add_action( 'wp_ajax_stackpress_master_search', array( $this, 'ajax_search' ) );
 	}
 
 	/**
@@ -88,11 +88,11 @@ final class Master_Search extends Abstract_Module {
 	 */
 	public function add_page() {
 		add_submenu_page(
-			'dicestack',
-			__( 'Master search', 'dicestack' ),
-			__( 'Master search', 'dicestack' ),
+			'stackpress',
+			__( 'Master search', 'stackpress' ),
+			__( 'Master search', 'stackpress' ),
 			'edit_posts',
-			'dicestack-search',
+			'stackpress-search',
 			array( $this, 'render_page' )
 		);
 	}
@@ -105,23 +105,23 @@ final class Master_Search extends Abstract_Module {
 	public function render_page() {
 		$nonce = wp_create_nonce( self::NONCE );
 		$ajax  = admin_url( 'admin-ajax.php' );
-		echo '<div class="wrap"><h1>' . esc_html__( 'Master search', 'dicestack' ) . '</h1>';
-		echo '<input type="search" id="dicestack-ms" class="regular-text" placeholder="' . esc_attr__( 'Search everything…', 'dicestack' ) . '" style="width:100%;max-width:520px;padding:10px;font-size:15px;" />';
-		echo '<div id="dicestack-ms-results" style="margin-top:18px;"></div>';
+		echo '<div class="wrap"><h1>' . esc_html__( 'Master search', 'stackpress' ) . '</h1>';
+		echo '<input type="search" id="stackpress-ms" class="regular-text" placeholder="' . esc_attr__( 'Search everything…', 'stackpress' ) . '" style="width:100%;max-width:520px;padding:10px;font-size:15px;" />';
+		echo '<div id="stackpress-ms-results" style="margin-top:18px;"></div>';
 		echo '</div>';
 		?>
 		<script>
 		(function(){
-		var box=document.getElementById('dicestack-ms'),out=document.getElementById('dicestack-ms-results'),t;
+		var box=document.getElementById('stackpress-ms'),out=document.getElementById('stackpress-ms-results'),t;
 		if(!box)return;
 		box.addEventListener('input',function(){clearTimeout(t);var q=box.value.trim();if(q.length<2){out.innerHTML='';return;}
 		t=setTimeout(function(){
-			var body=new URLSearchParams();body.append('action','dicestack_master_search');body.append('nonce',<?php echo wp_json_encode( $nonce ); ?>);body.append('q',q);
+			var body=new URLSearchParams();body.append('action','stackpress_master_search');body.append('nonce',<?php echo wp_json_encode( $nonce ); ?>);body.append('q',q);
 			fetch(<?php echo wp_json_encode( $ajax ); ?>,{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:body.toString()})
 			.then(function(r){return r.json();}).then(function(res){
 				if(!res||!res.success){out.innerHTML='';return;}
 				var h='';res.data.groups.forEach(function(g){if(!g.items.length)return;h+='<h2>'+g.label+'</h2><ul>';g.items.forEach(function(i){h+='<li><a href="'+i.edit+'">'+i.title+'</a></li>';});h+='</ul>';});
-				out.innerHTML=h||'<p><?php echo esc_js( __( 'No results.', 'dicestack' ) ); ?></p>';
+				out.innerHTML=h||'<p><?php echo esc_js( __( 'No results.', 'stackpress' ) ); ?></p>';
 			});
 		},200);});
 		})();
@@ -162,11 +162,11 @@ final class Master_Search extends Abstract_Module {
 				continue;
 			}
 			$items[] = array(
-				'title' => esc_html( get_the_title( $p ) ? get_the_title( $p ) : __( '(no title)', 'dicestack' ) ),
+				'title' => esc_html( get_the_title( $p ) ? get_the_title( $p ) : __( '(no title)', 'stackpress' ) ),
 				'edit'  => esc_url_raw( $edit ),
 			);
 		}
-		$groups[] = array( 'label' => esc_html__( 'Content', 'dicestack' ), 'items' => $items );
+		$groups[] = array( 'label' => esc_html__( 'Content', 'stackpress' ), 'items' => $items );
 
 		// Users.
 		$user_items = array();
@@ -185,7 +185,7 @@ final class Master_Search extends Abstract_Module {
 				);
 			}
 		}
-		$groups[] = array( 'label' => esc_html__( 'Users', 'dicestack' ), 'items' => $user_items );
+		$groups[] = array( 'label' => esc_html__( 'Users', 'stackpress' ), 'items' => $user_items );
 
 		wp_send_json_success( array( 'groups' => $groups ) );
 	}

@@ -2,12 +2,12 @@
 /**
  * Hide Help Tabs module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Admin;
+namespace StackPress\Modules\Admin;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Hide_Help_Tabs extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Hide help tabs', 'dicestack' );
+		return __( 'Hide help tabs', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Remove the contextual Help tabs from admin screens for a cleaner interface.', 'dicestack' );
+		return __( 'Remove the contextual Help tabs from admin screens for a cleaner interface.', 'stackpress' );
 	}
 
 	/**

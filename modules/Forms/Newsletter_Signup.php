@@ -2,17 +2,17 @@
 /**
  * Newsletter Signup module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Forms;
+namespace StackPress\Modules\Forms;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
- * A self-hosted email capture form via [dicestack_subscribe]. Stores subscribers
+ * A self-hosted email capture form via [stackpress_subscribe]. Stores subscribers
  * as a private post type you can export — no third-party service required.
  */
 final class Newsletter_Signup extends Abstract_Module {
@@ -20,7 +20,7 @@ final class Newsletter_Signup extends Abstract_Module {
 	/**
 	 * Subscriber post type.
 	 */
-	const CPT = 'dicestack_subscriber';
+	const CPT = 'stackpress_subscriber';
 
 	/**
 	 * {@inheritDoc}
@@ -33,14 +33,14 @@ final class Newsletter_Signup extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Newsletter signup', 'dicestack' );
+		return __( 'Newsletter signup', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Collect email subscribers with [dicestack_subscribe] — stored on your own site.', 'dicestack' );
+		return __( 'Collect email subscribers with [stackpress_subscribe] — stored on your own site.', 'stackpress' );
 	}
 
 	/**
@@ -84,15 +84,15 @@ final class Newsletter_Signup extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'heading',
-				'label'   => __( 'Form heading', 'dicestack' ),
+				'label'   => __( 'Form heading', 'stackpress' ),
 				'type'    => 'text',
-				'default' => __( 'Subscribe to our newsletter', 'dicestack' ),
+				'default' => __( 'Subscribe to our newsletter', 'stackpress' ),
 			),
 			array(
 				'key'     => 'success',
-				'label'   => __( 'Success message', 'dicestack' ),
+				'label'   => __( 'Success message', 'stackpress' ),
 				'type'    => 'text',
-				'default' => __( 'Thanks for subscribing!', 'dicestack' ),
+				'default' => __( 'Thanks for subscribing!', 'stackpress' ),
 			),
 		);
 	}
@@ -103,7 +103,7 @@ final class Newsletter_Signup extends Abstract_Module {
 	public function init() {
 		add_action( 'init', array( $this, 'register_cpt' ) );
 		add_action( 'init', array( $this, 'handle' ) );
-		add_shortcode( 'dicestack_subscribe', array( $this, 'render' ) );
+		add_shortcode( 'stackpress_subscribe', array( $this, 'render' ) );
 	}
 
 	/**
@@ -116,12 +116,12 @@ final class Newsletter_Signup extends Abstract_Module {
 			self::CPT,
 			array(
 				'labels'          => array(
-					'name'          => __( 'Subscribers', 'dicestack' ),
-					'singular_name' => __( 'Subscriber', 'dicestack' ),
+					'name'          => __( 'Subscribers', 'stackpress' ),
+					'singular_name' => __( 'Subscriber', 'stackpress' ),
 				),
 				'public'          => false,
 				'show_ui'         => true,
-				'show_in_menu'    => 'dicestack',
+				'show_in_menu'    => 'stackpress',
 				'supports'        => array( 'title' ),
 				'capability_type' => 'post',
 				'capabilities'    => array( 'create_posts' => 'do_not_allow' ),
@@ -137,17 +137,17 @@ final class Newsletter_Signup extends Abstract_Module {
 	 * @return void
 	 */
 	public function handle() {
-		if ( ! isset( $_POST['dicestack_subscribe_nonce'] ) ) {
+		if ( ! isset( $_POST['stackpress_subscribe_nonce'] ) ) {
 			return;
 		}
-		if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['dicestack_subscribe_nonce'] ) ), 'dicestack_subscribe' ) ) {
+		if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['stackpress_subscribe_nonce'] ) ), 'stackpress_subscribe' ) ) {
 			return;
 		}
 		// Honeypot.
-		if ( ! empty( $_POST['dicestack_sub_hp'] ) ) {
+		if ( ! empty( $_POST['stackpress_sub_hp'] ) ) {
 			$this->redirect( 'ok' );
 		}
-		$email = isset( $_POST['dicestack_sub_email'] ) ? sanitize_email( wp_unslash( $_POST['dicestack_sub_email'] ) ) : '';
+		$email = isset( $_POST['stackpress_sub_email'] ) ? sanitize_email( wp_unslash( $_POST['stackpress_sub_email'] ) ) : '';
 		if ( ! is_email( $email ) ) {
 			$this->redirect( 'error' );
 		}
@@ -183,7 +183,7 @@ final class Newsletter_Signup extends Abstract_Module {
 	 */
 	private function redirect( $status ) {
 		$ref = wp_get_referer();
-		wp_safe_redirect( add_query_arg( 'dicestack_sub', $status, $ref ? $ref : home_url( '/' ) ) );
+		wp_safe_redirect( add_query_arg( 'stackpress_sub', $status, $ref ? $ref : home_url( '/' ) ) );
 		exit;
 	}
 
@@ -194,19 +194,19 @@ final class Newsletter_Signup extends Abstract_Module {
 	 * @return string
 	 */
 	public function render( $atts ) {
-		$status = isset( $_GET['dicestack_sub'] ) ? sanitize_text_field( wp_unslash( $_GET['dicestack_sub'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only flash flag.
+		$status = isset( $_GET['stackpress_sub'] ) ? sanitize_text_field( wp_unslash( $_GET['stackpress_sub'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only flash flag.
 		ob_start();
 		if ( 'ok' === $status ) {
-			echo '<div style="background:#eaf3de;color:#3b6d11;padding:10px 14px;border-radius:8px;margin-bottom:12px;">' . esc_html( $this->get_setting( 'success', __( 'Thanks for subscribing!', 'dicestack' ) ) ) . '</div>';
+			echo '<div style="background:#eaf3de;color:#3b6d11;padding:10px 14px;border-radius:8px;margin-bottom:12px;">' . esc_html( $this->get_setting( 'success', __( 'Thanks for subscribing!', 'stackpress' ) ) ) . '</div>';
 		}
 		?>
-		<form method="post" class="dicestack-subscribe" style="max-width:420px;">
-			<?php wp_nonce_field( 'dicestack_subscribe', 'dicestack_subscribe_nonce' ); ?>
-			<strong style="display:block;margin-bottom:8px;"><?php echo esc_html( $this->get_setting( 'heading', __( 'Subscribe to our newsletter', 'dicestack' ) ) ); ?></strong>
-			<div style="position:absolute;left:-9999px;" aria-hidden="true"><input type="text" name="dicestack_sub_hp" tabindex="-1" autocomplete="off" /></div>
+		<form method="post" class="stackpress-subscribe" style="max-width:420px;">
+			<?php wp_nonce_field( 'stackpress_subscribe', 'stackpress_subscribe_nonce' ); ?>
+			<strong style="display:block;margin-bottom:8px;"><?php echo esc_html( $this->get_setting( 'heading', __( 'Subscribe to our newsletter', 'stackpress' ) ) ); ?></strong>
+			<div style="position:absolute;left:-9999px;" aria-hidden="true"><input type="text" name="stackpress_sub_hp" tabindex="-1" autocomplete="off" /></div>
 			<div style="display:flex;gap:8px;">
-				<input type="email" name="dicestack_sub_email" required placeholder="<?php esc_attr_e( 'you@example.com', 'dicestack' ); ?>" style="flex:1;padding:9px;" />
-				<button type="submit" style="background:#1b2a4a;color:#fff;border:0;padding:9px 18px;border-radius:6px;cursor:pointer;"><?php esc_html_e( 'Subscribe', 'dicestack' ); ?></button>
+				<input type="email" name="stackpress_sub_email" required placeholder="<?php esc_attr_e( 'you@example.com', 'stackpress' ); ?>" style="flex:1;padding:9px;" />
+				<button type="submit" style="background:#1b2a4a;color:#fff;border:0;padding:9px 18px;border-radius:6px;cursor:pointer;"><?php esc_html_e( 'Subscribe', 'stackpress' ); ?></button>
 			</div>
 		</form>
 		<?php

@@ -2,12 +2,12 @@
 /**
  * External Link Indicator module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Accessibility;
+namespace StackPress\Modules\Accessibility;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class External_Link_Indicator extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'New-tab link indicator', 'dicestack' );
+		return __( 'New-tab link indicator', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Tell screen-reader users when a link opens in a new tab.', 'dicestack' );
+		return __( 'Tell screen-reader users when a link opens in a new tab.', 'stackpress' );
 	}
 
 	/**
@@ -82,7 +82,7 @@ final class External_Link_Indicator extends Abstract_Module {
 		if ( strpos( $content, 'target="_blank"' ) === false && strpos( $content, "target='_blank'" ) === false ) {
 			return $content;
 		}
-		$sr = ' <span class="screen-reader-text">' . esc_html__( '(opens in a new tab)', 'dicestack' ) . '</span>';
+		$sr = ' <span class="screen-reader-text">' . esc_html__( '(opens in a new tab)', 'stackpress' ) . '</span>';
 
 		return preg_replace_callback(
 			'#(<a\b[^>]*target=("|\')_blank\2[^>]*>)(.*?)(</a>)#is',

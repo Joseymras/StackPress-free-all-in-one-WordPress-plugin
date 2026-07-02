@@ -1,4 +1,4 @@
-=== DiceStack ===
+=== StackPress ===
 Contributors: dicecodes
 Tags: security, performance, seo, woocommerce, optimization
 Requires at least: 6.0
@@ -12,13 +12,13 @@ One plugin, 170+ free tools: caching, security, SEO, WooCommerce, backups, objec
 
 == Description ==
 
-**DiceStack** replaces a whole stack of separate (and often paywalled) plugins with one lightweight, modular toolkit. Switch tools on and off from a single dashboard — when a tool is off, none of its code runs, so your site stays fast.
+**StackPress** replaces a whole stack of separate (and often paywalled) plugins with one lightweight, modular toolkit. Switch tools on and off from a single dashboard — when a tool is off, none of its code runs, so your site stays fast.
 
 Every feature is free. There is no locked "Pro" tier.
 
 Built and maintained by **[Dice Codes](https://dicecodes.com)**.
 
-= Why DiceStack =
+= Why StackPress =
 
 * **Modular & light** — disabled modules load zero code, scripts, or extra database reads.
 * **See the cost of everything** — each module shows its memory, front-end JavaScript, and database-query impact so you decide what to keep.
@@ -40,20 +40,20 @@ Built and maintained by **[Dice Codes](https://dicecodes.com)**.
 
 == External services ==
 
-DiceStack itself contacts no external services by default. The following modules connect to a third party **only when you enable and configure them**, and each field links to where to obtain any required ID/token:
+StackPress itself contacts no external services by default. The following modules connect to a third party **only when you enable and configure them**, and each field links to where to obtain any required ID/token:
 
 * **Analytics & tracking** — when you add a GA4, Google Tag Manager, or Meta Pixel ID, the corresponding script from Google/Meta is loaded on your front end and visitor analytics is sent to that provider. See Google's privacy policy (https://policies.google.com/privacy) and Meta's (https://www.facebook.com/privacy/policy/).
 * **Cloudflare control** — sends your API token and Zone ID to the Cloudflare API (https://api.cloudflare.com) to change settings you request. Cloudflare privacy policy: https://www.cloudflare.com/privacypolicy/.
-* **Cloud backup** — uploads your backup archive to the destination you configure (your own FTP/WebDAV server, an email address, or Google Drive). Google Drive uses a one-time connect via the Dice Codes connector (https://dicecodes.com/dicestack); only an access token is stored.
+* **Cloud backup** — uploads your backup archive to the destination you configure (your own FTP/WebDAV server, an email address, or Google Drive). Google Drive uses a one-time connect via the Dice Codes connector (https://dicecodes.com/stackpress); only an access token is stored.
 * **Reviews showcase (embed mode)** — if you paste a third-party reviews widget embed code, that provider's script loads on your front end. Manual mode sends nothing.
 
 No data is sent to any of these unless you turn the relevant module on and enter your details.
 
 == Installation ==
 
-1. In wp-admin go to **Plugins → Add New → Upload Plugin** and choose `dicestack.zip` (or install from the directory).
-2. Activate **DiceStack**.
-3. Open **DiceStack** in the admin menu and toggle on the modules you want. Each card shows its performance cost.
+1. In wp-admin go to **Plugins → Add New → Upload Plugin** and choose `stackpress.zip` (or install from the directory).
+2. Activate **StackPress**.
+3. Open **StackPress** in the admin menu and toggle on the modules you want. Each card shows its performance cost.
 
 == Frequently Asked Questions ==
 
@@ -67,10 +67,10 @@ Yes. Every module is free, with no locked features.
 Most modules need nothing. A few optional ones (Analytics, Cloudflare, Google Drive backup) need an ID or token — each field links to exactly where to get it.
 
 = How do I request a feature? =
-Use the "Request a feature" link in the DiceStack dashboard, or email Contact@dicecodes.com.
+Use the "Request a feature" link in the StackPress dashboard, or email Contact@dicecodes.com.
 
-= Who makes DiceStack? =
-DiceStack is built and maintained by Dice Codes (https://dicecodes.com).
+= Who makes StackPress? =
+StackPress is built and maintained by Dice Codes (https://dicecodes.com).
 
 == Screenshots ==
 
@@ -87,7 +87,7 @@ DiceStack is built and maintained by Dice Codes (https://dicecodes.com).
 * Tested up to WordPress 7.0.
 
 = 1.0.0 =
-* First public release of DiceStack.
+* First public release of StackPress.
 
 == Upgrade Notice ==
 

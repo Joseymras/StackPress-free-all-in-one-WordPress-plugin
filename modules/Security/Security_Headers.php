@@ -2,12 +2,12 @@
 /**
  * Advanced Security Headers module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Security;
+namespace StackPress\Modules\Security;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -29,14 +29,14 @@ final class Security_Headers extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Advanced security headers', 'dicestack' );
+		return __( 'Advanced security headers', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Send HSTS, Permissions-Policy, and other modern hardening headers.', 'dicestack' );
+		return __( 'Send HSTS, Permissions-Policy, and other modern hardening headers.', 'stackpress' );
 	}
 
 	/**
@@ -73,20 +73,20 @@ final class Security_Headers extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'hsts',
-				'label'   => __( 'Strict-Transport-Security (HSTS) — HTTPS only', 'dicestack' ),
+				'label'   => __( 'Strict-Transport-Security (HSTS) — HTTPS only', 'stackpress' ),
 				'type'    => 'toggle',
 				'default' => false,
-				'help'    => __( 'Only enable once HTTPS works everywhere; browsers will refuse http for a year.', 'dicestack' ),
+				'help'    => __( 'Only enable once HTTPS works everywhere; browsers will refuse http for a year.', 'stackpress' ),
 			),
 			array(
 				'key'     => 'permissions_policy',
-				'label'   => __( 'Permissions-Policy (limit camera/mic/geolocation)', 'dicestack' ),
+				'label'   => __( 'Permissions-Policy (limit camera/mic/geolocation)', 'stackpress' ),
 				'type'    => 'toggle',
 				'default' => true,
 			),
 			array(
 				'key'     => 'coop',
-				'label'   => __( 'Cross-Origin-Opener-Policy', 'dicestack' ),
+				'label'   => __( 'Cross-Origin-Opener-Policy', 'stackpress' ),
 				'type'    => 'toggle',
 				'default' => false,
 			),

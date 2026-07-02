@@ -2,12 +2,12 @@
 /**
  * WooCommerce Continue Shopping module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\WooCommerce;
+namespace StackPress\Modules\WooCommerce;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -27,14 +27,14 @@ final class Continue_Shopping extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Continue shopping button', 'dicestack' );
+		return __( 'Continue shopping button', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Add a "continue shopping" link to the cart so customers return to browsing.', 'dicestack' );
+		return __( 'Add a "continue shopping" link to the cart so customers return to browsing.', 'stackpress' );
 	}
 
 	/**
@@ -88,6 +88,6 @@ final class Continue_Shopping extends Abstract_Module {
 		if ( ! $shop ) {
 			$shop = home_url( '/' );
 		}
-		echo '<a href="' . esc_url( $shop ) . '" class="button dicestack-continue" style="margin-bottom:16px;display:inline-block;">&larr; ' . esc_html__( 'Continue shopping', 'dicestack' ) . '</a>';
+		echo '<a href="' . esc_url( $shop ) . '" class="button stackpress-continue" style="margin-bottom:16px;display:inline-block;">&larr; ' . esc_html__( 'Continue shopping', 'stackpress' ) . '</a>';
 	}
 }

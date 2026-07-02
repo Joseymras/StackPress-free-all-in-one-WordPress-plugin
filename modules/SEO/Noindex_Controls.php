@@ -2,12 +2,12 @@
 /**
  * Noindex Controls module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\SEO;
+namespace StackPress\Modules\SEO;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Noindex_Controls extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Noindex controls', 'dicestack' );
+		return __( 'Noindex controls', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Keep thin archive pages (search, author, date) out of search engines.', 'dicestack' );
+		return __( 'Keep thin archive pages (search, author, date) out of search engines.', 'stackpress' );
 	}
 
 	/**
@@ -72,25 +72,25 @@ final class Noindex_Controls extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'search',
-				'label'   => __( 'Noindex search results', 'dicestack' ),
+				'label'   => __( 'Noindex search results', 'stackpress' ),
 				'type'    => 'toggle',
 				'default' => true,
 			),
 			array(
 				'key'     => 'author',
-				'label'   => __( 'Noindex author archives', 'dicestack' ),
+				'label'   => __( 'Noindex author archives', 'stackpress' ),
 				'type'    => 'toggle',
 				'default' => true,
 			),
 			array(
 				'key'     => 'date',
-				'label'   => __( 'Noindex date archives', 'dicestack' ),
+				'label'   => __( 'Noindex date archives', 'stackpress' ),
 				'type'    => 'toggle',
 				'default' => true,
 			),
 			array(
 				'key'     => 'tag',
-				'label'   => __( 'Noindex tag archives', 'dicestack' ),
+				'label'   => __( 'Noindex tag archives', 'stackpress' ),
 				'type'    => 'toggle',
 				'default' => false,
 			),

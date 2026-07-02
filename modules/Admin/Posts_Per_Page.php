@@ -2,12 +2,12 @@
 /**
  * Admin Posts Per Page module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Admin;
+namespace StackPress\Modules\Admin;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Posts_Per_Page extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Admin items per page', 'dicestack' );
+		return __( 'Admin items per page', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Set how many posts, pages, and products show per admin list page.', 'dicestack' );
+		return __( 'Set how many posts, pages, and products show per admin list page.', 'stackpress' );
 	}
 
 	/**
@@ -72,7 +72,7 @@ final class Posts_Per_Page extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'per_page',
-				'label'   => __( 'Items per page', 'dicestack' ),
+				'label'   => __( 'Items per page', 'stackpress' ),
 				'type'    => 'number',
 				'default' => 50,
 				'min'     => 10,

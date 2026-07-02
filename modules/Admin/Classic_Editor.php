@@ -2,12 +2,12 @@
 /**
  * Classic Editor module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Admin;
+namespace StackPress\Modules\Admin;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Classic_Editor extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Classic editor', 'dicestack' );
+		return __( 'Classic editor', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Bring back the classic TinyMCE editor instead of the block editor.', 'dicestack' );
+		return __( 'Bring back the classic TinyMCE editor instead of the block editor.', 'stackpress' );
 	}
 
 	/**

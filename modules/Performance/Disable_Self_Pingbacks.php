@@ -2,12 +2,12 @@
 /**
  * Disable Self Pingbacks module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Performance;
+namespace StackPress\Modules\Performance;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Disable_Self_Pingbacks extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Disable self-pingbacks', 'dicestack' );
+		return __( 'Disable self-pingbacks', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Stop WordPress pinging your own site when you link between your posts.', 'dicestack' );
+		return __( 'Stop WordPress pinging your own site when you link between your posts.', 'stackpress' );
 	}
 
 	/**

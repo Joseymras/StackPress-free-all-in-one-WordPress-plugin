@@ -2,12 +2,12 @@
 /**
  * Disable Admin Email Verification module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Site;
+namespace StackPress\Modules\Site;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Disable_Admin_Email_Check extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Skip admin email verification', 'dicestack' );
+		return __( 'Skip admin email verification', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Stop the periodic "confirm your admin email" screen from interrupting logins.', 'dicestack' );
+		return __( 'Stop the periodic "confirm your admin email" screen from interrupting logins.', 'stackpress' );
 	}
 
 	/**

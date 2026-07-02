@@ -2,12 +2,12 @@
 /**
  * Terms Consent module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Forms;
+namespace StackPress\Modules\Forms;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Terms_Consent extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Terms consent checkbox', 'dicestack' );
+		return __( 'Terms consent checkbox', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Require visitors to agree to your terms before commenting or registering.', 'dicestack' );
+		return __( 'Require visitors to agree to your terms before commenting or registering.', 'stackpress' );
 	}
 
 	/**
@@ -72,25 +72,25 @@ final class Terms_Consent extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'label',
-				'label'   => __( 'Checkbox label', 'dicestack' ),
+				'label'   => __( 'Checkbox label', 'stackpress' ),
 				'type'    => 'text',
-				'default' => __( 'I agree to the terms and privacy policy.', 'dicestack' ),
+				'default' => __( 'I agree to the terms and privacy policy.', 'stackpress' ),
 			),
 			array(
 				'key'     => 'policy_url',
-				'label'   => __( 'Policy page URL (optional)', 'dicestack' ),
+				'label'   => __( 'Policy page URL (optional)', 'stackpress' ),
 				'type'    => 'url',
 				'default' => '',
 			),
 			array(
 				'key'     => 'comments',
-				'label'   => __( 'Show on comment form', 'dicestack' ),
+				'label'   => __( 'Show on comment form', 'stackpress' ),
 				'type'    => 'toggle',
 				'default' => true,
 			),
 			array(
 				'key'     => 'registration',
-				'label'   => __( 'Show on registration form', 'dicestack' ),
+				'label'   => __( 'Show on registration form', 'stackpress' ),
 				'type'    => 'toggle',
 				'default' => true,
 			),
@@ -120,9 +120,9 @@ final class Terms_Consent extends Abstract_Module {
 		$label = esc_html( (string) $this->get_setting( 'label', '' ) );
 		$url   = esc_url( (string) $this->get_setting( 'policy_url', '' ) );
 		if ( $url ) {
-			$label .= ' <a href="' . $url . '" target="_blank" rel="noopener">' . esc_html__( '(read more)', 'dicestack' ) . '</a>';
+			$label .= ' <a href="' . $url . '" target="_blank" rel="noopener">' . esc_html__( '(read more)', 'stackpress' ) . '</a>';
 		}
-		return '<p class="dicestack-terms"><label><input type="checkbox" name="dicestack_terms" value="1" /> ' . $label . '</label></p>';
+		return '<p class="stackpress-terms"><label><input type="checkbox" name="stackpress_terms" value="1" /> ' . $label . '</label></p>';
 	}
 
 	/**
@@ -152,10 +152,10 @@ final class Terms_Consent extends Abstract_Module {
 	 */
 	public function verify_comment( $commentdata ) {
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- WP comment flow nonce covers this; reading our checkbox only.
-		if ( empty( $_POST['dicestack_terms'] ) ) {
+		if ( empty( $_POST['stackpress_terms'] ) ) {
 			wp_die(
-				esc_html__( 'You must agree to the terms to comment.', 'dicestack' ),
-				esc_html__( 'Consent required', 'dicestack' ),
+				esc_html__( 'You must agree to the terms to comment.', 'stackpress' ),
+				esc_html__( 'Consent required', 'stackpress' ),
 				array(
 					'response'  => 403,
 					'back_link' => true,
@@ -173,8 +173,8 @@ final class Terms_Consent extends Abstract_Module {
 	 */
 	public function verify_registration( $errors ) {
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- WP registration flow handles nonce; reading our checkbox only.
-		if ( empty( $_POST['dicestack_terms'] ) ) {
-			$errors->add( 'dicestack_terms', __( 'You must agree to the terms to register.', 'dicestack' ) );
+		if ( empty( $_POST['stackpress_terms'] ) ) {
+			$errors->add( 'stackpress_terms', __( 'You must agree to the terms to register.', 'stackpress' ) );
 		}
 		return $errors;
 	}

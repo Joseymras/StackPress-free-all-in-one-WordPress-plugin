@@ -2,12 +2,12 @@
 /**
  * Hide PHP Errors module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Security;
+namespace StackPress\Modules\Security;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Hide_PHP_Errors extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Hide PHP errors from visitors', 'dicestack' );
+		return __( 'Hide PHP errors from visitors', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Stop PHP warnings leaking to the front end (they can reveal server paths).', 'dicestack' );
+		return __( 'Stop PHP warnings leaking to the front end (they can reveal server paths).', 'stackpress' );
 	}
 
 	/**

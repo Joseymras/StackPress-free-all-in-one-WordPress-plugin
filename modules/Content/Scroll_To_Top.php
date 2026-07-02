@@ -2,12 +2,12 @@
 /**
  * Scroll To Top module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Content;
+namespace StackPress\Modules\Content;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Scroll_To_Top extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Scroll to top', 'dicestack' );
+		return __( 'Scroll to top', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'A floating button that smoothly returns visitors to the top of the page.', 'dicestack' );
+		return __( 'A floating button that smoothly returns visitors to the top of the page.', 'stackpress' );
 	}
 
 	/**
@@ -72,23 +72,23 @@ final class Scroll_To_Top extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'position',
-				'label'   => __( 'Position', 'dicestack' ),
+				'label'   => __( 'Position', 'stackpress' ),
 				'type'    => 'select',
 				'default' => 'right',
 				'options' => array(
-					'right' => __( 'Bottom right', 'dicestack' ),
-					'left'  => __( 'Bottom left', 'dicestack' ),
+					'right' => __( 'Bottom right', 'stackpress' ),
+					'left'  => __( 'Bottom left', 'stackpress' ),
 				),
 			),
 			array(
 				'key'     => 'bg_color',
-				'label'   => __( 'Button colour', 'dicestack' ),
+				'label'   => __( 'Button colour', 'stackpress' ),
 				'type'    => 'color',
 				'default' => '#1b2a4a',
 			),
 			array(
 				'key'     => 'offset',
-				'label'   => __( 'Show after scrolling (pixels)', 'dicestack' ),
+				'label'   => __( 'Show after scrolling (pixels)', 'stackpress' ),
 				'type'    => 'number',
 				'default' => 300,
 				'min'     => 50,
@@ -116,11 +116,11 @@ final class Scroll_To_Top extends Abstract_Module {
 		$color  = $color ? $color : '#1b2a4a';
 		$offset = (int) $this->get_setting( 'offset', 300 );
 		?>
-		<button id="dicestack-stt" aria-label="<?php esc_attr_e( 'Scroll to top', 'dicestack' ); ?>" style="position:fixed;bottom:24px;<?php echo esc_attr( $pos ); ?>:24px;width:44px;height:44px;border:0;border-radius:50%;background:<?php echo esc_attr( $color ); ?>;color:#fff;cursor:pointer;opacity:0;visibility:hidden;transition:opacity .2s;z-index:9999;font-size:20px;line-height:1;">&#8593;</button>
-		<style>#dicestack-stt.dicestack-show{opacity:1;visibility:visible}</style>
+		<button id="stackpress-stt" aria-label="<?php esc_attr_e( 'Scroll to top', 'stackpress' ); ?>" style="position:fixed;bottom:24px;<?php echo esc_attr( $pos ); ?>:24px;width:44px;height:44px;border:0;border-radius:50%;background:<?php echo esc_attr( $color ); ?>;color:#fff;cursor:pointer;opacity:0;visibility:hidden;transition:opacity .2s;z-index:9999;font-size:20px;line-height:1;">&#8593;</button>
+		<style>#stackpress-stt.stackpress-show{opacity:1;visibility:visible}</style>
 		<script>
-		(function(){var b=document.getElementById('dicestack-stt');if(!b)return;var o=<?php echo (int) $offset; ?>;
-		window.addEventListener('scroll',function(){if(window.pageYOffset>o){b.classList.add('dicestack-show');}else{b.classList.remove('dicestack-show');}},{passive:true});
+		(function(){var b=document.getElementById('stackpress-stt');if(!b)return;var o=<?php echo (int) $offset; ?>;
+		window.addEventListener('scroll',function(){if(window.pageYOffset>o){b.classList.add('stackpress-show');}else{b.classList.remove('stackpress-show');}},{passive:true});
 		b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});})();
 		</script>
 		<?php

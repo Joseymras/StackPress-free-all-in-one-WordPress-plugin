@@ -2,12 +2,12 @@
 /**
  * Email Obfuscator module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Security;
+namespace StackPress\Modules\Security;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Email_Obfuscator extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Email obfuscator', 'dicestack' );
+		return __( 'Email obfuscator', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Hide email addresses in content from spam bots while keeping them clickable.', 'dicestack' );
+		return __( 'Hide email addresses in content from spam bots while keeping them clickable.', 'stackpress' );
 	}
 
 	/**

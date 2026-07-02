@@ -2,17 +2,17 @@
 /**
  * Elementor Widgets integration module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Content;
+namespace StackPress\Modules\Content;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Exposes DiceStack features (reviews, FAQ, contact form, breadcrumbs) as native
+ * Exposes StackPress features (reviews, FAQ, contact form, breadcrumbs) as native
  * Elementor widgets when Elementor is active. Completely inert if Elementor is
  * not installed, so it can never break a non-Elementor site.
  */
@@ -29,14 +29,14 @@ final class Elementor_Widgets extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Elementor widgets', 'dicestack' );
+		return __( 'Elementor widgets', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Use DiceStack reviews, FAQ, contact form, and breadcrumbs as native Elementor widgets.', 'dicestack' );
+		return __( 'Use StackPress reviews, FAQ, contact form, and breadcrumbs as native Elementor widgets.', 'stackpress' );
 	}
 
 	/**
@@ -75,7 +75,7 @@ final class Elementor_Widgets extends Abstract_Module {
 	}
 
 	/**
-	 * Register DiceStack widgets with Elementor.
+	 * Register StackPress widgets with Elementor.
 	 *
 	 * @param mixed $widgets_manager Elementor widgets manager.
 	 * @return void
@@ -85,25 +85,25 @@ final class Elementor_Widgets extends Abstract_Module {
 			return;
 		}
 
-		if ( ! class_exists( '\DiceStack_Elementor_Shortcode_Widget' ) ) {
+		if ( ! class_exists( '\StackPress_Elementor_Shortcode_Widget' ) ) {
 			$this->define_widget_class();
 		}
 
 		$specs = array(
-			array( 'dicestack_reviews', __( 'DiceStack Reviews', 'dicestack' ), 'dicestack_reviews' ),
-			array( 'dicestack_faq', __( 'DiceStack FAQ', 'dicestack' ), 'dicestack_faq' ),
-			array( 'dicestack_contact', __( 'DiceStack Contact Form', 'dicestack' ), 'dicestack_contact' ),
-			array( 'dicestack_breadcrumbs', __( 'DiceStack Breadcrumbs', 'dicestack' ), 'dicestack_breadcrumbs' ),
+			array( 'stackpress_reviews', __( 'StackPress Reviews', 'stackpress' ), 'stackpress_reviews' ),
+			array( 'stackpress_faq', __( 'StackPress FAQ', 'stackpress' ), 'stackpress_faq' ),
+			array( 'stackpress_contact', __( 'StackPress Contact Form', 'stackpress' ), 'stackpress_contact' ),
+			array( 'stackpress_breadcrumbs', __( 'StackPress Breadcrumbs', 'stackpress' ), 'stackpress_breadcrumbs' ),
 		);
 
 		foreach ( $specs as $spec ) {
 			try {
-				$widget = new \DiceStack_Elementor_Shortcode_Widget(
+				$widget = new \StackPress_Elementor_Shortcode_Widget(
 					array(),
 					array(
-						'dicestack_name'      => $spec[0],
-						'dicestack_title'     => $spec[1],
-						'dicestack_shortcode' => $spec[2],
+						'stackpress_name'      => $spec[0],
+						'stackpress_title'     => $spec[1],
+						'stackpress_shortcode' => $spec[2],
 					)
 				);
 				$widgets_manager->register( $widget );

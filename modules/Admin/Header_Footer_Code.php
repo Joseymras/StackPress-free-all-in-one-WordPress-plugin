@@ -2,12 +2,12 @@
 /**
  * Header & Footer Code module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Admin;
+namespace StackPress\Modules\Admin;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -29,14 +29,14 @@ final class Header_Footer_Code extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Header & footer code', 'dicestack' );
+		return __( 'Header & footer code', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Add analytics, verification, or custom scripts to the head or footer safely.', 'dicestack' );
+		return __( 'Add analytics, verification, or custom scripts to the head or footer safely.', 'stackpress' );
 	}
 
 	/**
@@ -80,17 +80,17 @@ final class Header_Footer_Code extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'head_code',
-				'label'   => __( 'Code in <head>', 'dicestack' ),
+				'label'   => __( 'Code in <head>', 'stackpress' ),
 				'type'    => 'textarea',
 				'default' => '',
-				'help'    => __( 'Pasted verbatim into the page head. Only admins can edit this field.', 'dicestack' ),
+				'help'    => __( 'Pasted verbatim into the page head. Only admins can edit this field.', 'stackpress' ),
 			),
 			array(
 				'key'     => 'footer_code',
-				'label'   => __( 'Code before </body>', 'dicestack' ),
+				'label'   => __( 'Code before </body>', 'stackpress' ),
 				'type'    => 'textarea',
 				'default' => '',
-				'help'    => __( 'Pasted verbatim before the closing body tag.', 'dicestack' ),
+				'help'    => __( 'Pasted verbatim before the closing body tag.', 'stackpress' ),
 			),
 		);
 	}

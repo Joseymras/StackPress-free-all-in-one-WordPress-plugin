@@ -2,12 +2,12 @@
 /**
  * Environment Badge module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Admin;
+namespace StackPress\Modules\Admin;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Environment_Badge extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Environment badge', 'dicestack' );
+		return __( 'Environment badge', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Display a coloured STAGING/DEV label in the admin bar to avoid mix-ups.', 'dicestack' );
+		return __( 'Display a coloured STAGING/DEV label in the admin bar to avoid mix-ups.', 'stackpress' );
 	}
 
 	/**
@@ -72,13 +72,13 @@ final class Environment_Badge extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'label',
-				'label'   => __( 'Badge label', 'dicestack' ),
+				'label'   => __( 'Badge label', 'stackpress' ),
 				'type'    => 'text',
-				'default' => __( 'STAGING', 'dicestack' ),
+				'default' => __( 'STAGING', 'stackpress' ),
 			),
 			array(
 				'key'     => 'color',
-				'label'   => __( 'Badge colour', 'dicestack' ),
+				'label'   => __( 'Badge colour', 'stackpress' ),
 				'type'    => 'color',
 				'default' => '#d4537e',
 			),
@@ -106,9 +106,9 @@ final class Environment_Badge extends Abstract_Module {
 		$color = sanitize_hex_color( (string) $this->get_setting( 'color', '#d4537e' ) ) ?: '#d4537e';
 		$bar->add_node(
 			array(
-				'id'    => 'dicestack-env',
+				'id'    => 'stackpress-env',
 				'title' => '<span style="background:' . esc_attr( $color ) . ';color:#fff;padding:0 10px;border-radius:3px;font-weight:600;">' . esc_html( $label ) . '</span>',
-				'meta'  => array( 'title' => esc_attr__( 'Current environment', 'dicestack' ) ),
+				'meta'  => array( 'title' => esc_attr__( 'Current environment', 'stackpress' ) ),
 			)
 		);
 	}

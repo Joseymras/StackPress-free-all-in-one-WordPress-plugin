@@ -2,12 +2,12 @@
 /**
  * RSS Item Count module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Site;
+namespace StackPress\Modules\Site;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class RSS_Item_Count extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'RSS feed item count', 'dicestack' );
+		return __( 'RSS feed item count', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Set how many posts appear in your RSS feeds.', 'dicestack' );
+		return __( 'Set how many posts appear in your RSS feeds.', 'stackpress' );
 	}
 
 	/**
@@ -72,7 +72,7 @@ final class RSS_Item_Count extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'count',
-				'label'   => __( 'Items in feed', 'dicestack' ),
+				'label'   => __( 'Items in feed', 'stackpress' ),
 				'type'    => 'number',
 				'default' => 10,
 				'min'     => 1,

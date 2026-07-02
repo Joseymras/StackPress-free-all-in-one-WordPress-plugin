@@ -2,12 +2,12 @@
 /**
  * Auto Featured Image module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Content;
+namespace StackPress\Modules\Content;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Auto_Featured_Image extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Auto featured image', 'dicestack' );
+		return __( 'Auto featured image', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Use the first image in a post as its featured image when none is set.', 'dicestack' );
+		return __( 'Use the first image in a post as its featured image when none is set.', 'stackpress' );
 	}
 
 	/**

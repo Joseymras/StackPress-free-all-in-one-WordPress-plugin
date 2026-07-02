@@ -2,12 +2,12 @@
 /**
  * Media Categories module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Media;
+namespace StackPress\Modules\Media;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Media_Categories extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Media categories', 'dicestack' );
+		return __( 'Media categories', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Organise the Media Library with categories you can filter by.', 'dicestack' );
+		return __( 'Organise the Media Library with categories you can filter by.', 'stackpress' );
 	}
 
 	/**
@@ -86,13 +86,13 @@ final class Media_Categories extends Abstract_Module {
 	 */
 	public function register_taxonomy() {
 		register_taxonomy(
-			'dicestack_media_category',
+			'stackpress_media_category',
 			'attachment',
 			array(
 				'labels'       => array(
-					'name'          => __( 'Media categories', 'dicestack' ),
-					'singular_name' => __( 'Media category', 'dicestack' ),
-					'menu_name'     => __( 'Media categories', 'dicestack' ),
+					'name'          => __( 'Media categories', 'stackpress' ),
+					'singular_name' => __( 'Media category', 'stackpress' ),
+					'menu_name'     => __( 'Media categories', 'stackpress' ),
 				),
 				'public'       => false,
 				'show_ui'      => true,

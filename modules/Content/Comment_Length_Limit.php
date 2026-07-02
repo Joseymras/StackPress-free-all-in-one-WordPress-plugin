@@ -2,12 +2,12 @@
 /**
  * Comment Length Limit module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Content;
+namespace StackPress\Modules\Content;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Comment_Length_Limit extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Comment length limits', 'dicestack' );
+		return __( 'Comment length limits', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Set minimum and maximum comment lengths to reduce spam and noise.', 'dicestack' );
+		return __( 'Set minimum and maximum comment lengths to reduce spam and noise.', 'stackpress' );
 	}
 
 	/**
@@ -72,7 +72,7 @@ final class Comment_Length_Limit extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'min',
-				'label'   => __( 'Minimum characters', 'dicestack' ),
+				'label'   => __( 'Minimum characters', 'stackpress' ),
 				'type'    => 'number',
 				'default' => 5,
 				'min'     => 0,
@@ -81,7 +81,7 @@ final class Comment_Length_Limit extends Abstract_Module {
 			),
 			array(
 				'key'     => 'max',
-				'label'   => __( 'Maximum characters', 'dicestack' ),
+				'label'   => __( 'Maximum characters', 'stackpress' ),
 				'type'    => 'number',
 				'default' => 5000,
 				'min'     => 100,
@@ -111,8 +111,8 @@ final class Comment_Length_Limit extends Abstract_Module {
 
 		if ( $len < $min ) {
 			wp_die(
-				esc_html( sprintf( /* translators: %d: min characters. */ __( 'Your comment is too short (minimum %d characters).', 'dicestack' ), $min ) ),
-				esc_html__( 'Comment too short', 'dicestack' ),
+				esc_html( sprintf( /* translators: %d: min characters. */ __( 'Your comment is too short (minimum %d characters).', 'stackpress' ), $min ) ),
+				esc_html__( 'Comment too short', 'stackpress' ),
 				array(
 					'response'  => 403,
 					'back_link' => true,
@@ -121,8 +121,8 @@ final class Comment_Length_Limit extends Abstract_Module {
 		}
 		if ( $len > $max ) {
 			wp_die(
-				esc_html( sprintf( /* translators: %d: max characters. */ __( 'Your comment is too long (maximum %d characters).', 'dicestack' ), $max ) ),
-				esc_html__( 'Comment too long', 'dicestack' ),
+				esc_html( sprintf( /* translators: %d: max characters. */ __( 'Your comment is too long (maximum %d characters).', 'stackpress' ), $max ) ),
+				esc_html__( 'Comment too long', 'stackpress' ),
 				array(
 					'response'  => 403,
 					'back_link' => true,

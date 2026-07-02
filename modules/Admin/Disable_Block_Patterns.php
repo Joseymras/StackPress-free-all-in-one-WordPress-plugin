@@ -2,12 +2,12 @@
 /**
  * Disable Block Patterns module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Admin;
+namespace StackPress\Modules\Admin;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Disable_Block_Patterns extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Disable block patterns', 'dicestack' );
+		return __( 'Disable block patterns', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Hide core and remote block patterns for a cleaner, faster editor inserter.', 'dicestack' );
+		return __( 'Hide core and remote block patterns for a cleaner, faster editor inserter.', 'stackpress' );
 	}
 
 	/**

@@ -2,12 +2,12 @@
 /**
  * WooCommerce Sale Percentage module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\WooCommerce;
+namespace StackPress\Modules\WooCommerce;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Sale_Percentage extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Sale percentage flash', 'dicestack' );
+		return __( 'Sale percentage flash', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Show the exact discount (e.g. -25%) on the sale badge instead of just "Sale".', 'dicestack' );
+		return __( 'Show the exact discount (e.g. -25%) on the sale badge instead of just "Sale".', 'stackpress' );
 	}
 
 	/**

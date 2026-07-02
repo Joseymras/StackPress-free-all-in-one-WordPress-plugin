@@ -2,12 +2,12 @@
 /**
  * Disable REST Link module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Performance;
+namespace StackPress\Modules\Performance;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Disable_REST_Link extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Remove REST API link tag', 'dicestack' );
+		return __( 'Remove REST API link tag', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Clean the REST API discovery link and header from the page head.', 'dicestack' );
+		return __( 'Clean the REST API discovery link and header from the page head.', 'stackpress' );
 	}
 
 	/**

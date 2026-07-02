@@ -2,12 +2,12 @@
 /**
  * Show ID Column module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Admin;
+namespace StackPress\Modules\Admin;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Show_ID_Column extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Show ID column', 'dicestack' );
+		return __( 'Show ID column', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Display post, page, and category IDs in admin lists for easy reference.', 'dicestack' );
+		return __( 'Display post, page, and category IDs in admin lists for easy reference.', 'stackpress' );
 	}
 
 	/**
@@ -85,7 +85,7 @@ final class Show_ID_Column extends Abstract_Module {
 	 * @return array
 	 */
 	public function add_column( $columns ) {
-		$columns['dicestack_id'] = __( 'ID', 'dicestack' );
+		$columns['stackpress_id'] = __( 'ID', 'stackpress' );
 		return $columns;
 	}
 
@@ -97,7 +97,7 @@ final class Show_ID_Column extends Abstract_Module {
 	 * @return void
 	 */
 	public function render_column( $column, $post_id ) {
-		if ( 'dicestack_id' === $column ) {
+		if ( 'stackpress_id' === $column ) {
 			echo (int) $post_id;
 		}
 	}

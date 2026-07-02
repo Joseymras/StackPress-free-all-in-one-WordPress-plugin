@@ -2,12 +2,12 @@
 /**
  * Cookie Consent module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Accessibility;
+namespace StackPress\Modules\Accessibility;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Cookie_Consent extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Cookie consent banner', 'dicestack' );
+		return __( 'Cookie consent banner', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Show a GDPR/CCPA-style cookie notice and remember the visitor\'s choice.', 'dicestack' );
+		return __( 'Show a GDPR/CCPA-style cookie notice and remember the visitor\'s choice.', 'stackpress' );
 	}
 
 	/**
@@ -79,25 +79,25 @@ final class Cookie_Consent extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'message',
-				'label'   => __( 'Banner message', 'dicestack' ),
+				'label'   => __( 'Banner message', 'stackpress' ),
 				'type'    => 'text',
-				'default' => __( 'We use cookies to improve your experience. By continuing, you agree to our use of cookies.', 'dicestack' ),
+				'default' => __( 'We use cookies to improve your experience. By continuing, you agree to our use of cookies.', 'stackpress' ),
 			),
 			array(
 				'key'     => 'accept_text',
-				'label'   => __( 'Accept button text', 'dicestack' ),
+				'label'   => __( 'Accept button text', 'stackpress' ),
 				'type'    => 'text',
-				'default' => __( 'Accept', 'dicestack' ),
+				'default' => __( 'Accept', 'stackpress' ),
 			),
 			array(
 				'key'     => 'decline_text',
-				'label'   => __( 'Decline button text', 'dicestack' ),
+				'label'   => __( 'Decline button text', 'stackpress' ),
 				'type'    => 'text',
-				'default' => __( 'Decline', 'dicestack' ),
+				'default' => __( 'Decline', 'stackpress' ),
 			),
 			array(
 				'key'     => 'policy_url',
-				'label'   => __( 'Privacy policy URL', 'dicestack' ),
+				'label'   => __( 'Privacy policy URL', 'stackpress' ),
 				'type'    => 'url',
 				'default' => '',
 			),
@@ -122,21 +122,21 @@ final class Cookie_Consent extends Abstract_Module {
 		$accept  = esc_html( $s['accept_text'] );
 		$decline = esc_html( $s['decline_text'] );
 		$policy  = esc_url( (string) $s['policy_url'] );
-		$link    = $policy ? ' <a href="' . $policy . '" style="color:#0aa2c0;">' . esc_html__( 'Learn more', 'dicestack' ) . '</a>' : '';
+		$link    = $policy ? ' <a href="' . $policy . '" style="color:#0aa2c0;">' . esc_html__( 'Learn more', 'stackpress' ) . '</a>' : '';
 		?>
-		<div id="dicestack-cookie" style="display:none;position:fixed;left:16px;right:16px;bottom:16px;max-width:680px;margin:0 auto;background:#1b2a4a;color:#fff;padding:16px 20px;border-radius:10px;z-index:99999;box-shadow:0 4px 20px rgba(0,0,0,.25);font-size:14px;line-height:1.5;">
+		<div id="stackpress-cookie" style="display:none;position:fixed;left:16px;right:16px;bottom:16px;max-width:680px;margin:0 auto;background:#1b2a4a;color:#fff;padding:16px 20px;border-radius:10px;z-index:99999;box-shadow:0 4px 20px rgba(0,0,0,.25);font-size:14px;line-height:1.5;">
 			<span><?php echo $message . $link; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- parts escaped above. ?></span>
 			<div style="margin-top:12px;display:flex;gap:8px;justify-content:flex-end;">
-				<button id="dicestack-cookie-decline" style="background:transparent;color:#fff;border:1px solid rgba(255,255,255,.5);padding:7px 16px;border-radius:6px;cursor:pointer;"><?php echo $decline; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></button>
-				<button id="dicestack-cookie-accept" style="background:#0aa2c0;color:#fff;border:0;padding:7px 18px;border-radius:6px;cursor:pointer;"><?php echo $accept; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></button>
+				<button id="stackpress-cookie-decline" style="background:transparent;color:#fff;border:1px solid rgba(255,255,255,.5);padding:7px 16px;border-radius:6px;cursor:pointer;"><?php echo $decline; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></button>
+				<button id="stackpress-cookie-accept" style="background:#0aa2c0;color:#fff;border:0;padding:7px 18px;border-radius:6px;cursor:pointer;"><?php echo $accept; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></button>
 			</div>
 		</div>
 		<script>
-		(function(){var b=document.getElementById('dicestack-cookie');if(!b)return;
+		(function(){var b=document.getElementById('stackpress-cookie');if(!b)return;
 		function get(n){return document.cookie.split('; ').find(function(r){return r.indexOf(n+'=')===0;});}
-		if(!get('dicestack_cookie_consent')){b.style.display='block';}
-		function set(v){document.cookie='dicestack_cookie_consent='+v+';path=/;max-age=31536000;SameSite=Lax';b.style.display='none';}
-		var a=document.getElementById('dicestack-cookie-accept'),d=document.getElementById('dicestack-cookie-decline');
+		if(!get('stackpress_cookie_consent')){b.style.display='block';}
+		function set(v){document.cookie='stackpress_cookie_consent='+v+';path=/;max-age=31536000;SameSite=Lax';b.style.display='none';}
+		var a=document.getElementById('stackpress-cookie-accept'),d=document.getElementById('stackpress-cookie-decline');
 		if(a)a.addEventListener('click',function(){set('accept');});
 		if(d)d.addEventListener('click',function(){set('decline');});})();
 		</script>

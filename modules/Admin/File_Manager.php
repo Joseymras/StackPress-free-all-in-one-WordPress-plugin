@@ -2,12 +2,12 @@
 /**
  * File Manager module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Admin;
+namespace StackPress\Modules\Admin;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -38,14 +38,14 @@ final class File_Manager extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'File manager', 'dicestack' );
+		return __( 'File manager', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Browse, upload, download, edit, rename and delete site files from the dashboard — no FTP needed.', 'dicestack' );
+		return __( 'Browse, upload, download, edit, rename and delete site files from the dashboard — no FTP needed.', 'stackpress' );
 	}
 
 	/**
@@ -90,12 +90,12 @@ final class File_Manager extends Abstract_Module {
 			return;
 		}
 		add_action( 'admin_menu', array( $this, 'add_page' ) );
-		add_action( 'admin_post_dicestack_fm_save', array( $this, 'handle_save' ) );
-		add_action( 'admin_post_dicestack_fm_upload', array( $this, 'handle_upload' ) );
-		add_action( 'admin_post_dicestack_fm_mkdir', array( $this, 'handle_mkdir' ) );
-		add_action( 'admin_post_dicestack_fm_rename', array( $this, 'handle_rename' ) );
-		add_action( 'admin_post_dicestack_fm_delete', array( $this, 'handle_delete' ) );
-		add_action( 'admin_post_dicestack_fm_download', array( $this, 'handle_download' ) );
+		add_action( 'admin_post_stackpress_fm_save', array( $this, 'handle_save' ) );
+		add_action( 'admin_post_stackpress_fm_upload', array( $this, 'handle_upload' ) );
+		add_action( 'admin_post_stackpress_fm_mkdir', array( $this, 'handle_mkdir' ) );
+		add_action( 'admin_post_stackpress_fm_rename', array( $this, 'handle_rename' ) );
+		add_action( 'admin_post_stackpress_fm_delete', array( $this, 'handle_delete' ) );
+		add_action( 'admin_post_stackpress_fm_download', array( $this, 'handle_download' ) );
 	}
 
 	/**
@@ -105,11 +105,11 @@ final class File_Manager extends Abstract_Module {
 	 */
 	public function add_page() {
 		add_submenu_page(
-			'dicestack',
-			__( 'File manager', 'dicestack' ),
-			__( 'File manager', 'dicestack' ),
+			'stackpress',
+			__( 'File manager', 'stackpress' ),
+			__( 'File manager', 'stackpress' ),
 			'manage_options',
-			'dicestack-files',
+			'stackpress-files',
 			array( $this, 'render_page' )
 		);
 	}
@@ -160,41 +160,41 @@ final class File_Manager extends Abstract_Module {
 	 */
 	public function render_page() {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( esc_html__( 'Permission denied.', 'dicestack' ) );
+			wp_die( esc_html__( 'Permission denied.', 'stackpress' ) );
 		}
 
-		echo '<div class="wrap dicestack-fm"><h1>' . esc_html__( 'File manager', 'dicestack' ) . '</h1>';
+		echo '<div class="wrap stackpress-fm"><h1>' . esc_html__( 'File manager', 'stackpress' ) . '</h1>';
 		echo '<style>'
-			. '.dicestack-fm{max-width:1100px}'
-			. '.dicestack-fm .dsfm-panel{background:#fff;border:1px solid #e4e7ec;border-radius:14px;overflow:hidden;box-shadow:0 1px 3px rgba(16,24,40,.05)}'
-			. '.dicestack-fm .dsfm-top{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:14px 18px;border-bottom:1px solid #eef1f5;background:#fafbfc}'
-			. '.dicestack-fm .dsfm-crumbs{display:flex;align-items:center;gap:4px;flex-wrap:wrap;font-size:13px;flex:1;min-width:200px}'
-			. '.dicestack-fm .dsfm-crumbs a{color:#2563eb;text-decoration:none}.dicestack-fm .dsfm-crumbs a:hover{text-decoration:underline}'
-			. '.dicestack-fm .dsfm-crumbs .sep{color:#9aa3af}'
-			. '.dicestack-fm .dsfm-crumbs .cur{color:#101828;font-weight:600}'
-			. '.dicestack-fm .dsfm-search{display:flex;align-items:center;gap:6px;background:#fff;border:1px solid #e4e7ec;border-radius:8px;padding:4px 10px}'
-			. '.dicestack-fm .dsfm-search input{border:0;outline:none;box-shadow:none;font-size:13px;width:180px;background:transparent}'
-			. '.dicestack-fm .dsfm-tools{display:flex;gap:8px;flex-wrap:wrap;padding:14px 18px;border-bottom:1px solid #eef1f5}'
-			. '.dicestack-fm .dsfm-tools form{display:flex;gap:6px;align-items:center}'
-			. '.dicestack-fm .dsfm-tools input[type=text],.dicestack-fm .dsfm-tools input[type=file]{font-size:13px}'
-			. '.dicestack-fm table{width:100%;border-collapse:collapse}'
-			. '.dicestack-fm thead th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:#6b7280;padding:10px 18px;border-bottom:1px solid #eef1f5;background:#fff}'
-			. '.dicestack-fm tbody td{padding:10px 18px;border-bottom:1px solid #f1f3f6;font-size:13.5px;vertical-align:middle}'
-			. '.dicestack-fm tbody tr:hover{background:#f5f9ff}'
-			. '.dicestack-fm tbody tr:last-child td{border-bottom:0}'
-			. '.dicestack-fm .dsfm-ico{display:inline-flex;width:30px;height:30px;border-radius:7px;align-items:center;justify-content:center;font-size:15px;margin-right:10px;vertical-align:middle}'
-			. '.dicestack-fm .dsfm-name a{text-decoration:none;color:#101828;font-weight:500}.dicestack-fm .dsfm-name a:hover{color:#2563eb}'
-			. '.dicestack-fm .dsfm-up a{color:#6b7280;font-weight:600}'
-			. '.dicestack-fm .dsfm-meta{color:#6b7280;font-size:12.5px;white-space:nowrap}'
-			. '.dicestack-fm .dsfm-act{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}'
-			. '.dicestack-fm .dsfm-act a{display:inline-block;font-size:12px;padding:3px 9px;border:1px solid #e4e7ec;border-radius:6px;text-decoration:none;color:#475467;background:#fff}'
-			. '.dicestack-fm .dsfm-act a:hover{border-color:#2563eb;color:#2563eb}'
-			. '.dicestack-fm .dsfm-act a.ds-fm-delete:hover{border-color:#dc2626;color:#dc2626}'
+			. '.stackpress-fm{max-width:1100px}'
+			. '.stackpress-fm .dsfm-panel{background:#fff;border:1px solid #e4e7ec;border-radius:14px;overflow:hidden;box-shadow:0 1px 3px rgba(16,24,40,.05)}'
+			. '.stackpress-fm .dsfm-top{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:14px 18px;border-bottom:1px solid #eef1f5;background:#fafbfc}'
+			. '.stackpress-fm .dsfm-crumbs{display:flex;align-items:center;gap:4px;flex-wrap:wrap;font-size:13px;flex:1;min-width:200px}'
+			. '.stackpress-fm .dsfm-crumbs a{color:#2563eb;text-decoration:none}.stackpress-fm .dsfm-crumbs a:hover{text-decoration:underline}'
+			. '.stackpress-fm .dsfm-crumbs .sep{color:#9aa3af}'
+			. '.stackpress-fm .dsfm-crumbs .cur{color:#101828;font-weight:600}'
+			. '.stackpress-fm .dsfm-search{display:flex;align-items:center;gap:6px;background:#fff;border:1px solid #e4e7ec;border-radius:8px;padding:4px 10px}'
+			. '.stackpress-fm .dsfm-search input{border:0;outline:none;box-shadow:none;font-size:13px;width:180px;background:transparent}'
+			. '.stackpress-fm .dsfm-tools{display:flex;gap:8px;flex-wrap:wrap;padding:14px 18px;border-bottom:1px solid #eef1f5}'
+			. '.stackpress-fm .dsfm-tools form{display:flex;gap:6px;align-items:center}'
+			. '.stackpress-fm .dsfm-tools input[type=text],.stackpress-fm .dsfm-tools input[type=file]{font-size:13px}'
+			. '.stackpress-fm table{width:100%;border-collapse:collapse}'
+			. '.stackpress-fm thead th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:#6b7280;padding:10px 18px;border-bottom:1px solid #eef1f5;background:#fff}'
+			. '.stackpress-fm tbody td{padding:10px 18px;border-bottom:1px solid #f1f3f6;font-size:13.5px;vertical-align:middle}'
+			. '.stackpress-fm tbody tr:hover{background:#f5f9ff}'
+			. '.stackpress-fm tbody tr:last-child td{border-bottom:0}'
+			. '.stackpress-fm .dsfm-ico{display:inline-flex;width:30px;height:30px;border-radius:7px;align-items:center;justify-content:center;font-size:15px;margin-right:10px;vertical-align:middle}'
+			. '.stackpress-fm .dsfm-name a{text-decoration:none;color:#101828;font-weight:500}.stackpress-fm .dsfm-name a:hover{color:#2563eb}'
+			. '.stackpress-fm .dsfm-up a{color:#6b7280;font-weight:600}'
+			. '.stackpress-fm .dsfm-meta{color:#6b7280;font-size:12.5px;white-space:nowrap}'
+			. '.stackpress-fm .dsfm-act{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}'
+			. '.stackpress-fm .dsfm-act a{display:inline-block;font-size:12px;padding:3px 9px;border:1px solid #e4e7ec;border-radius:6px;text-decoration:none;color:#475467;background:#fff}'
+			. '.stackpress-fm .dsfm-act a:hover{border-color:#2563eb;color:#2563eb}'
+			. '.stackpress-fm .dsfm-act a.ds-fm-delete:hover{border-color:#dc2626;color:#dc2626}'
 			. '.dsfm-ico-folder{background:#fef3c7}.dsfm-ico-image{background:#dcfce7}.dsfm-ico-code{background:#e0e7ff}.dsfm-ico-doc{background:#e0f2fe}.dsfm-ico-zip{background:#fae8ff}.dsfm-ico-file{background:#f1f3f6}'
 			. '</style>';
 
 		if ( $this->mods_blocked() ) {
-			echo '<p>' . esc_html__( 'File editing is disabled on this site by the DISALLOW_FILE_MODS / DISALLOW_FILE_EDIT setting.', 'dicestack' ) . '</p></div>';
+			echo '<p>' . esc_html__( 'File editing is disabled on this site by the DISALLOW_FILE_MODS / DISALLOW_FILE_EDIT setting.', 'stackpress' ) . '</p></div>';
 			return;
 		}
 
@@ -211,12 +211,12 @@ final class File_Manager extends Abstract_Module {
 		}
 
 		$notices = array(
-			'uploaded' => __( 'File uploaded.', 'dicestack' ),
-			'created'  => __( 'Folder created.', 'dicestack' ),
-			'renamed'  => __( 'Renamed.', 'dicestack' ),
-			'deleted'  => __( 'Deleted.', 'dicestack' ),
-			'saved'    => __( 'File saved.', 'dicestack' ),
-			'error'    => __( 'That action could not be completed.', 'dicestack' ),
+			'uploaded' => __( 'File uploaded.', 'stackpress' ),
+			'created'  => __( 'Folder created.', 'stackpress' ),
+			'renamed'  => __( 'Renamed.', 'stackpress' ),
+			'deleted'  => __( 'Deleted.', 'stackpress' ),
+			'saved'    => __( 'File saved.', 'stackpress' ),
+			'error'    => __( 'That action could not be completed.', 'stackpress' ),
 		);
 		if ( isset( $notices[ $msg ] ) ) {
 			$class = 'error' === $msg ? 'notice-error' : 'notice-success';
@@ -233,7 +233,7 @@ final class File_Manager extends Abstract_Module {
 
 		// Top bar: clickable breadcrumb + in-folder search.
 		echo '<div class="dsfm-top"><nav class="dsfm-crumbs">';
-		echo '<a href="' . esc_url( $this->link( '' ) ) . '">🏠 ' . esc_html__( 'Home', 'dicestack' ) . '</a>';
+		echo '<a href="' . esc_url( $this->link( '' ) ) . '">🏠 ' . esc_html__( 'Home', 'stackpress' ) . '</a>';
 		if ( '' !== $rel ) {
 			$parts = explode( '/', $rel );
 			$accum = '';
@@ -249,22 +249,22 @@ final class File_Manager extends Abstract_Module {
 			}
 		}
 		echo '</nav>';
-		echo '<span class="dsfm-search">🔍 <input type="text" id="dsfm-search" placeholder="' . esc_attr__( 'Search this folder…', 'dicestack' ) . '" /></span>';
+		echo '<span class="dsfm-search">🔍 <input type="text" id="dsfm-search" placeholder="' . esc_attr__( 'Search this folder…', 'stackpress' ) . '" /></span>';
 		echo '</div>';
 
 		// Toolbar: new folder + upload.
 		echo '<div class="dsfm-tools">';
 		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '">';
-		wp_nonce_field( 'dicestack_fm_mkdir' );
-		echo '<input type="hidden" name="action" value="dicestack_fm_mkdir" /><input type="hidden" name="path" value="' . esc_attr( $rel ) . '" />';
-		echo '<input type="text" name="name" required placeholder="' . esc_attr__( 'New folder name', 'dicestack' ) . '" />';
-		echo '<button class="button">📁 ' . esc_html__( 'Create folder', 'dicestack' ) . '</button>';
+		wp_nonce_field( 'stackpress_fm_mkdir' );
+		echo '<input type="hidden" name="action" value="stackpress_fm_mkdir" /><input type="hidden" name="path" value="' . esc_attr( $rel ) . '" />';
+		echo '<input type="text" name="name" required placeholder="' . esc_attr__( 'New folder name', 'stackpress' ) . '" />';
+		echo '<button class="button">📁 ' . esc_html__( 'Create folder', 'stackpress' ) . '</button>';
 		echo '</form>';
 		echo '<form method="post" enctype="multipart/form-data" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '">';
-		wp_nonce_field( 'dicestack_fm_upload' );
-		echo '<input type="hidden" name="action" value="dicestack_fm_upload" /><input type="hidden" name="path" value="' . esc_attr( $rel ) . '" />';
+		wp_nonce_field( 'stackpress_fm_upload' );
+		echo '<input type="hidden" name="action" value="stackpress_fm_upload" /><input type="hidden" name="path" value="' . esc_attr( $rel ) . '" />';
 		echo '<input type="file" name="upload" required />';
-		echo '<button class="button button-primary">⬆ ' . esc_html__( 'Upload', 'dicestack' ) . '</button>';
+		echo '<button class="button button-primary">⬆ ' . esc_html__( 'Upload', 'stackpress' ) . '</button>';
 		echo '</form>';
 		echo '</div>';
 
@@ -286,11 +286,11 @@ final class File_Manager extends Abstract_Module {
 		natcasesort( $dirs );
 		natcasesort( $files );
 
-		echo '<table id="dsfm-table"><thead><tr><th>' . esc_html__( 'Name', 'dicestack' ) . '</th><th style="width:110px;">' . esc_html__( 'Size', 'dicestack' ) . '</th><th style="width:150px;">' . esc_html__( 'Modified', 'dicestack' ) . '</th><th style="width:240px;text-align:right;">' . esc_html__( 'Actions', 'dicestack' ) . '</th></tr></thead><tbody>';
+		echo '<table id="dsfm-table"><thead><tr><th>' . esc_html__( 'Name', 'stackpress' ) . '</th><th style="width:110px;">' . esc_html__( 'Size', 'stackpress' ) . '</th><th style="width:150px;">' . esc_html__( 'Modified', 'stackpress' ) . '</th><th style="width:240px;text-align:right;">' . esc_html__( 'Actions', 'stackpress' ) . '</th></tr></thead><tbody>';
 
 		if ( '' !== $rel ) {
 			$parent = trim( dirname( $rel ), '.' );
-			echo '<tr class="dsfm-up"><td colspan="4"><a href="' . esc_url( $this->link( $parent ) ) . '">⬆ ' . esc_html__( 'Up one level', 'dicestack' ) . '</a></td></tr>';
+			echo '<tr class="dsfm-up"><td colspan="4"><a href="' . esc_url( $this->link( $parent ) ) . '">⬆ ' . esc_html__( 'Up one level', 'stackpress' ) . '</a></td></tr>';
 		}
 
 		foreach ( array_merge( $dirs, $files ) as $entry ) {
@@ -315,19 +315,19 @@ final class File_Manager extends Abstract_Module {
 		}
 		echo '</tbody></table>';
 		echo '</div>'; // .dsfm-panel
-		echo '<p style="color:#a32d2d;margin-top:14px;">' . esc_html__( 'Editing or deleting core files can break your site. Make a backup first.', 'dicestack' ) . '</p>';
+		echo '<p style="color:#a32d2d;margin-top:14px;">' . esc_html__( 'Editing or deleting core files can break your site. Make a backup first.', 'stackpress' ) . '</p>';
 		echo '</div>';
 
 		// One small, clean script for rename prompt + delete confirm.
 		$js = 'document.addEventListener("click",function(e){'
 			. 'var r=e.target.closest(".ds-fm-rename");'
-			. 'if(r){e.preventDefault();var cur=r.getAttribute("data-name");var n=window.prompt(' . wp_json_encode( __( 'New name:', 'dicestack' ) ) . ',cur);if(!n||n===cur)return;'
+			. 'if(r){e.preventDefault();var cur=r.getAttribute("data-name");var n=window.prompt(' . wp_json_encode( __( 'New name:', 'stackpress' ) ) . ',cur);if(!n||n===cur)return;'
 			. 'var f=document.createElement("form");f.method="post";f.action=' . wp_json_encode( admin_url( 'admin-post.php' ) ) . ';'
-			. 'var data={action:"dicestack_fm_rename",_wpnonce:' . wp_json_encode( wp_create_nonce( 'dicestack_fm_rename' ) ) . ',path:r.getAttribute("data-path"),old:cur,"new":n};'
+			. 'var data={action:"stackpress_fm_rename",_wpnonce:' . wp_json_encode( wp_create_nonce( 'stackpress_fm_rename' ) ) . ',path:r.getAttribute("data-path"),old:cur,"new":n};'
 			. 'for(var k in data){var i=document.createElement("input");i.type="hidden";i.name=k;i.value=data[k];f.appendChild(i);}'
 			. 'document.body.appendChild(f);f.submit();return;}'
 			. 'var d=e.target.closest(".ds-fm-delete");'
-			. 'if(d){if(!window.confirm(' . wp_json_encode( __( 'Delete this item? This cannot be undone.', 'dicestack' ) ) . ')){e.preventDefault();}}'
+			. 'if(d){if(!window.confirm(' . wp_json_encode( __( 'Delete this item? This cannot be undone.', 'stackpress' ) ) . ')){e.preventDefault();}}'
 			. '});'
 			. 'var s=document.getElementById("dsfm-search");'
 			. 'if(s){s.addEventListener("input",function(){var v=this.value.toLowerCase();var rows=document.querySelectorAll("#dsfm-table tbody tr[data-name]");for(var i=0;i<rows.length;i++){rows[i].style.display=rows[i].getAttribute("data-name").indexOf(v)>-1?"":"none";}});}';
@@ -351,30 +351,30 @@ final class File_Manager extends Abstract_Module {
 		if ( ! $is_dir ) {
 			$ext = strtolower( pathinfo( $entry, PATHINFO_EXTENSION ) );
 			if ( in_array( $ext, $this->editable, true ) ) {
-				$out[] = '<a href="' . esc_url( $this->link( $dir_rel, $child_rel ) ) . '">' . esc_html__( 'Edit', 'dicestack' ) . '</a>';
+				$out[] = '<a href="' . esc_url( $this->link( $dir_rel, $child_rel ) ) . '">' . esc_html__( 'Edit', 'stackpress' ) . '</a>';
 			}
 			$dl = wp_nonce_url( add_query_arg(
 				array(
-					'action' => 'dicestack_fm_download',
+					'action' => 'stackpress_fm_download',
 					'file'   => rawurlencode( $child_rel ),
 				),
 				admin_url( 'admin-post.php' )
-			), 'dicestack_fm_download' );
-			$out[] = '<a href="' . esc_url( $dl ) . '">' . esc_html__( 'Download', 'dicestack' ) . '</a>';
+			), 'stackpress_fm_download' );
+			$out[] = '<a href="' . esc_url( $dl ) . '">' . esc_html__( 'Download', 'stackpress' ) . '</a>';
 		}
 
 		// Rename — clean: a class + data attributes, handled by one script (below).
-		$out[] = '<a href="#" class="ds-fm-rename" data-path="' . esc_attr( $dir_rel ) . '" data-name="' . esc_attr( $entry ) . '">' . esc_html__( 'Rename', 'dicestack' ) . '</a>';
+		$out[] = '<a href="#" class="ds-fm-rename" data-path="' . esc_attr( $dir_rel ) . '" data-name="' . esc_attr( $entry ) . '">' . esc_html__( 'Rename', 'stackpress' ) . '</a>';
 
 		// Delete.
 		$del = wp_nonce_url( add_query_arg(
 			array(
-				'action' => 'dicestack_fm_delete',
+				'action' => 'stackpress_fm_delete',
 				'file'   => rawurlencode( $child_rel ),
 			),
 			admin_url( 'admin-post.php' )
-		), 'dicestack_fm_delete' );
-		$out[] = '<a href="' . esc_url( $del ) . '" class="ds-fm-delete" style="color:#a32d2d;">' . esc_html__( 'Delete', 'dicestack' ) . '</a>';
+		), 'stackpress_fm_delete' );
+		$out[] = '<a href="' . esc_url( $del ) . '" class="ds-fm-delete" style="color:#a32d2d;">' . esc_html__( 'Delete', 'stackpress' ) . '</a>';
 
 		return implode( ' ', $out );
 	}
@@ -414,7 +414,7 @@ final class File_Manager extends Abstract_Module {
 	 * @return string
 	 */
 	private function link( $path, $edit = '' ) {
-		$args = array( 'page' => 'dicestack-files' );
+		$args = array( 'page' => 'stackpress-files' );
 		if ( '' !== $path ) {
 			$args['path'] = $path;
 		}
@@ -446,7 +446,7 @@ final class File_Manager extends Abstract_Module {
 		$abs = $this->resolve( $rel );
 		$ext = strtolower( pathinfo( (string) $rel, PATHINFO_EXTENSION ) );
 		if ( false === $abs || ! is_file( $abs ) || ! in_array( $ext, $this->editable, true ) ) {
-			echo '<p>' . esc_html__( 'That file cannot be edited.', 'dicestack' ) . '</p>';
+			echo '<p>' . esc_html__( 'That file cannot be edited.', 'stackpress' ) . '</p>';
 			return;
 		}
 		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- reading a site file for the admin editor.
@@ -454,11 +454,11 @@ final class File_Manager extends Abstract_Module {
 
 		echo '<h2>' . esc_html( $rel ) . '</h2>';
 		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '">';
-		wp_nonce_field( 'dicestack_fm_save' );
-		echo '<input type="hidden" name="action" value="dicestack_fm_save" />';
+		wp_nonce_field( 'stackpress_fm_save' );
+		echo '<input type="hidden" name="action" value="stackpress_fm_save" />';
 		echo '<input type="hidden" name="file" value="' . esc_attr( $rel ) . '" />';
 		echo '<textarea name="content" style="width:100%;height:480px;font-family:monospace;font-size:13px;" spellcheck="false">' . esc_textarea( $contents ) . '</textarea>';
-		echo '<p><button type="submit" class="button button-primary">' . esc_html__( 'Save file', 'dicestack' ) . '</button> <a href="' . esc_url( $this->link( trim( dirname( $rel ), '.' ) ) ) . '" class="button">' . esc_html__( 'Cancel', 'dicestack' ) . '</a></p>';
+		echo '<p><button type="submit" class="button button-primary">' . esc_html__( 'Save file', 'stackpress' ) . '</button> <a href="' . esc_url( $this->link( trim( dirname( $rel ), '.' ) ) ) . '" class="button">' . esc_html__( 'Cancel', 'stackpress' ) . '</a></p>';
 		echo '</form>';
 	}
 
@@ -468,8 +468,8 @@ final class File_Manager extends Abstract_Module {
 	 * @return void
 	 */
 	public function handle_save() {
-		if ( ! current_user_can( 'manage_options' ) || ! check_admin_referer( 'dicestack_fm_save' ) || $this->mods_blocked() ) {
-			wp_die( esc_html__( 'Permission denied.', 'dicestack' ) );
+		if ( ! current_user_can( 'manage_options' ) || ! check_admin_referer( 'stackpress_fm_save' ) || $this->mods_blocked() ) {
+			wp_die( esc_html__( 'Permission denied.', 'stackpress' ) );
 		}
 		$rel = isset( $_POST['file'] ) ? sanitize_text_field( wp_unslash( $_POST['file'] ) ) : '';
 		$abs = $this->resolve( $rel );
@@ -477,14 +477,14 @@ final class File_Manager extends Abstract_Module {
 
 		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_is_writable -- writability check before editing a site file; WP_Filesystem is not initialised in this admin context.
 		if ( false === $abs || ! is_file( $abs ) || ! in_array( $ext, $this->editable, true ) || ! is_writable( $abs ) ) {
-			wp_die( esc_html__( 'That file cannot be saved.', 'dicestack' ) );
+			wp_die( esc_html__( 'That file cannot be saved.', 'stackpress' ) );
 		}
 
 		$content = isset( $_POST['content'] ) ? wp_unslash( $_POST['content'] ) : ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- raw file content authored by an administrator.
 		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents
 		$written = file_put_contents( $abs, $content );
 		if ( false === $written ) {
-			wp_die( esc_html__( 'Could not write the file. Check file permissions.', 'dicestack' ) );
+			wp_die( esc_html__( 'Could not write the file. Check file permissions.', 'stackpress' ) );
 		}
 
 		$this->back( trim( dirname( $rel ), '.' ), 'saved' );
@@ -496,7 +496,7 @@ final class File_Manager extends Abstract_Module {
 	 * @return void
 	 */
 	public function handle_upload() {
-		$rel = $this->guard_write( 'dicestack_fm_upload' );
+		$rel = $this->guard_write( 'stackpress_fm_upload' );
 		$dir = $this->resolve_dir( $rel );
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified in guard_write().
 		if ( false === $dir || empty( $_FILES['upload']['name'] ) ) {
@@ -527,7 +527,7 @@ final class File_Manager extends Abstract_Module {
 	 * @return void
 	 */
 	public function handle_mkdir() {
-		$rel  = $this->guard_write( 'dicestack_fm_mkdir' );
+		$rel  = $this->guard_write( 'stackpress_fm_mkdir' );
 		$dir  = $this->resolve_dir( $rel );
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified in guard_write().
 		$name = isset( $_POST['name'] ) ? sanitize_file_name( wp_unslash( $_POST['name'] ) ) : '';
@@ -544,7 +544,7 @@ final class File_Manager extends Abstract_Module {
 	 * @return void
 	 */
 	public function handle_rename() {
-		$rel = $this->guard_write( 'dicestack_fm_rename' );
+		$rel = $this->guard_write( 'stackpress_fm_rename' );
 		$dir = $this->resolve_dir( $rel );
 		// phpcs:disable WordPress.Security.NonceVerification.Missing -- nonce verified in guard_write().
 		$old = isset( $_POST['old'] ) ? sanitize_file_name( wp_unslash( $_POST['old'] ) ) : '';
@@ -568,8 +568,8 @@ final class File_Manager extends Abstract_Module {
 	 * @return void
 	 */
 	public function handle_delete() {
-		if ( ! current_user_can( 'manage_options' ) || ! check_admin_referer( 'dicestack_fm_delete' ) || $this->mods_blocked() ) {
-			wp_die( esc_html__( 'Permission denied.', 'dicestack' ) );
+		if ( ! current_user_can( 'manage_options' ) || ! check_admin_referer( 'stackpress_fm_delete' ) || $this->mods_blocked() ) {
+			wp_die( esc_html__( 'Permission denied.', 'stackpress' ) );
 		}
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- verified above.
 		$file = isset( $_GET['file'] ) ? sanitize_text_field( wp_unslash( $_GET['file'] ) ) : '';
@@ -589,14 +589,14 @@ final class File_Manager extends Abstract_Module {
 	 * @return void
 	 */
 	public function handle_download() {
-		if ( ! current_user_can( 'manage_options' ) || ! check_admin_referer( 'dicestack_fm_download' ) ) {
-			wp_die( esc_html__( 'Permission denied.', 'dicestack' ) );
+		if ( ! current_user_can( 'manage_options' ) || ! check_admin_referer( 'stackpress_fm_download' ) ) {
+			wp_die( esc_html__( 'Permission denied.', 'stackpress' ) );
 		}
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- verified above.
 		$file = isset( $_GET['file'] ) ? sanitize_text_field( wp_unslash( $_GET['file'] ) ) : '';
 		$abs  = $this->resolve( $file );
 		if ( false === $abs || ! is_file( $abs ) ) {
-			wp_die( esc_html__( 'File not found.', 'dicestack' ) );
+			wp_die( esc_html__( 'File not found.', 'stackpress' ) );
 		}
 		nocache_headers();
 		header( 'Content-Type: application/octet-stream' );
@@ -615,7 +615,7 @@ final class File_Manager extends Abstract_Module {
 	 */
 	private function guard_write( $nonce ) {
 		if ( ! current_user_can( 'manage_options' ) || ! check_admin_referer( $nonce ) || $this->mods_blocked() ) {
-			wp_die( esc_html__( 'Permission denied.', 'dicestack' ) );
+			wp_die( esc_html__( 'Permission denied.', 'stackpress' ) );
 		}
 		return isset( $_POST['path'] ) ? sanitize_text_field( wp_unslash( $_POST['path'] ) ) : '';
 	}

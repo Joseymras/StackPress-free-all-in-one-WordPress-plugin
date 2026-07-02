@@ -2,12 +2,12 @@
 /**
  * Page Cache module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Performance;
+namespace StackPress\Modules\Performance;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -38,14 +38,14 @@ final class Page_Cache extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Page caching', 'dicestack' );
+		return __( 'Page caching', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Serve cached HTML to logged-out visitors for much faster page loads.', 'dicestack' );
+		return __( 'Serve cached HTML to logged-out visitors for much faster page loads.', 'stackpress' );
 	}
 
 	/**
@@ -89,7 +89,7 @@ final class Page_Cache extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'lifetime_hours',
-				'label'   => __( 'Cache lifetime (hours)', 'dicestack' ),
+				'label'   => __( 'Cache lifetime (hours)', 'stackpress' ),
 				'type'    => 'number',
 				'default' => 10,
 				'min'     => 1,
@@ -98,45 +98,45 @@ final class Page_Cache extends Abstract_Module {
 			),
 			array(
 				'key'     => 'exclude',
-				'label'   => __( 'Exclude URLs containing', 'dicestack' ),
+				'label'   => __( 'Exclude URLs containing', 'stackpress' ),
 				'type'    => 'textarea',
 				'default' => '',
-				'help'    => __( 'One fragment per line, e.g. /my-account. Cart, checkout, and account pages are always excluded.', 'dicestack' ),
+				'help'    => __( 'One fragment per line, e.g. /my-account. Cart, checkout, and account pages are always excluded.', 'stackpress' ),
 			),
 			array(
 				'key'     => 'gzip',
-				'label'   => __( 'Gzip compress cached pages', 'dicestack' ),
+				'label'   => __( 'Gzip compress cached pages', 'stackpress' ),
 				'type'    => 'checkbox',
 				'default' => true,
-				'help'    => __( 'Serve a pre-compressed copy to browsers that support it (smaller, faster).', 'dicestack' ),
+				'help'    => __( 'Serve a pre-compressed copy to browsers that support it (smaller, faster).', 'stackpress' ),
 			),
 			array(
 				'key'     => 'preload',
-				'label'   => __( 'Preload cache after clearing', 'dicestack' ),
+				'label'   => __( 'Preload cache after clearing', 'stackpress' ),
 				'type'    => 'checkbox',
 				'default' => false,
-				'help'    => __( 'After the cache is cleared, DiceStack quietly re-visits your home page and recent posts/pages so the next visitor always gets a cached (fast) page.', 'dicestack' ),
+				'help'    => __( 'After the cache is cleared, StackPress quietly re-visits your home page and recent posts/pages so the next visitor always gets a cached (fast) page.', 'stackpress' ),
 			),
 			array(
 				'key'     => 'mobile_cache',
-				'label'   => __( 'Separate cache for mobile', 'dicestack' ),
+				'label'   => __( 'Separate cache for mobile', 'stackpress' ),
 				'type'    => 'checkbox',
 				'default' => false,
-				'help'    => __( 'Store a separate copy for phones (turn on if your theme serves different mobile markup).', 'dicestack' ),
+				'help'    => __( 'Store a separate copy for phones (turn on if your theme serves different mobile markup).', 'stackpress' ),
 			),
 			array(
 				'key'     => 'exclude_cookies',
-				'label'   => __( 'Never cache when these cookies are set', 'dicestack' ),
+				'label'   => __( 'Never cache when these cookies are set', 'stackpress' ),
 				'type'    => 'textarea',
 				'default' => '',
-				'help'    => __( 'One cookie-name fragment per line.', 'dicestack' ),
+				'help'    => __( 'One cookie-name fragment per line.', 'stackpress' ),
 			),
 			array(
 				'key'     => 'exclude_agents',
-				'label'   => __( 'Never cache these user agents', 'dicestack' ),
+				'label'   => __( 'Never cache these user agents', 'stackpress' ),
 				'type'    => 'textarea',
 				'default' => '',
-				'help'    => __( 'One user-agent fragment per line, e.g. bot, crawler.', 'dicestack' ),
+				'help'    => __( 'One user-agent fragment per line, e.g. bot, crawler.', 'stackpress' ),
 			),
 		);
 	}
@@ -149,7 +149,7 @@ final class Page_Cache extends Abstract_Module {
 	private function cache_dir() {
 		if ( ! $this->dir ) {
 			$uploads   = wp_get_upload_dir();
-			$this->dir = trailingslashit( $uploads['basedir'] ) . 'dicestack-cache/';
+			$this->dir = trailingslashit( $uploads['basedir'] ) . 'stackpress-cache/';
 		}
 		return $this->dir;
 	}
@@ -167,10 +167,10 @@ final class Page_Cache extends Abstract_Module {
 		}
 
 		// Warm the cache again after it is cleared (cron).
-		add_action( 'dicestack_cache_preload', array( $this, 'preload' ) );
+		add_action( 'stackpress_cache_preload', array( $this, 'preload' ) );
 
 		// Clean up when the module is switched off or settings change.
-		add_action( 'dicestack_module_disabled_' . $this->id(), array( $this, 'on_disable' ) );
+		add_action( 'stackpress_module_disabled_' . $this->id(), array( $this, 'on_disable' ) );
 	}
 
 	/**
@@ -180,7 +180,7 @@ final class Page_Cache extends Abstract_Module {
 	 */
 	public function on_disable() {
 		$this->clear();
-		wp_clear_scheduled_hook( 'dicestack_cache_preload' );
+		wp_clear_scheduled_hook( 'stackpress_cache_preload' );
 	}
 
 	/**
@@ -225,7 +225,7 @@ final class Page_Cache extends Abstract_Module {
 					'blocking'   => false,
 					'timeout'    => 1,
 					'sslverify'  => false,
-					'user-agent' => 'DiceStack-Preload',
+					'user-agent' => 'StackPress-Preload',
 				)
 			);
 		}
@@ -349,7 +349,7 @@ final class Page_Cache extends Abstract_Module {
 				// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- reading our own cache file.
 				$data = file_get_contents( $gz );
 				if ( false !== $data ) {
-					header( 'X-DiceStack-Cache: HIT' );
+					header( 'X-StackPress-Cache: HIT' );
 					header( 'Content-Encoding: gzip' );
 					header( 'Vary: Accept-Encoding' );
 					echo $data; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- previously-rendered, gzipped page.
@@ -363,7 +363,7 @@ final class Page_Cache extends Abstract_Module {
 			// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- reading our own cache file.
 			$html = file_get_contents( $file );
 			if ( false !== $html ) {
-				header( 'X-DiceStack-Cache: HIT' );
+				header( 'X-StackPress-Cache: HIT' );
 				echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- previously-rendered page HTML.
 				exit;
 			}
@@ -396,7 +396,7 @@ final class Page_Cache extends Abstract_Module {
 			@file_put_contents( $dir . 'index.html', '' );
 		}
 
-		$output = $html . "\n<!-- cached by DiceStack -->";
+		$output = $html . "\n<!-- cached by StackPress -->";
 
 		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents
 		@file_put_contents( $this->current_file(), $output, LOCK_EX );
@@ -434,8 +434,8 @@ final class Page_Cache extends Abstract_Module {
 		}
 
 		// Schedule a single preload run shortly after (if enabled and not queued).
-		if ( $this->get_setting( 'preload', false ) && ! wp_next_scheduled( 'dicestack_cache_preload' ) ) {
-			wp_schedule_single_event( time() + 120, 'dicestack_cache_preload' );
+		if ( $this->get_setting( 'preload', false ) && ! wp_next_scheduled( 'stackpress_cache_preload' ) ) {
+			wp_schedule_single_event( time() + 120, 'stackpress_cache_preload' );
 		}
 	}
 }

@@ -2,12 +2,12 @@
 /**
  * WP-Cron Control module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Site;
+namespace StackPress\Modules\Site;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class WP_Cron_Control extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'WP-Cron control', 'dicestack' );
+		return __( 'WP-Cron control', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Disable the visitor-triggered WP-Cron so you can run it from a real server cron.', 'dicestack' );
+		return __( 'Disable the visitor-triggered WP-Cron so you can run it from a real server cron.', 'stackpress' );
 	}
 
 	/**
@@ -72,10 +72,10 @@ final class WP_Cron_Control extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'note',
-				'label'   => __( 'Server cron command (for your reference)', 'dicestack' ),
+				'label'   => __( 'Server cron command (for your reference)', 'stackpress' ),
 				'type'    => 'text',
 				'default' => 'wget -q -O - ' . site_url( 'wp-cron.php?doing_wp_cron' ) . ' >/dev/null 2>&1',
-				'help'    => __( 'Add this to your hosting cron (e.g. every 15 minutes) after enabling. WP-Cron will not run on page loads while this module is on.', 'dicestack' ),
+				'help'    => __( 'Add this to your hosting cron (e.g. every 15 minutes) after enabling. WP-Cron will not run on page loads while this module is on.', 'stackpress' ),
 			),
 		);
 	}

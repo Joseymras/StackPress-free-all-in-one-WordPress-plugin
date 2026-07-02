@@ -2,12 +2,12 @@
 /**
  * Generic Login Errors module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Security;
+namespace StackPress\Modules\Security;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Login_Errors extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Generic login errors', 'dicestack' );
+		return __( 'Generic login errors', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Hide whether a username exists by showing one generic login error message.', 'dicestack' );
+		return __( 'Hide whether a username exists by showing one generic login error message.', 'stackpress' );
 	}
 
 	/**
@@ -79,6 +79,6 @@ final class Login_Errors extends Abstract_Module {
 	 * @return string
 	 */
 	public function generic( $error ) {
-		return __( 'Invalid login details. Please try again.', 'dicestack' );
+		return __( 'Invalid login details. Please try again.', 'stackpress' );
 	}
 }

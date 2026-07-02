@@ -2,12 +2,12 @@
 /**
  * Author Box module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Content;
+namespace StackPress\Modules\Content;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Author_Box extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Author box', 'dicestack' );
+		return __( 'Author box', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Display an author bio with avatar and website below each post.', 'dicestack' );
+		return __( 'Display an author bio with avatar and website below each post.', 'stackpress' );
 	}
 
 	/**
@@ -79,13 +79,13 @@ final class Author_Box extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'position',
-				'label'   => __( 'Where to show', 'dicestack' ),
+				'label'   => __( 'Where to show', 'stackpress' ),
 				'type'    => 'select',
 				'default' => 'after',
 				'options' => array(
-					'after'  => __( 'After the post content', 'dicestack' ),
-					'before' => __( 'Before the post content', 'dicestack' ),
-					'manual' => __( 'Only where I place [dicestack_author_box]', 'dicestack' ),
+					'after'  => __( 'After the post content', 'stackpress' ),
+					'before' => __( 'Before the post content', 'stackpress' ),
+					'manual' => __( 'Only where I place [stackpress_author_box]', 'stackpress' ),
 				),
 			),
 		);
@@ -96,7 +96,7 @@ final class Author_Box extends Abstract_Module {
 	 */
 	public function init() {
 		add_filter( 'the_content', array( $this, 'append' ), 45 );
-		add_shortcode( 'dicestack_author_box', array( $this, 'shortcode' ) );
+		add_shortcode( 'stackpress_author_box', array( $this, 'shortcode' ) );
 	}
 
 	/**
@@ -147,13 +147,13 @@ final class Author_Box extends Abstract_Module {
 		$url    = get_the_author_meta( 'user_url', $author_id );
 		$avatar = get_avatar( $author_id, 72, '', $name, array( 'style' => 'border-radius:50%;' ) );
 
-		$box  = '<div class="dicestack-author-box" style="display:flex;gap:16px;margin-top:32px;padding:18px;background:#f6f7f9;border-radius:10px;">';
-		$box .= '<div class="dicestack-author-avatar" style="flex-shrink:0;">' . $avatar . '</div>';
-		$box .= '<div class="dicestack-author-info">';
+		$box  = '<div class="stackpress-author-box" style="display:flex;gap:16px;margin-top:32px;padding:18px;background:#f6f7f9;border-radius:10px;">';
+		$box .= '<div class="stackpress-author-avatar" style="flex-shrink:0;">' . $avatar . '</div>';
+		$box .= '<div class="stackpress-author-info">';
 		$box .= '<strong style="display:block;font-size:16px;">' . esc_html( $name ) . '</strong>';
 		$box .= '<p style="margin:6px 0;">' . esc_html( $bio ) . '</p>';
 		if ( $url ) {
-			$box .= '<a href="' . esc_url( $url ) . '" rel="noopener" target="_blank" style="color:#0aa2c0;">' . esc_html__( 'Website', 'dicestack' ) . '</a>';
+			$box .= '<a href="' . esc_url( $url ) . '" rel="noopener" target="_blank" style="color:#0aa2c0;">' . esc_html__( 'Website', 'stackpress' ) . '</a>';
 		}
 		$box .= '</div></div>';
 

@@ -2,12 +2,12 @@
 /**
  * Image Lightbox module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Media;
+namespace StackPress\Modules\Media;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Image_Lightbox extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Image lightbox', 'dicestack' );
+		return __( 'Image lightbox', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Open full-size images in a clean overlay instead of a new page.', 'dicestack' );
+		return __( 'Open full-size images in a clean overlay instead of a new page.', 'stackpress' );
 	}
 
 	/**
@@ -82,12 +82,12 @@ final class Image_Lightbox extends Abstract_Module {
 			return;
 		}
 		?>
-		<div id="dicestack-lb" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:99999;align-items:center;justify-content:center;cursor:zoom-out;">
-			<img id="dicestack-lb-img" src="" alt="" style="max-width:92%;max-height:92%;border-radius:4px;" />
+		<div id="stackpress-lb" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:99999;align-items:center;justify-content:center;cursor:zoom-out;">
+			<img id="stackpress-lb-img" src="" alt="" style="max-width:92%;max-height:92%;border-radius:4px;" />
 		</div>
 		<script>
 		(function(){
-		var lb=document.getElementById('dicestack-lb'),img=document.getElementById('dicestack-lb-img');
+		var lb=document.getElementById('stackpress-lb'),img=document.getElementById('stackpress-lb-img');
 		if(!lb)return;
 		function open(src){img.src=src;lb.style.display='flex';}
 		function close(){lb.style.display='none';img.src='';}

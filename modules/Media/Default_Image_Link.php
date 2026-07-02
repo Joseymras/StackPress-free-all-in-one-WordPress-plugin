@@ -2,12 +2,12 @@
 /**
  * Default Image Link module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Media;
+namespace StackPress\Modules\Media;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Default_Image_Link extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Default image link: none', 'dicestack' );
+		return __( 'Default image link: none', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Stop new images defaulting to a link, avoiding accidental attachment-page links.', 'dicestack' );
+		return __( 'Stop new images defaulting to a link, avoiding accidental attachment-page links.', 'stackpress' );
 	}
 
 	/**

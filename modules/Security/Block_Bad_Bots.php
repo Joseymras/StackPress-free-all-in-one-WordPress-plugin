@@ -2,12 +2,12 @@
 /**
  * Block Bad Bots module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Security;
+namespace StackPress\Modules\Security;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Block_Bad_Bots extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Block bad bots', 'dicestack' );
+		return __( 'Block bad bots', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Reject known vulnerability scanners and aggressive scrapers by user agent.', 'dicestack' );
+		return __( 'Reject known vulnerability scanners and aggressive scrapers by user agent.', 'stackpress' );
 	}
 
 	/**
@@ -72,10 +72,10 @@ final class Block_Bad_Bots extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'extra',
-				'label'   => __( 'Extra blocked user-agent keywords', 'dicestack' ),
+				'label'   => __( 'Extra blocked user-agent keywords', 'stackpress' ),
 				'type'    => 'textarea',
 				'default' => '',
-				'help'    => __( 'One keyword per line, matched case-insensitively against the user agent.', 'dicestack' ),
+				'help'    => __( 'One keyword per line, matched case-insensitively against the user agent.', 'stackpress' ),
 			),
 		);
 	}
@@ -112,7 +112,7 @@ final class Block_Bad_Bots extends Abstract_Module {
 			if ( strpos( $ua, $needle ) !== false ) {
 				status_header( 403 );
 				nocache_headers();
-				wp_die( esc_html__( 'Access denied.', 'dicestack' ), '', array( 'response' => 403 ) );
+				wp_die( esc_html__( 'Access denied.', 'stackpress' ), '', array( 'response' => 403 ) );
 			}
 		}
 	}

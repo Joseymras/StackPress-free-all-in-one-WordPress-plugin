@@ -2,12 +2,12 @@
 /**
  * Defer JavaScript module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Performance;
+namespace StackPress\Modules\Performance;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -29,14 +29,14 @@ final class Defer_JS extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Defer JavaScript', 'dicestack' );
+		return __( 'Defer JavaScript', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Add defer to front-end scripts to stop them blocking the first paint.', 'dicestack' );
+		return __( 'Add defer to front-end scripts to stop them blocking the first paint.', 'stackpress' );
 	}
 
 	/**
@@ -80,10 +80,10 @@ final class Defer_JS extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'exclude',
-				'label'   => __( 'Script handles to NOT defer', 'dicestack' ),
+				'label'   => __( 'Script handles to NOT defer', 'stackpress' ),
 				'type'    => 'textarea',
 				'default' => "jquery-core\njquery-migrate",
-				'help'    => __( 'One script handle per line. Defaults keep jQuery non-deferred for safety.', 'dicestack' ),
+				'help'    => __( 'One script handle per line. Defaults keep jQuery non-deferred for safety.', 'stackpress' ),
 			),
 		);
 	}

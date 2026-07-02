@@ -2,12 +2,12 @@
 /**
  * Analytics & Tracking module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\SEO;
+namespace StackPress\Modules\SEO;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -29,14 +29,14 @@ final class Analytics extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Analytics & tracking', 'dicestack' );
+		return __( 'Analytics & tracking', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Add Google Analytics (GA4), Tag Manager, and Meta Pixel by ID — no code.', 'dicestack' );
+		return __( 'Add Google Analytics (GA4), Tag Manager, and Meta Pixel by ID — no code.', 'stackpress' );
 	}
 
 	/**
@@ -78,9 +78,9 @@ final class Analytics extends Abstract_Module {
 	 */
 	public function external_service() {
 		return array(
-			'service' => __( 'Google Analytics / Tag Manager / Meta Pixel', 'dicestack' ),
+			'service' => __( 'Google Analytics / Tag Manager / Meta Pixel', 'stackpress' ),
 			'url'     => 'https://policies.google.com/privacy',
-			'data'    => __( 'When configured, visitor analytics data is sent to the tracking services you enable.', 'dicestack' ),
+			'data'    => __( 'When configured, visitor analytics data is sent to the tracking services you enable.', 'stackpress' ),
 		);
 	}
 
@@ -91,40 +91,40 @@ final class Analytics extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'ga4_id',
-				'label'   => __( 'Google Analytics 4 Measurement ID', 'dicestack' ),
+				'label'   => __( 'Google Analytics 4 Measurement ID', 'stackpress' ),
 				'type'    => 'text',
 				'default' => '',
-				'help'    => __( 'Looks like G-XXXXXXXXXX.', 'dicestack' ),
+				'help'    => __( 'Looks like G-XXXXXXXXXX.', 'stackpress' ),
 				'guide'   => array(
 					'url'   => 'https://support.google.com/analytics/answer/9539598',
-					'label' => __( 'How to find your GA4 ID', 'dicestack' ),
+					'label' => __( 'How to find your GA4 ID', 'stackpress' ),
 				),
 			),
 			array(
 				'key'     => 'gtm_id',
-				'label'   => __( 'Google Tag Manager ID', 'dicestack' ),
+				'label'   => __( 'Google Tag Manager ID', 'stackpress' ),
 				'type'    => 'text',
 				'default' => '',
-				'help'    => __( 'Looks like GTM-XXXXXXX.', 'dicestack' ),
+				'help'    => __( 'Looks like GTM-XXXXXXX.', 'stackpress' ),
 				'guide'   => array(
 					'url'   => 'https://support.google.com/tagmanager/answer/6103696',
-					'label' => __( 'How to find your GTM ID', 'dicestack' ),
+					'label' => __( 'How to find your GTM ID', 'stackpress' ),
 				),
 			),
 			array(
 				'key'     => 'meta_pixel',
-				'label'   => __( 'Meta (Facebook) Pixel ID', 'dicestack' ),
+				'label'   => __( 'Meta (Facebook) Pixel ID', 'stackpress' ),
 				'type'    => 'text',
 				'default' => '',
-				'help'    => __( 'A 15–16 digit number.', 'dicestack' ),
+				'help'    => __( 'A 15–16 digit number.', 'stackpress' ),
 				'guide'   => array(
 					'url'   => 'https://www.facebook.com/business/help/952192354843755',
-					'label' => __( 'How to find your Meta Pixel ID', 'dicestack' ),
+					'label' => __( 'How to find your Meta Pixel ID', 'stackpress' ),
 				),
 			),
 			array(
 				'key'     => 'exclude_admins',
-				'label'   => __( 'Do not track logged-in administrators', 'dicestack' ),
+				'label'   => __( 'Do not track logged-in administrators', 'stackpress' ),
 				'type'    => 'toggle',
 				'default' => true,
 			),
@@ -153,9 +153,9 @@ final class Analytics extends Abstract_Module {
 		if ( '' === $ga4 || ! preg_match( '/^G-[A-Z0-9]+$/i', $ga4 ) ) {
 			return;
 		}
-		wp_enqueue_script( 'dicestack-ga4', 'https://www.googletagmanager.com/gtag/js?id=' . rawurlencode( $ga4 ), array(), null, false ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- Google serves an unversioned URL.
+		wp_enqueue_script( 'stackpress-ga4', 'https://www.googletagmanager.com/gtag/js?id=' . rawurlencode( $ga4 ), array(), null, false ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- Google serves an unversioned URL.
 		$id = esc_js( $ga4 );
-		wp_add_inline_script( 'dicestack-ga4', "window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','" . $id . "');" );
+		wp_add_inline_script( 'stackpress-ga4', "window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','" . $id . "');" );
 	}
 
 	/**

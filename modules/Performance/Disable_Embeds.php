@@ -2,12 +2,12 @@
 /**
  * Disable Embeds module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Performance;
+namespace StackPress\Modules\Performance;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Disable_Embeds extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Disable oEmbeds', 'dicestack' );
+		return __( 'Disable oEmbeds', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Remove the wp-embed script and oEmbed discovery tags from every page.', 'dicestack' );
+		return __( 'Remove the wp-embed script and oEmbed discovery tags from every page.', 'stackpress' );
 	}
 
 	/**

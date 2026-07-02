@@ -2,20 +2,20 @@
 /**
  * Front-end Custom CSS module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Content;
+namespace StackPress\Modules\Content;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
  * Add custom CSS to the front end without touching the theme. Use it to restyle
- * anything DiceStack outputs (popups, reviews, badges, forms…) so it matches your
- * theme, or to make any other visual tweak. DiceStack front-end elements use
- * .dicestack-* class names that are easy to target.
+ * anything StackPress outputs (popups, reviews, badges, forms…) so it matches your
+ * theme, or to make any other visual tweak. StackPress front-end elements use
+ * .stackpress-* class names that are easy to target.
  */
 final class Frontend_CSS extends Abstract_Module {
 
@@ -30,14 +30,14 @@ final class Frontend_CSS extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Front-end custom CSS', 'dicestack' );
+		return __( 'Front-end custom CSS', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Add your own CSS to the site front end — restyle DiceStack output to match your theme.', 'dicestack' );
+		return __( 'Add your own CSS to the site front end — restyle StackPress output to match your theme.', 'stackpress' );
 	}
 
 	/**
@@ -81,10 +81,10 @@ final class Frontend_CSS extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'css',
-				'label'   => __( 'Custom CSS', 'dicestack' ),
+				'label'   => __( 'Custom CSS', 'stackpress' ),
 				'type'    => 'textarea',
 				'default' => '',
-				'help'    => __( 'Applied site-wide on the front end. Tip: DiceStack elements use .dicestack-* classes (e.g. .dicestack-cookie, .dicestack-reviews, .dicestack-badge-wc).', 'dicestack' ),
+				'help'    => __( 'Applied site-wide on the front end. Tip: StackPress elements use .stackpress-* classes (e.g. .stackpress-cookie, .stackpress-reviews, .stackpress-badge-wc).', 'stackpress' ),
 			),
 		);
 	}
@@ -119,7 +119,7 @@ final class Frontend_CSS extends Abstract_Module {
 	public function output() {
 		$css = (string) $this->get_setting( 'css', '' );
 		if ( '' !== trim( $css ) ) {
-			echo "<style id=\"dicestack-frontend-css\">\n" . wp_strip_all_tags( $css ) . "\n</style>\n"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- CSS with tags stripped.
+			echo "<style id=\"stackpress-frontend-css\">\n" . wp_strip_all_tags( $css ) . "\n</style>\n"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- CSS with tags stripped.
 		}
 	}
 }

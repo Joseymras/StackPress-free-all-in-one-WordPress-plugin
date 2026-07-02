@@ -2,12 +2,12 @@
 /**
  * Spam Shield module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Forms;
+namespace StackPress\Modules\Forms;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -21,12 +21,12 @@ final class Spam_Shield extends Abstract_Module {
 	/**
 	 * Honeypot field name.
 	 */
-	const HONEYPOT = 'dicestack_hp';
+	const HONEYPOT = 'stackpress_hp';
 
 	/**
 	 * Timestamp field name.
 	 */
-	const TS = 'dicestack_cts';
+	const TS = 'stackpress_cts';
 
 	/**
 	 * {@inheritDoc}
@@ -39,14 +39,14 @@ final class Spam_Shield extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Spam shield', 'dicestack' );
+		return __( 'Spam shield', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Block comment and registration spam with a honeypot and time trap — no CAPTCHA, no API.', 'dicestack' );
+		return __( 'Block comment and registration spam with a honeypot and time trap — no CAPTCHA, no API.', 'stackpress' );
 	}
 
 	/**
@@ -90,19 +90,19 @@ final class Spam_Shield extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'protect_comments',
-				'label'   => __( 'Protect the comment form', 'dicestack' ),
+				'label'   => __( 'Protect the comment form', 'stackpress' ),
 				'type'    => 'toggle',
 				'default' => true,
 			),
 			array(
 				'key'     => 'protect_registration',
-				'label'   => __( 'Protect the registration form', 'dicestack' ),
+				'label'   => __( 'Protect the registration form', 'stackpress' ),
 				'type'    => 'toggle',
 				'default' => true,
 			),
 			array(
 				'key'     => 'min_seconds',
-				'label'   => __( 'Minimum seconds to fill the form', 'dicestack' ),
+				'label'   => __( 'Minimum seconds to fill the form', 'stackpress' ),
 				'type'    => 'number',
 				'default' => 3,
 				'min'     => 1,
@@ -176,8 +176,8 @@ final class Spam_Shield extends Abstract_Module {
 		}
 		if ( ! $this->passes() ) {
 			wp_die(
-				esc_html__( 'Your comment was flagged as spam. Please go back and try again.', 'dicestack' ),
-				esc_html__( 'Comment blocked', 'dicestack' ),
+				esc_html__( 'Your comment was flagged as spam. Please go back and try again.', 'stackpress' ),
+				esc_html__( 'Comment blocked', 'stackpress' ),
 				array( 'response' => 403, 'back_link' => true )
 			);
 		}
@@ -192,7 +192,7 @@ final class Spam_Shield extends Abstract_Module {
 	 */
 	public function check_registration( $errors ) {
 		if ( ! $this->passes() ) {
-			$errors->add( 'dicestack_spam', __( 'Registration blocked: the form looked automated.', 'dicestack' ) );
+			$errors->add( 'stackpress_spam', __( 'Registration blocked: the form looked automated.', 'stackpress' ) );
 		}
 		return $errors;
 	}

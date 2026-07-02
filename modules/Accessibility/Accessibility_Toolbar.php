@@ -2,12 +2,12 @@
 /**
  * Accessibility Toolbar module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Accessibility;
+namespace StackPress\Modules\Accessibility;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -29,14 +29,14 @@ final class Accessibility_Toolbar extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Accessibility toolbar', 'dicestack' );
+		return __( 'Accessibility toolbar', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'A floating widget for font size, high contrast, and link highlighting.', 'dicestack' );
+		return __( 'A floating widget for font size, high contrast, and link highlighting.', 'stackpress' );
 	}
 
 	/**
@@ -80,12 +80,12 @@ final class Accessibility_Toolbar extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'position',
-				'label'   => __( 'Button position', 'dicestack' ),
+				'label'   => __( 'Button position', 'stackpress' ),
 				'type'    => 'select',
 				'default' => 'right',
 				'options' => array(
-					'right' => __( 'Bottom right', 'dicestack' ),
-					'left'  => __( 'Bottom left', 'dicestack' ),
+					'right' => __( 'Bottom right', 'stackpress' ),
+					'left'  => __( 'Bottom left', 'stackpress' ),
 				),
 			),
 		);
@@ -107,35 +107,35 @@ final class Accessibility_Toolbar extends Abstract_Module {
 		$pos = ( 'left' === $this->get_setting( 'position', 'right' ) ) ? 'left' : 'right';
 		?>
 		<style>
-		#dicestack-a11y-btn{position:fixed;bottom:24px;<?php echo esc_attr( $pos ); ?>:24px;width:48px;height:48px;border-radius:50%;background:#1b2a4a;color:#fff;border:0;cursor:pointer;z-index:99998;font-size:22px;line-height:1}
-		#dicestack-a11y-panel{position:fixed;bottom:80px;<?php echo esc_attr( $pos ); ?>:24px;background:#fff;color:#1b2a4a;border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,.2);padding:14px;z-index:99998;display:none;min-width:200px}
-		#dicestack-a11y-panel button{display:block;width:100%;text-align:left;background:#f6f7f9;border:1px solid #e4e7ec;border-radius:6px;padding:8px 10px;margin:5px 0;cursor:pointer;font-size:13px}
-		body.dicestack-a11y-contrast{filter:contrast(1.4)}
-		body.dicestack-a11y-gray{filter:grayscale(1)}
-		body.dicestack-a11y-links a{text-decoration:underline!important;color:#0000ee!important}
-		body.dicestack-a11y-readable *{font-family:Arial,Helvetica,sans-serif!important}
+		#stackpress-a11y-btn{position:fixed;bottom:24px;<?php echo esc_attr( $pos ); ?>:24px;width:48px;height:48px;border-radius:50%;background:#1b2a4a;color:#fff;border:0;cursor:pointer;z-index:99998;font-size:22px;line-height:1}
+		#stackpress-a11y-panel{position:fixed;bottom:80px;<?php echo esc_attr( $pos ); ?>:24px;background:#fff;color:#1b2a4a;border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,.2);padding:14px;z-index:99998;display:none;min-width:200px}
+		#stackpress-a11y-panel button{display:block;width:100%;text-align:left;background:#f6f7f9;border:1px solid #e4e7ec;border-radius:6px;padding:8px 10px;margin:5px 0;cursor:pointer;font-size:13px}
+		body.stackpress-a11y-contrast{filter:contrast(1.4)}
+		body.stackpress-a11y-gray{filter:grayscale(1)}
+		body.stackpress-a11y-links a{text-decoration:underline!important;color:#0000ee!important}
+		body.stackpress-a11y-readable *{font-family:Arial,Helvetica,sans-serif!important}
 		</style>
-		<button id="dicestack-a11y-btn" aria-label="<?php esc_attr_e( 'Accessibility options', 'dicestack' ); ?>" aria-expanded="false">&#9855;</button>
-		<div id="dicestack-a11y-panel" role="dialog" aria-label="<?php esc_attr_e( 'Accessibility options', 'dicestack' ); ?>">
-			<button data-act="font-up"><?php esc_html_e( 'Increase text size', 'dicestack' ); ?></button>
-			<button data-act="font-down"><?php esc_html_e( 'Decrease text size', 'dicestack' ); ?></button>
-			<button data-act="contrast"><?php esc_html_e( 'High contrast', 'dicestack' ); ?></button>
-			<button data-act="gray"><?php esc_html_e( 'Grayscale', 'dicestack' ); ?></button>
-			<button data-act="links"><?php esc_html_e( 'Highlight links', 'dicestack' ); ?></button>
-			<button data-act="readable"><?php esc_html_e( 'Readable font', 'dicestack' ); ?></button>
-			<button data-act="reset"><?php esc_html_e( 'Reset', 'dicestack' ); ?></button>
+		<button id="stackpress-a11y-btn" aria-label="<?php esc_attr_e( 'Accessibility options', 'stackpress' ); ?>" aria-expanded="false">&#9855;</button>
+		<div id="stackpress-a11y-panel" role="dialog" aria-label="<?php esc_attr_e( 'Accessibility options', 'stackpress' ); ?>">
+			<button data-act="font-up"><?php esc_html_e( 'Increase text size', 'stackpress' ); ?></button>
+			<button data-act="font-down"><?php esc_html_e( 'Decrease text size', 'stackpress' ); ?></button>
+			<button data-act="contrast"><?php esc_html_e( 'High contrast', 'stackpress' ); ?></button>
+			<button data-act="gray"><?php esc_html_e( 'Grayscale', 'stackpress' ); ?></button>
+			<button data-act="links"><?php esc_html_e( 'Highlight links', 'stackpress' ); ?></button>
+			<button data-act="readable"><?php esc_html_e( 'Readable font', 'stackpress' ); ?></button>
+			<button data-act="reset"><?php esc_html_e( 'Reset', 'stackpress' ); ?></button>
 		</div>
 		<script>
 		(function(){
-		var btn=document.getElementById('dicestack-a11y-btn'),panel=document.getElementById('dicestack-a11y-panel'),body=document.body;
-		var KEY='dicestack_a11y',state={font:0,contrast:false,gray:false,links:false,readable:false};
+		var btn=document.getElementById('stackpress-a11y-btn'),panel=document.getElementById('stackpress-a11y-panel'),body=document.body;
+		var KEY='stackpress_a11y',state={font:0,contrast:false,gray:false,links:false,readable:false};
 		try{var s=localStorage.getItem(KEY);if(s){state=JSON.parse(s);}}catch(e){}
 		function apply(){
 			body.style.fontSize=state.font?((100+state.font*10)+'%'):'';
-			body.classList.toggle('dicestack-a11y-contrast',!!state.contrast);
-			body.classList.toggle('dicestack-a11y-gray',!!state.gray);
-			body.classList.toggle('dicestack-a11y-links',!!state.links);
-			body.classList.toggle('dicestack-a11y-readable',!!state.readable);
+			body.classList.toggle('stackpress-a11y-contrast',!!state.contrast);
+			body.classList.toggle('stackpress-a11y-gray',!!state.gray);
+			body.classList.toggle('stackpress-a11y-links',!!state.links);
+			body.classList.toggle('stackpress-a11y-readable',!!state.readable);
 			try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}
 		}
 		apply();

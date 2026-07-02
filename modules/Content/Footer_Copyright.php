@@ -2,17 +2,17 @@
 /**
  * Footer Copyright module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Content;
+namespace StackPress\Modules\Content;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Provides [dicestack_year] and [dicestack_copyright] shortcodes for an always-current
+ * Provides [stackpress_year] and [stackpress_copyright] shortcodes for an always-current
  * copyright line in the footer.
  */
 final class Footer_Copyright extends Abstract_Module {
@@ -28,14 +28,14 @@ final class Footer_Copyright extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Auto copyright', 'dicestack' );
+		return __( 'Auto copyright', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Use [dicestack_copyright] or [dicestack_year] for an always-current footer credit.', 'dicestack' );
+		return __( 'Use [stackpress_copyright] or [stackpress_year] for an always-current footer credit.', 'stackpress' );
 	}
 
 	/**
@@ -72,13 +72,13 @@ final class Footer_Copyright extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'start_year',
-				'label'   => __( 'Start year (optional)', 'dicestack' ),
+				'label'   => __( 'Start year (optional)', 'stackpress' ),
 				'type'    => 'number',
 				'default' => 0,
 				'min'     => 0,
 				'max'     => 2100,
 				'step'    => 1,
-				'help'    => __( 'If set and earlier than this year, shows a range like 2018–2026.', 'dicestack' ),
+				'help'    => __( 'If set and earlier than this year, shows a range like 2018–2026.', 'stackpress' ),
 			),
 		);
 	}
@@ -87,8 +87,8 @@ final class Footer_Copyright extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function init() {
-		add_shortcode( 'dicestack_year', array( $this, 'year' ) );
-		add_shortcode( 'dicestack_copyright', array( $this, 'copyright' ) );
+		add_shortcode( 'stackpress_year', array( $this, 'year' ) );
+		add_shortcode( 'stackpress_copyright', array( $this, 'copyright' ) );
 	}
 
 	/**

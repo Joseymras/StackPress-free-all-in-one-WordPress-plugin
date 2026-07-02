@@ -2,12 +2,12 @@
 /**
  * Database Optimizer module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Performance;
+namespace StackPress\Modules\Performance;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -20,7 +20,7 @@ final class Database_Optimizer extends Abstract_Module {
 	/**
 	 * Cron hook name.
 	 */
-	const CRON_HOOK = 'dicestack_db_cleanup';
+	const CRON_HOOK = 'stackpress_db_cleanup';
 
 	/**
 	 * {@inheritDoc}
@@ -33,14 +33,14 @@ final class Database_Optimizer extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Database optimizer', 'dicestack' );
+		return __( 'Database optimizer', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Automatically clear revisions, auto-drafts, transients, and spam to keep the database lean.', 'dicestack' );
+		return __( 'Automatically clear revisions, auto-drafts, transients, and spam to keep the database lean.', 'stackpress' );
 	}
 
 	/**
@@ -84,30 +84,30 @@ final class Database_Optimizer extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'frequency',
-				'label'   => __( 'Run automatically', 'dicestack' ),
+				'label'   => __( 'Run automatically', 'stackpress' ),
 				'type'    => 'select',
 				'default' => 'weekly',
 				'options' => array(
-					'never'   => __( 'Never (manual only)', 'dicestack' ),
-					'daily'   => __( 'Daily', 'dicestack' ),
-					'weekly'  => __( 'Weekly', 'dicestack' ),
+					'never'   => __( 'Never (manual only)', 'stackpress' ),
+					'daily'   => __( 'Daily', 'stackpress' ),
+					'weekly'  => __( 'Weekly', 'stackpress' ),
 				),
 			),
 			array(
 				'key'     => 'revisions',
-				'label'   => __( 'Delete post revisions', 'dicestack' ),
+				'label'   => __( 'Delete post revisions', 'stackpress' ),
 				'type'    => 'toggle',
 				'default' => true,
 			),
 			array(
 				'key'     => 'transients',
-				'label'   => __( 'Delete expired transients', 'dicestack' ),
+				'label'   => __( 'Delete expired transients', 'stackpress' ),
 				'type'    => 'toggle',
 				'default' => true,
 			),
 			array(
 				'key'     => 'spam',
-				'label'   => __( 'Delete spam & trashed comments', 'dicestack' ),
+				'label'   => __( 'Delete spam & trashed comments', 'stackpress' ),
 				'type'    => 'toggle',
 				'default' => true,
 			),
@@ -122,7 +122,7 @@ final class Database_Optimizer extends Abstract_Module {
 		add_action( 'init', array( $this, 'ensure_schedule' ) );
 
 		// Tidy the cron event when the module is turned off.
-		add_action( 'dicestack_module_disabled_' . $this->id(), array( $this, 'clear_schedule' ) );
+		add_action( 'stackpress_module_disabled_' . $this->id(), array( $this, 'clear_schedule' ) );
 	}
 
 	/**
@@ -198,7 +198,7 @@ final class Database_Optimizer extends Abstract_Module {
 			$results['comments'] = (int) $wpdb->query( "DELETE FROM {$wpdb->comments} WHERE comment_approved IN ('spam','trash')" );
 		}
 
-		update_option( 'dicestack_db_last_cleanup', array( 'time' => time(), 'results' => $results ) );
+		update_option( 'stackpress_db_last_cleanup', array( 'time' => time(), 'results' => $results ) );
 		return $results;
 	}
 }

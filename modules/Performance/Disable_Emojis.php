@@ -2,12 +2,12 @@
 /**
  * Disable Emojis module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Performance;
+namespace StackPress\Modules\Performance;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Disable_Emojis extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Disable emojis', 'dicestack' );
+		return __( 'Disable emojis', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Remove the extra emoji script and detection request from every page.', 'dicestack' );
+		return __( 'Remove the extra emoji script and detection request from every page.', 'stackpress' );
 	}
 
 	/**

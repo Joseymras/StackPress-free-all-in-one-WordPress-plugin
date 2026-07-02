@@ -2,18 +2,18 @@
 /**
  * WooCommerce Wishlist module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\WooCommerce;
+namespace StackPress\Modules\WooCommerce;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
  * A simple, no-AJAX wishlist. Logged-in users' lists are stored in user meta;
- * guests use a cookie. Display the list with [dicestack_wishlist]. Replaces YITH
+ * guests use a cookie. Display the list with [stackpress_wishlist]. Replaces YITH
  * Wishlist for the core use case.
  */
 final class Wishlist extends Abstract_Module {
@@ -21,7 +21,7 @@ final class Wishlist extends Abstract_Module {
 	/**
 	 * User-meta / cookie key.
 	 */
-	const KEY = 'dicestack_wishlist';
+	const KEY = 'stackpress_wishlist';
 
 	/**
 	 * {@inheritDoc}
@@ -34,14 +34,14 @@ final class Wishlist extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Wishlist', 'dicestack' );
+		return __( 'Wishlist', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Let shoppers save products to a wishlist. Show it with [dicestack_wishlist].', 'dicestack' );
+		return __( 'Let shoppers save products to a wishlist. Show it with [stackpress_wishlist].', 'stackpress' );
 	}
 
 	/**
@@ -92,7 +92,7 @@ final class Wishlist extends Abstract_Module {
 		add_action( 'init', array( $this, 'handle_toggle' ) );
 		add_action( 'woocommerce_after_add_to_cart_button', array( $this, 'button' ) );
 		add_action( 'woocommerce_after_shop_loop_item', array( $this, 'button' ), 20 );
-		add_shortcode( 'dicestack_wishlist', array( $this, 'render_list' ) );
+		add_shortcode( 'stackpress_wishlist', array( $this, 'render_list' ) );
 	}
 
 	/**
@@ -133,14 +133,14 @@ final class Wishlist extends Abstract_Module {
 	 */
 	public function handle_toggle() {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- nonce verified below before any state change.
-		if ( ! isset( $_GET['dicestack_wishlist'], $_GET['product'] ) ) {
+		if ( ! isset( $_GET['stackpress_wishlist'], $_GET['product'] ) ) {
 			return;
 		}
-		$action  = sanitize_key( wp_unslash( $_GET['dicestack_wishlist'] ) );
+		$action  = sanitize_key( wp_unslash( $_GET['stackpress_wishlist'] ) );
 		$product = absint( $_GET['product'] );
 		$nonce   = isset( $_GET['_wpnonce'] ) ? sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ) : '';
 
-		if ( ! wp_verify_nonce( $nonce, 'dicestack_wishlist_' . $product ) ) {
+		if ( ! wp_verify_nonce( $nonce, 'stackpress_wishlist_' . $product ) ) {
 			return;
 		}
 
@@ -152,7 +152,7 @@ final class Wishlist extends Abstract_Module {
 		}
 		$this->save_list( $list );
 
-		wp_safe_redirect( remove_query_arg( array( 'dicestack_wishlist', 'product', '_wpnonce' ) ) );
+		wp_safe_redirect( remove_query_arg( array( 'stackpress_wishlist', 'product', '_wpnonce' ) ) );
 		exit;
 	}
 
@@ -170,17 +170,17 @@ final class Wishlist extends Abstract_Module {
 		$list   = $this->get_list();
 		$in     = in_array( $id, $list, true );
 		$action = $in ? 'remove' : 'add';
-		$label  = $in ? __( '♥ In wishlist — remove', 'dicestack' ) : __( '♡ Add to wishlist', 'dicestack' );
+		$label  = $in ? __( '♥ In wishlist — remove', 'stackpress' ) : __( '♡ Add to wishlist', 'stackpress' );
 		$url    = wp_nonce_url(
 			add_query_arg(
 				array(
-					'dicestack_wishlist' => $action,
+					'stackpress_wishlist' => $action,
 					'product'         => $id,
 				)
 			),
-			'dicestack_wishlist_' . $id
+			'stackpress_wishlist_' . $id
 		);
-		echo '<a class="dicestack-wishlist-btn" href="' . esc_url( $url ) . '" style="display:inline-block;margin-top:8px;font-size:13px;color:#d4537e;text-decoration:none;">' . esc_html( $label ) . '</a>';
+		echo '<a class="stackpress-wishlist-btn" href="' . esc_url( $url ) . '" style="display:inline-block;margin-top:8px;font-size:13px;color:#d4537e;text-decoration:none;">' . esc_html( $label ) . '</a>';
 	}
 
 	/**
@@ -192,7 +192,7 @@ final class Wishlist extends Abstract_Module {
 	public function render_list( $atts ) {
 		$list = $this->get_list();
 		if ( empty( $list ) ) {
-			return '<p>' . esc_html__( 'Your wishlist is empty.', 'dicestack' ) . '</p>';
+			return '<p>' . esc_html__( 'Your wishlist is empty.', 'stackpress' ) . '</p>';
 		}
 		$shortcode = sprintf( '[products ids="%s" columns="4"]', esc_attr( implode( ',', $list ) ) );
 		return do_shortcode( $shortcode );

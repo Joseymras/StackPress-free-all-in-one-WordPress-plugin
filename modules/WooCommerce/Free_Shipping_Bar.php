@@ -2,12 +2,12 @@
 /**
  * WooCommerce Free Shipping Bar module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\WooCommerce;
+namespace StackPress\Modules\WooCommerce;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,14 +28,14 @@ final class Free_Shipping_Bar extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Free shipping nudge', 'dicestack' );
+		return __( 'Free shipping nudge', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Encourage bigger carts with a "spend X more for free shipping" message.', 'dicestack' );
+		return __( 'Encourage bigger carts with a "spend X more for free shipping" message.', 'stackpress' );
 	}
 
 	/**
@@ -79,7 +79,7 @@ final class Free_Shipping_Bar extends Abstract_Module {
 		return array(
 			array(
 				'key'     => 'threshold',
-				'label'   => __( 'Free shipping threshold', 'dicestack' ),
+				'label'   => __( 'Free shipping threshold', 'stackpress' ),
 				'type'    => 'number',
 				'default' => 50,
 				'min'     => 1,
@@ -87,9 +87,9 @@ final class Free_Shipping_Bar extends Abstract_Module {
 			),
 			array(
 				'key'     => 'reached_message',
-				'label'   => __( 'Message when threshold is reached', 'dicestack' ),
+				'label'   => __( 'Message when threshold is reached', 'stackpress' ),
 				'type'    => 'text',
-				'default' => __( 'You have unlocked free shipping!', 'dicestack' ),
+				'default' => __( 'You have unlocked free shipping!', 'stackpress' ),
 			),
 		);
 	}
@@ -118,16 +118,16 @@ final class Free_Shipping_Bar extends Abstract_Module {
 		$subtotal = (float) WC()->cart->get_subtotal();
 
 		if ( $subtotal >= $threshold ) {
-			$message = (string) $this->get_setting( 'reached_message', __( 'You have unlocked free shipping!', 'dicestack' ) );
+			$message = (string) $this->get_setting( 'reached_message', __( 'You have unlocked free shipping!', 'stackpress' ) );
 		} else {
 			$remaining = $threshold - $subtotal;
 			$message   = sprintf(
 				/* translators: %s: remaining amount. */
-				esc_html__( 'Spend %s more to get free shipping!', 'dicestack' ),
+				esc_html__( 'Spend %s more to get free shipping!', 'stackpress' ),
 				wp_strip_all_tags( wc_price( $remaining ) )
 			);
 		}
 
-		echo '<div class="dicestack-free-ship" style="background:#e1f5ee;color:#0f6e56;padding:10px 14px;border-radius:8px;margin-bottom:16px;text-align:center;">' . esc_html( $message ) . '</div>';
+		echo '<div class="stackpress-free-ship" style="background:#e1f5ee;color:#0f6e56;padding:10px 14px;border-radius:8px;margin-bottom:16px;text-align:center;">' . esc_html( $message ) . '</div>';
 	}
 }

@@ -2,12 +2,12 @@
 /**
  * Database Search & Replace module.
  *
- * @package DiceStack
+ * @package StackPress
  */
 
-namespace DiceStack\Modules\Admin;
+namespace StackPress\Modules\Admin;
 
-use DiceStack\Modules\Abstract_Module;
+use StackPress\Modules\Abstract_Module;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -29,14 +29,14 @@ final class DB_Search_Replace extends Abstract_Module {
 	 * {@inheritDoc}
 	 */
 	public function name() {
-		return __( 'Database search & replace', 'dicestack' );
+		return __( 'Database search & replace', 'stackpress' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function description() {
-		return __( 'Find and replace text across content, fields, and options — safe with serialized data.', 'dicestack' );
+		return __( 'Find and replace text across content, fields, and options — safe with serialized data.', 'stackpress' );
 	}
 
 	/**
@@ -81,7 +81,7 @@ final class DB_Search_Replace extends Abstract_Module {
 			return;
 		}
 		add_action( 'admin_menu', array( $this, 'add_page' ) );
-		add_action( 'admin_post_dicestack_sr_run', array( $this, 'handle_run' ) );
+		add_action( 'admin_post_stackpress_sr_run', array( $this, 'handle_run' ) );
 	}
 
 	/**
@@ -91,11 +91,11 @@ final class DB_Search_Replace extends Abstract_Module {
 	 */
 	public function add_page() {
 		add_submenu_page(
-			'dicestack',
-			__( 'Search & replace', 'dicestack' ),
-			__( 'Search & replace', 'dicestack' ),
+			'stackpress',
+			__( 'Search & replace', 'stackpress' ),
+			__( 'Search & replace', 'stackpress' ),
 			'manage_options',
-			'dicestack-search-replace',
+			'stackpress-search-replace',
 			array( $this, 'render_page' )
 		);
 	}
@@ -194,16 +194,16 @@ final class DB_Search_Replace extends Abstract_Module {
 	 * @return void
 	 */
 	public function handle_run() {
-		if ( ! current_user_can( 'manage_options' ) || ! check_admin_referer( 'dicestack_sr' ) ) {
-			wp_die( esc_html__( 'Permission denied.', 'dicestack' ) );
+		if ( ! current_user_can( 'manage_options' ) || ! check_admin_referer( 'stackpress_sr' ) ) {
+			wp_die( esc_html__( 'Permission denied.', 'stackpress' ) );
 		}
 		$search  = isset( $_POST['search'] ) ? (string) wp_unslash( $_POST['search'] ) : ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- exact-match search needle.
 		$replace = isset( $_POST['replace'] ) ? (string) wp_unslash( $_POST['replace'] ) : ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- exact replacement value.
 		$dry     = ! isset( $_POST['apply'] );
 
 		$count = ( '' !== $search ) ? $this->run( $search, $replace, $dry ) : 0;
-		set_transient( 'dicestack_sr_result', array( 'count' => $count, 'dry' => $dry ), 60 );
-		wp_safe_redirect( admin_url( 'admin.php?page=dicestack-search-replace' ) );
+		set_transient( 'stackpress_sr_result', array( 'count' => $count, 'dry' => $dry ), 60 );
+		wp_safe_redirect( admin_url( 'admin.php?page=stackpress-search-replace' ) );
 		exit;
 	}
 
@@ -213,28 +213,28 @@ final class DB_Search_Replace extends Abstract_Module {
 	 * @return void
 	 */
 	public function render_page() {
-		$result = get_transient( 'dicestack_sr_result' );
-		delete_transient( 'dicestack_sr_result' );
+		$result = get_transient( 'stackpress_sr_result' );
+		delete_transient( 'stackpress_sr_result' );
 
-		echo '<div class="wrap"><h1>' . esc_html__( 'Database search & replace', 'dicestack' ) . '</h1>';
-		echo '<p style="color:#a32d2d;">' . esc_html__( 'Always back up before applying changes. Use dry run first.', 'dicestack' ) . '</p>';
+		echo '<div class="wrap"><h1>' . esc_html__( 'Database search & replace', 'stackpress' ) . '</h1>';
+		echo '<p style="color:#a32d2d;">' . esc_html__( 'Always back up before applying changes. Use dry run first.', 'stackpress' ) . '</p>';
 
 		if ( is_array( $result ) ) {
 			$msg = $result['dry']
-				? sprintf( /* translators: %d: count. */ __( 'Dry run: %d replacements would be made.', 'dicestack' ), $result['count'] )
-				: sprintf( /* translators: %d: count. */ __( 'Done: %d replacements made.', 'dicestack' ), $result['count'] );
+				? sprintf( /* translators: %d: count. */ __( 'Dry run: %d replacements would be made.', 'stackpress' ), $result['count'] )
+				: sprintf( /* translators: %d: count. */ __( 'Done: %d replacements made.', 'stackpress' ), $result['count'] );
 			echo '<div class="notice notice-info"><p>' . esc_html( $msg ) . '</p></div>';
 		}
 
 		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '">';
-		wp_nonce_field( 'dicestack_sr' );
-		echo '<input type="hidden" name="action" value="dicestack_sr_run" />';
+		wp_nonce_field( 'stackpress_sr' );
+		echo '<input type="hidden" name="action" value="stackpress_sr_run" />';
 		echo '<table class="form-table">';
-		echo '<tr><th>' . esc_html__( 'Search for', 'dicestack' ) . '</th><td><input type="text" name="search" class="regular-text" required placeholder="https://old-domain.com" /></td></tr>';
-		echo '<tr><th>' . esc_html__( 'Replace with', 'dicestack' ) . '</th><td><input type="text" name="replace" class="regular-text" placeholder="https://new-domain.com" /></td></tr>';
+		echo '<tr><th>' . esc_html__( 'Search for', 'stackpress' ) . '</th><td><input type="text" name="search" class="regular-text" required placeholder="https://old-domain.com" /></td></tr>';
+		echo '<tr><th>' . esc_html__( 'Replace with', 'stackpress' ) . '</th><td><input type="text" name="replace" class="regular-text" placeholder="https://new-domain.com" /></td></tr>';
 		echo '</table>';
-		echo '<p><button type="submit" class="button">' . esc_html__( 'Dry run (preview)', 'dicestack' ) . '</button> ';
-		echo '<button type="submit" name="apply" value="1" class="button button-primary" onclick="return confirm(\'' . esc_js( __( 'Apply replacements to the database now?', 'dicestack' ) ) . '\');">' . esc_html__( 'Apply changes', 'dicestack' ) . '</button></p>';
+		echo '<p><button type="submit" class="button">' . esc_html__( 'Dry run (preview)', 'stackpress' ) . '</button> ';
+		echo '<button type="submit" name="apply" value="1" class="button button-primary" onclick="return confirm(\'' . esc_js( __( 'Apply replacements to the database now?', 'stackpress' ) ) . '\');">' . esc_html__( 'Apply changes', 'stackpress' ) . '</button></p>';
 		echo '</form></div>';
 	}
 }
