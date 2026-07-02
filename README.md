@@ -1,4 +1,4 @@
-# DiceStack — Free All-in-One WordPress Plugin (185 Tools)
+# StackPress — Free All-in-One WordPress Plugin (185 Tools)
 
 > **One plugin. Every tool. Always free.** DiceStack bundles **185 modular tools** for security, performance, SEO, WooCommerce, caching, backups, forms, and site management into a single lightweight dashboard — and you turn on **only what you need**. Disabled tools load **zero code**, so your site stays fast.
 
@@ -19,7 +19,7 @@
 
 ---
 
-## Why DiceStack?
+## Why StackPress?
 
 Most WordPress sites run a dozen plugins — one for caching, one for security, one for SEO, another for backups — each adding weight, cost, and conflicts. **DiceStack replaces that whole stack** with one free, modular toolkit:
 
